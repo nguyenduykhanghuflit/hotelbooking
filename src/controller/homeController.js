@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 class HomeController {
   async home(req, res) {
     let data = await CRUD.getAllTestData();
-
+    //oke test
     res.send(data);
   }
   // async GetData(req, res) {
