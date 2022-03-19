@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
+
+    <!-- Boxicons CDN Link -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="sidebar open">
+      <div class="logo-details">
+        <div class="logo_name">Quản lý học sinh</div>
+        <i class="bx bx-menu" id="btn"></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a class="active" href="/">
+            <i class="fas fa-home"></i>
+            <span class="links_name">Trang chủ</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admissions">
+            <i class="fas fa-graduation-cap"></i>
+            <span class="links_name">Tuyển sinh</span>
+          </a>
+        </li>
+        <li>
+          <a href="/student">
+            <i class="fas fa-user-graduate"></i>
+
+            <span class="links_name">Học sinh</span>
+          </a>
+        </li>
+        <li>
+          <a href="/class">
+            <i class="fas fa-users"></i>
+
+            <span class="links_name">Lớp học</span>
+          </a>
+        </li>
+        <li>
+          <a href="/teacher/">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span class="links_name">Giáo viên</span>
+          </a>
+        </li>
+        <li>
+          <a class="" href="/study">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <span class="links_name">Học tập</span>
+          </a>
+        </li>
+        <li class="profile">
+          <div class="profile-details">
+            <img
+              src="https://cdn.iconscout.com/icon/free/png-256/teacher-240-1128987.png"
+              alt="profileImg"
+            />
+            <div class="name_job">
+              <div class="name">Nguyễn Duy Khang</div>
+              <div class="job">Admin</div>
+            </div>
+          </div>
+          <i class="bx bx-log-out" id="log_out"></i>
+        </li>
+      </ul>
+    </div>
+    <section class="home-section">
+      <h2>Trang chủ nè</h2>
+      <h1>Tạo bảng điểm</h1>
+      <label>Nhập lớp id</label>
+      <input class="classID" type="text" />
+      <button class="sm">Thực hiện</button>
+      <div class="showdata">
+        <h1 class="mess">mess</h1>
+      </div>
+    </section>
+  </body>
+</html>
