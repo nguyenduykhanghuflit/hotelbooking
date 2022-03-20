@@ -13,6 +13,7 @@ function route(app) {
   // app.use('/class', classRouter);
   // app.use('/student', studentRouter);
   // app.use('/testdb', testRouter);
+  //k su dung nua
   app.use('/', homeRouter);
 }
 
