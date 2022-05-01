@@ -1,0 +1,406 @@
+:root {
+  --primary-color: #f8b600;
+}
+
+.section {
+  position: relative;
+  height: 100vh;
+}
+
+.section .section-center {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+#booking {
+  font-family: 'Montserrat', sans-serif;
+  background-image: url('../img/background.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+#booking::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background: rgba(4, 9, 30, 0.5);
+}
+
+.booking-cta {
+  margin-top: 45px;
+}
+
+.booking-cta h2 {
+  font-size: 30px;
+  text-transform: uppercase;
+  color: #d1caca;
+  font-family: Montserrat;
+  font-weight: 800;
+  line-height: 33px;
+  margin: 20px 0px 10px;
+}
+
+.booking-cta p {
+  font-size: 22px;
+  color: #f3eee1;
+  font-weight: 700px;
+  font-family: Montserrat;
+}
+
+.booking-form {
+  background: #fff;
+  -webkit-box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.3);
+  max-width: 642px;
+  width: 100%;
+  margin: auto;
+  padding: 40px 30px;
+}
+
+.booking-form .form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.booking-form .form-control {
+  background-color: #fff;
+  height: 55px;
+  padding: 0px;
+  padding-top: 15px;
+  padding-left: 7px;
+  color: #181818;
+  font-size: 16px;
+  font-weight: 700;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0px;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.booking-form .form-control::placeholder {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.booking-form input[type='date'].form-control:invalid {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.booking-form .form-group:not(.input-not-empty) .form-control:not(:focus) {
+  color: transparent;
+}
+
+.booking-form select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-left: 7px;
+}
+
+.booking-form select.form-control + .select-arrow {
+  position: absolute;
+  right: 0px;
+  bottom: 7px;
+  width: 32px;
+  line-height: 32px;
+  height: 32px;
+  text-align: center;
+  pointer-events: none;
+  color: rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+}
+
+.booking-form select.form-control + .select-arrow:after {
+  content: '\279C';
+  display: block;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+/* .booking-form select.form-control > option {
+    color: red;
+  } */
+
+.booking-form .form-label {
+  color: rgba(0, 0, 0, 0.2);
+  font-weight: 700;
+  position: absolute;
+  top: 20px;
+  left: 7px;
+  text-transform: uppercase;
+  line-height: 24px;
+  height: 23px;
+  font-size: 16px;
+  pointer-events: none;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.booking-form .form-group .form-control:focus + .form-label {
+  top: 0px;
+  color: var(--primary-color);
+  font-size: 14px;
+}
+
+.booking-form .form-group.input-not-empty .form-label {
+  top: 0px;
+  color: var(--primary-color);
+  font-size: 14px;
+}
+
+.booking-form .submit-btn {
+  color: #fff;
+  background-color: var(--primary-color);
+  font-weight: 700;
+  height: 55px;
+  padding: 10px 35px;
+  font-size: 18px;
+  border: none;
+  display: block;
+  width: 100%;
+  text-transform: capitalize;
+}
+.booking-form .submit-btn:hover {
+  background-color: #ddb33e;
+  transition: all 0.3s ease-in-out;
+}
+
+/* header chưa scorll */
+#header {
+  position: fixed;
+  z-index: 999;
+  width: 90%;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.15);
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+#header.header-scrolled {
+  top: 0;
+  width: 100%;
+  padding: 0 50px;
+  background: rgba(36, 35, 35, 0.8);
+}
+.header-logo {
+  color: white;
+}
+
+.header-nav {
+  height: 100%;
+}
+#header .nav-list {
+  display: flex;
+  height: 100%;
+  list-style: none;
+}
+#header .nav-item {
+  text-align: center;
+  display: inline-block;
+  line-height: 70px;
+  position: relative;
+}
+
+#header .nav-list .nav-item + .nav-item {
+  margin-left: 30px;
+}
+#header .nav-link-nb {
+  font-size: 12px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 800;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+#header .nav-link-nb:hover::after {
+  width: 100%;
+}
+#header .nav-link-nb-main {
+  color: var(--primary-color);
+}
+#header .nav-link-nb:hover {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+/* .body-content {
+  width: 100%;
+  height: 900px;
+  background-color: rgb(255, 255, 255);
+}
+
+.filter__form {
+  background: #ffffff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100%;
+}
+
+.filter__form button {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+  background: #1d1c1c;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: none;
+  width: 20%;
+  text-align: center;
+  height: 100px;
+  line-height: 100%;
+}
+.filter__form button:hover {
+  transition: all ease-in 0.3s;
+  background: #a4e310;
+  color: black;
+}
+html .btn-hover:hover {
+  transition: all ease-in 0.3s;
+  background: #a4e310;
+  color: black;
+}
+
+.filter__form__item {
+  width: 24%;
+}
+
+.filter__form__item.filter__form__item--search {
+  width: 260px;
+}
+
+.filter__form__item.filter__form__item--select {
+  width: 230px;
+}
+
+.filter__form__item p {
+  font-size: 18px;
+  color: #777c81;
+  margin-bottom: 24px;
+}
+
+.filter__form__item .filter__form__input {
+  position: relative;
+}
+
+.filter__form__item .filter__form__input span {
+  font-size: 18px;
+  color: #e9ad28;
+  position: absolute;
+  right: 17px;
+  top: 15px;
+}
+
+.filter__form__item .filter__form__input input {
+  border: 1px solid #e4e4e4;
+  font-size: 20px;
+  color: #1d1c1c;
+  width: 100%;
+  height: 48px;
+  padding-left: 15px;
+  padding-right: 40px;
+  font-family: 'Barlow Condensed', sans-serif;
+  cursor: pointer;
+}
+
+.filter__form__item .filter__form__datepicker {
+  position: relative;
+  cursor: pointer;
+}
+
+.filter__form__item .filter__form__datepicker span {
+  font-size: 18px;
+  color: #e9ad28;
+  position: absolute;
+  left: 18px;
+  top: 15px;
+}
+
+.filter__form__item .filter__form__datepicker input {
+  border: 1px solid #e4e4e4;
+  font-size: 20px;
+  color: #1d1c1c;
+  width: 100%;
+  padding-left: 48px;
+  height: 48px;
+  font-family: 'Barlow Condensed', sans-serif;
+  cursor: pointer;
+}
+
+.filter__form__item .filter__form__datepicker i {
+  font-size: 22px;
+  color: #1d1c1c;
+  position: absolute;
+  right: 10px;
+  top: 13px;
+}
+
+.filter__form__item .filter__form__select {
+  position: relative;
+  height: 48px;
+  border: 1px solid #e4e4e4;
+}
+
+.filter__form__item .filter__form__select span {
+  font-size: 18px;
+  color: #e9ad28;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  z-index: 1;
+}
+
+.filter__form__item .filter__form__select .nice-select {
+  float: none;
+  border: none;
+  border-radius: 0;
+  padding-left: 29px;
+  padding-top: 3px;
+  width: 100%;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.filter__form__item .filter__form__select .nice-select .current {
+  font-size: 20px;
+  color: #1d1c1c;
+  position: relative;
+  top: 0;
+}
+
+.filter__form__item .filter__form__select .nice-select:after {
+  border-bottom: 1.5px solid #1d1c1c;
+  border-right: 1.5px solid #1d1c1c;
+  height: 8px;
+  width: 8px;
+  right: 20px;
+  top: 23px;
+}
+
+.filter__form__item .filter__form__select .nice-select .list {
+  margin-top: 0;
+  width: 100%;
+  border-radius: 0;
+} */

@@ -23,5 +23,5 @@ router(app);
 connectDB();
 
 app.listen(port, () => {
-  console.log(`Đã chạy thành công ở http://localhost:${port}`);
+  console.log(`Ket noi thanh cong  http://localhost:${port}`);
 });

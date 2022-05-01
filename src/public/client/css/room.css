@@ -1,0 +1,19 @@
+#booking {
+  height: 400px;
+}
+.booking-form {
+  max-width: 1000px;
+  padding: initial;
+  height: 150px;
+  margin: -10px auto;
+}
+.section .section-center {
+  top: 65%;
+}
+.room__text a:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+/* .room__text a:hover:before {
+  width: calc(100% - 20px);
+} */
