@@ -36,12 +36,16 @@
     />
     <link rel="stylesheet" href="/client/css/style.css" type="text/css" />
     <link rel="stylesheet" href="/client/css/header.css" type="text/css" />
+    <!-- toast -->
+    <link rel="stylesheet" href="/client/css/toastr.css" type="text/css" />
   </head>
 
   <body>
     <div id="header">
-      <div class="header-logo"><a href="/" class="nav-link-nb">huflit</a></div>
       <div class="header-nav">
+        <div class="header-logo">
+          <img src="/client/img/mylogo.svg" alt="" class="logo" />
+        </div>
         <ul class="nav-list">
           <li class="nav-item">
             <a href="/" class="nav-link-nb nav-link-nb-main">Trang chủ</a>
@@ -56,7 +60,35 @@
           <li class="nav-item">
             <a href="/about" class="nav-link-nb">Giới thiệu</a>
           </li>
+          <!-- <li class="nav-item">
+            <a href="/login" class="nav-link-nb">Đăng nhập</a>
+          </li>
+          <li class="nav-item">
+            <a href="/register" class="nav-link-nb">Đăng ký</a>
+          </li> -->
         </ul>
+      </div>
+      <div class="header-account">
+        <!-- đã login -->
+        <div class="btn-account login-success">
+          <span class="username">Hello Khang</span>
+          <i class="bx bx-user-check"></i>
+          <div class="account-info hide-if">
+            <div class="arrow-up"></div>
+            <ul class="list-info">
+              <li><a href="/cart">Giỏ hàng</a></li>
+              <li><a href="/info">Thông tin</a></li>
+              <li><a href="/list-room">Phòng đã đặt</a></li>
+              <li><a href="/logout">Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Chưa login -->
+        <!-- <a class="btn-login btn-account" href="/login"
+          ><i class="bx bx-user"></i>Đăng nhập
+        </a>
+        <a class="btn-register btn-account" href="/login">Đăng ký </a> -->
       </div>
     </div>
     <div id="booking" class="section">
@@ -69,39 +101,65 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input class="form-control" type="date" required />
+                        <input
+                          id="date-checkin"
+                          class="form-control"
+                          type="date"
+                          required
+                        />
                         <span class="form-label">Check In</span>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <input class="form-control" type="date" required />
+                        <input
+                          id="date-checkout"
+                          class="form-control"
+                          type="date"
+                          required
+                        />
                         <span class="form-label">Check Out</span>
                       </div>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6 col-sm-6">
+                    <!-- số phòng -->
+                    <div class="col-md-4 col-sm-4">
                       <div class="form-group">
-                        <span class="form-label">Người</span>
-                        <select class="form-control">
+                        <span class="form-label">Số phòng</span>
+                        <select id="number-room" required class="form-control">
                           <option>1</option>
                           <option>2</option>
-                          <option>4 - 6</option>
+                          <option>3</option>
+                          <option>4</option>
                         </select>
                         <span class="select-arrow"></span>
                       </div>
                     </div>
-                    <div class="col-md-6 col-sm-6">
+                    <!-- số người lớn -->
+                    <div class="col-md-4 col-sm-4">
                       <div class="form-group">
-                        <span class="form-label">Giường</span>
-                        <select class="form-control">
-                          <option>Giường đơn</option>
-                          <option>2 Giường đơn</option>
-                          <option>Giường đôi</option>
-                          <option>Giường đôi lớn</option>
-                          <option>2 Giường đôi</option>
-                          <option>3 Giường</option>
+                        <span class="form-label">Số người lớn</span>
+                        <select id="number-adult" required class="form-control">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>4</option>
+                        </select>
+                        <span class="select-arrow"></span>
+                      </div>
+                    </div>
+                    <!-- số trẻ em -->
+                    <div class="col-md-4 col-sm-4">
+                      <div class="form-group">
+                        <span class="form-label">Số trẻ em</span>
+                        <select
+                          id="number-children"
+                          required
+                          class="form-control"
+                        >
+                          <option>0</option>
+                          <option>1</option>
+                          <option>2</option>
                         </select>
                         <span class="select-arrow"></span>
                       </div>
@@ -109,7 +167,9 @@
                   </div>
 
                   <div class="form-btn">
-                    <button class="submit-btn">Tìm phòng ngay</button>
+                    <button type="button" id="btnSearch" class="submit-btn">
+                      Tìm phòng ngay
+                    </button>
                   </div>
                 </form>
               </div>
@@ -283,16 +343,11 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- bootstrap -->
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 
     <!-- Js Plugins -->
-    <script src="/client/js/jquery-3.3.1.min.js"></script>
 
+    <script src="/client/js/toastr.js"></script>
     <script src="/client/js/header.js"></script>
   </body>
 </html>

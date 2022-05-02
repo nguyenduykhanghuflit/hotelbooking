@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="description" content="Hiroto Template" />
     <meta name="keywords" content="Hiroto, unica, creative, html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=dev-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
     <title>HotelBooking</title>
@@ -52,12 +52,17 @@
     <link rel="stylesheet" href="/client/css/style.css" type="text/css" />
     <link rel="stylesheet" href="/client/css/header.css" type="text/css" />
     <link rel="stylesheet" href="/client/css/room.css" type="text/css" />
+
+    <!-- toast -->
+    <link rel="stylesheet" href="/client/css/toastr.css" type="text/css" />
   </head>
 
   <body>
     <div id="header">
-      <div class="header-logo"><a href="/" class="nav-link-nb">huflit</a></div>
       <div class="header-nav">
+        <div class="header-logo">
+          <img src="/client/img/mylogo.svg" alt="" class="logo" />
+        </div>
         <ul class="nav-list">
           <li class="nav-item">
             <a href="/" class="nav-link-nb">Trang chủ</a>
@@ -72,7 +77,35 @@
           <li class="nav-item">
             <a href="/about" class="nav-link-nb">Giới thiệu</a>
           </li>
+          <!-- <li class="nav-item">
+            <a href="/login" class="nav-link-nb">Đăng nhập</a>
+          </li>
+          <li class="nav-item">
+            <a href="/register" class="nav-link-nb">Đăng ký</a>
+          </li> -->
         </ul>
+      </div>
+      <div class="header-account">
+        <!-- đã login -->
+        <div class="btn-account login-success">
+          <span class="username">Hello Khang</span>
+          <i class="bx bx-user-check"></i>
+          <div class="account-info hide-if">
+            <div class="arrow-up"></div>
+            <ul class="list-info">
+              <li><a href="/cart">Giỏ hàng</a></li>
+              <li><a href="/info">Thông tin</a></li>
+              <li><a href="/list-room">Phòng đã đặt</a></li>
+              <li><a href="/logout">Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Chưa login -->
+        <!-- <a class="btn-login btn-account" href="/login"
+          ><i class="bx bx-user"></i>Đăng nhập
+        </a>
+        <a class="btn-register btn-account" href="/login">Đăng ký </a> -->
       </div>
     </div>
     <div id="booking" class="section">
@@ -92,33 +125,81 @@
               <div class="booking-form">
                 <form>
                   <div class="row">
-                    <div class="col-md-3 col-sm-3">
-                      <select
-                        class="form-select form-select-lg mb-3"
-                        aria-label=".form-select-lg example"
-                      >
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                    <!-- check in -->
+                    <div class="col-md-2 col-sm-2">
+                      <div class="form-group">
+                        <input
+                          id="date-checkin"
+                          class="form-control sn"
+                          type="date"
+                          required
+                        />
+                        <span class="form-label">Check In</span>
+                      </div>
                     </div>
-                    <div class="col-md-3 col-sm-3">
-                      <select
-                        class="form-select form-select-lg mb-3"
-                        aria-label=".form-select-lg example"
+                    <!-- check out -->
+                    <div class="col-md-2 col-sm-2">
+                      <div class="form-group">
+                        <input
+                          id="date-checkout"
+                          class="form-control sn"
+                          type="date"
+                          required
+                        />
+                        <span class="form-label">Check Out</span>
+                      </div>
+                    </div>
+                    <!-- số phòng -->
+                    <div class="col-md-2 col-sm-2">
+                      <div class="form-group">
+                        <span class="form-label">Số phòng</span>
+                        <select id="number-room" required class="form-control">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                        </select>
+                        <span class="select-arrow"></span>
+                      </div>
+                    </div>
+                    <!-- số người lớn -->
+                    <div class="col-md-2 col-sm-2">
+                      <div class="form-group">
+                        <span class="form-label">Số người lớn</span>
+                        <select id="number-adult" required class="form-control">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>4</option>
+                        </select>
+                        <span class="select-arrow"></span>
+                      </div>
+                    </div>
+                    <!-- số trẻ em -->
+                    <div class="col-md-2 col-sm-2">
+                      <div class="form-group">
+                        <span class="form-label">Số trẻ em</span>
+                        <select
+                          id="number-children"
+                          required
+                          class="form-control"
+                        >
+                          <option>0</option>
+                          <option>1</option>
+                          <option>2</option>
+                        </select>
+                        <span class="select-arrow"></span>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                      <button
+                        id="btnSearch"
+                        type="button"
+                        class="btn btn-fliter form-group btn-primary"
                       >
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                        Tìm kiếm
+                      </button>
                     </div>
                   </div>
-
-                  <!-- <div class="form-btn">
-                    <button class="submit-btn">Tìm phòng ngay</button>
-                  </div> -->
                 </form>
               </div>
             </div>
@@ -133,9 +214,7 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="section-title">
-              <h5 style="font-size: 30px; margin: 10px 0">
-                Phòng phù hợp cho bạn
-              </h5>
+              <h5 style="font-size: 30px; margin: 10px 0">Đề xuất cho bạn</h5>
             </div>
           </div>
         </div>
@@ -224,21 +303,11 @@
           <% } %> <% a=b+1; b=a+1%> <%})%>
         </div>
         <div class="btn-on-top"></div>
-        <!-- <div class="row">
-          <div class="col-lg-12">
-            <div class="pagination__number">
-              <a href="#">Trang trước <span class="arrow_left"></span></a>
-              <a class="pagination__number_active" href="#">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#">Trang sau <span class="arrow_right"></span></a>
-            </div>
-          </div>
-        </div> -->
       </div>
     </section>
 
     <!--==================================== -->
+
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
       integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -246,47 +315,17 @@
     ></script>
 
     <!-- Js Plugins -->
-    <script type="module" id="" src="/client/js/rooms.js"></script>
-    <script src="/client/js/jquery-3.3.1.min.js"></script>
 
+    <!-- <script src="/client/js/jquery-3.3.1.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="/client/js/jquery.slicknav.js"></script>
     <script src="/client/js/owl.carousel.min.js"></script>
+
+    <!-- toast -->
+    <script src="/client/js/toastr.js"></script>
+
     <script src="/client/js/main.js"></script>
     <script src="/client/js/header.js"></script>
-
-    <script>
-      window.onscroll = function () {
-        scrollFunction();
-      };
-      function scrollFunction() {
-        if (
-          document.body.scrollTop > 600 ||
-          document.documentElement.scrollTop > 600
-        ) {
-          document.querySelector('.btn-on-top').style.display = 'flex';
-          document.querySelector(
-            '.btn-on-top'
-          ).innerHTML = `<span class="arrow_up"></span>`;
-        } else {
-          document.querySelector('.btn-on-top').style.display = 'none';
-        }
-      }
-      document
-        .querySelector('.btn-on-top')
-        .addEventListener('click', function () {
-          document.body.scrollTop = 0;
-          document.documentElement.scrollTop = 0;
-        });
-    </script>
-
-    <!-- clginhieulam ne -->
-
-    <!-- bootstrap bao gồm min-->
-
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-      crossorigin="anonymous"
-    ></script>
+    <script src="/client/js/room.js"></script>
   </body>
 </html>

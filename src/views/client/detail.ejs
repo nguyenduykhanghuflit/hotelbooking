@@ -40,114 +40,100 @@
       href="/client/css/slicknav.min.css"
       type="text/css"
     />
-    <link rel="stylesheet" href="/client/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="/client/css/header-bootstrap.css"
+      type="text/css"
+    />
+
+    <!-- Css Styles -->
+    <link
+      rel="stylesheet"
+      href="/client/css/owl.carousel.min.css"
+      type="text/css"
+    />
+
+    <link rel="stylesheet" href="/client/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/client/css/header.css" type="text/css" />
+    <link rel="stylesheet" href="/client/css/room.css" type="text/css" />
+    <style>
+      #booking {
+        height: 300px;
+      }
+    </style>
   </head>
 
   <body>
     <!-- Page Preloder -->
-    <div id="preloder">
-      <div class="loader"></div>
-    </div>
+
     <div class="btn-on-top"><span class="arrow_left"></span></div>
     <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-      <div class="offcanvas__logo">
-        <a href="/client/index.html"
-          ><img src="/client/img/logo.png" alt=""
-        /></a>
-      </div>
-      <div id="mobile-menu-wrap"></div>
-      <div class="offcanvas__btn__widget">
-        <a href="">Book Now <span class="arrow_right"></span></a>
-      </div>
-      <div class="offcanvas__widget">
-        <ul>
-          <li>
-            <span class="icon_pin_alt"></span> 96 Ernser Vista Suite 437, NY, US
+
+    <div id="header">
+      <div class="header-nav">
+        <div class="header-logo">
+          <img src="/client/img/mylogo.svg" alt="" class="logo" />
+        </div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="/" class="nav-link-nb">Trang chủ</a>
           </li>
-          <li><span class="icon_phone"></span> (123) 456-78-910</li>
+
+          <li class="nav-item">
+            <a href="/rooms" class="nav-link-nb nav-link-nb-main">Phòng</a>
+          </li>
+          <li class="nav-item">
+            <a href="/checkout" class="nav-link-nb">Đặt phòng</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link-nb">Giới thiệu</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a href="/login" class="nav-link-nb">Đăng nhập</a>
+          </li>
+          <li class="nav-item">
+            <a href="/register" class="nav-link-nb">Đăng ký</a>
+          </li> -->
         </ul>
       </div>
-      <div class="offcanvas__language">
-        <img src="/client/img/lan.png" alt="" />
-        <span>English</span>
-        <i class="fa fa-angle-down"></i>
-        <ul>
-          <li>English</li>
-          <li>Bangla</li>
-        </ul>
-      </div>
-      <div class="offcanvas__auth">
-        <ul>
-          <li><a href="/client#">Login</a></li>
-          <li><a href="/client#">Register</a></li>
-        </ul>
+      <div class="header-account">
+        <!-- đã login -->
+        <div class="btn-account login-success">
+          <span class="username">Hello Khang</span>
+          <i class="bx bx-user-check"></i>
+          <div class="account-info hide-if">
+            <div class="arrow-up"></div>
+            <ul class="list-info">
+              <li><a href="/cart">Giỏ hàng</a></li>
+              <li><a href="/info">Thông tin</a></li>
+              <li><a href="/list-room">Phòng đã đặt</a></li>
+              <li><a href="/logout">Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Chưa login -->
+        <!-- <a class="btn-login btn-account" href="/login"
+          ><i class="bx bx-user"></i>Đăng nhập
+        </a>
+        <a class="btn-register btn-account" href="/login">Đăng ký </a> -->
       </div>
     </div>
-    <!-- Offcanvas Menu End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
-      <div class="header__top">
+    <div id="booking" class="section">
+      <div class="section-center">
         <div class="container">
           <div class="row">
-            <div class="col-lg-7">
-              <ul class="header__top__widget">
-                <li>
-                  <span class="icon_pin_alt"></span> 10 Trần Thiện Chánh P13,
-                  Q10, TP.HCM
-                </li>
-                <li><span class="icon_phone"></span> 0924989342</li>
-              </ul>
-            </div>
-            <div class="col-lg-5">
-              <div class="header__top__right">
-                <div class="header__top__auth">
-                  <ul>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Register</a></li>
-                  </ul>
-                </div>
+            <div class="col-lg-12">
+              <div class="section-title">
+                <h5 style="font-size: 30px; color: #fff; font-weight: bold">
+                  Xem chi tiết phòng để có trải nghiệm tốt hơn bạn nhé
+                </h5>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="header__nav__option">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-2">
-              <div class="header__logo">
-                <a href="/"><img src="/client/img/logo.png" alt="" /></a>
-              </div>
-            </div>
-            <div class="col-lg-10">
-              <div class="header__nav">
-                <nav class="header__menu">
-                  <ul class="menu__class">
-                    <li>
-                      <a href="/">Trang chủ</a>
-                    </li>
-                    <li class="active"><a href="/rooms">Phòng</a></li>
-                    <li><a href="/contact">Hỗ trợ</a></li>
-                  </ul>
-                </nav>
-                <div class="header__nav__widget">
-                  <a href="/rooms" class="btn-hover"
-                    >Đặt ngay <span class="arrow_right"></span
-                  ></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="canvas__open">
-            <span class="fa fa-bars"></span>
-          </div>
-        </div>
-      </div>
-    </header>
-    <!-- Header Section End -->
+    </div>
     <!--==================================== -->
     <div class="room-details-slider">
       <div class="container">
@@ -465,30 +451,6 @@
     <script src="/client/js/jquery.slicknav.js"></script>
     <script src="/client/js/owl.carousel.min.js"></script>
     <script src="/client/js/main.js"></script>
-
-    <script>
-      window.onscroll = function () {
-        scrollFunction();
-      };
-      function scrollFunction() {
-        if (
-          document.body.scrollTop > 600 ||
-          document.documentElement.scrollTop > 600
-        ) {
-          document.querySelector('.btn-on-top').style.display = 'flex';
-          document.querySelector(
-            '.btn-on-top'
-          ).innerHTML = `<span class="arrow_up"></span>`;
-        } else {
-          document.querySelector('.btn-on-top').style.display = 'none';
-        }
-      }
-      document
-        .querySelector('.btn-on-top')
-        .addEventListener('click', function () {
-          document.body.scrollTop = 0;
-          document.documentElement.scrollTop = 0;
-        });
-    </script>
+    <script src="/client/js/header.js"></script>
   </body>
 </html>

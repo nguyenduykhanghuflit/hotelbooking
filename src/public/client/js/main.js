@@ -13,10 +13,10 @@
   /*------------------
         Preloader
     --------------------*/
-  $(window).on('load', function () {
-    $('.loader').fadeOut();
-    $('#preloder').delay(200).fadeOut('slow');
-  });
+  // $(window).on('load', function () {
+  //   $('.loader').fadeOut();
+  //   $('#preloder').delay(200).fadeOut('slow');
+  // });
 
   /*------------------
         Background Set
@@ -40,10 +40,10 @@
   /*------------------
 		Navigation
 	--------------------*/
-  $('.menu__class').slicknav({
-    appendTo: '#mobile-menu-wrap',
-    allowParentLinks: true,
-  });
+  // $('.menu__class').slicknav({
+  //   appendTo: '#mobile-menu-wrap',
+  //   allowParentLinks: true,
+  // });
 
   /*--------------------------
         Gallery Slider
