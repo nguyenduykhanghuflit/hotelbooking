@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.STRING, //này nè DataTypes nhaaa
       },
-      khachHangID: {
+      customerID: {
         allowNull: false,
         foreignKey: true,
         type: DataTypes.STRING,
@@ -21,20 +21,19 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: true,
         type: DataTypes.STRING,
       },
-      voucherID: {
+      voucher_id: {
         allowNull: false,
         foreignKey: true,
         type: DataTypes.STRING,
       },
-      ngayDen: DataTypes.DATE,
-      ngayDi: DataTypes.DATE,
-      tongSoTien: DataTypes.INTEGER,
-      ngayTaoHoaDon: DataTypes.STRING,
+      checkin: DataTypes.DATE,
+      checkout: DataTypes.DATE,
+      totalMoney: DataTypes.INTEGER,
+      payment: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: 'Bill', //chú ý
-      timestamps: false,
     }
   );
   return Bill;

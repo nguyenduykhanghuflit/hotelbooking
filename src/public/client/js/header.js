@@ -85,11 +85,3 @@ $(document).ready(function () {
     else return true;
   }
 });
-
-let showInfo = document.querySelector('.login-success');
-let info = document.querySelector('.account-info');
-showInfo.addEventListener('click', (e) => {
-  info.classList.contains('hide-if')
-    ? info.classList.remove('hide-if')
-    : info.classList.add('hide-if');
-});

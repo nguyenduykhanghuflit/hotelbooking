@@ -1,83 +1,35 @@
 const { response } = require('express');
 const e = require('express');
-const db = require('../models/index');
-const CRUD = require('../services/CRUD');
-class HomeController {
-  mdw(req, res, next) {
-    let a = 1;
-    if (a == 1) next();
-    else res.json('cút');
-  }
 
+// Service dùng để xử lý các CRUD cơ bản ở database
+const CRUD = require('../services/CRUD');
+// Service dùng để xử lý thông tin user
+const USER = require('../services/USER');
+const jwt = require('jsonwebtoken');
+
+class HomeController {
   async data(req, res) {
-    let data = await CRUD.getAllTestData();
-    // res.render('home/home.ejs', { data: data });
+    let data = await USER.getInfoAdmin('admin1');
     res.json(data);
   }
-
-  async index(req, res) {
-    let data = await CRUD.getAllTestData();
-    res.render('client/home.ejs', { data: data, layout: false });
-  }
-
-  //hiển thị tất cả các phòng
-  async rooms(req, res) {
-    let data = await CRUD.getAllRoom();
-    let listImg = [];
-    data.forEach((room) => {
-      let dt = [];
-      let s = room.imgs.split(']');
-      for (let i = 0; i < s.length - 1; i++) dt.push(s[i].slice(1));
-      listImg.push(dt);
-    });
-    for (let i = 0; i < listImg.length; i++) {
-      data[i].imgs = listImg[i];
-    }
-    res.render('client/rooms.ejs', { data, layout: false });
-  }
-
-  async filterRooms(req, res) {
-    let soNguoiLon = req.query.soNguoiLon;
-    let soTreEm = req.query.soTreEm;
-    let title = req.query.val;
-    soNguoiLon = parseInt(soNguoiLon);
-    soTreEm = parseInt(soTreEm);
-
-    if (typeof soNguoiLon != 'number' || typeof soTreEm != 'number')
-      res.json({ message: 'data invalid' });
-    else {
-      let data = await CRUD.getRoomByCapacity(soNguoiLon, soTreEm);
-      let listImg = [];
-      data.forEach((room) => {
-        let dt = [];
-        let s = room.imgs.split(']');
-        for (let i = 0; i < s.length - 1; i++) dt.push(s[i].slice(1));
-        listImg.push(dt);
-      });
-      for (let i = 0; i < listImg.length; i++) {
-        data[i].imgs = listImg[i];
+  // trang chủ
+  async Home(req, res) {
+    // let data = await CRUD.getAllTestData();
+    let token = req.cookies.token;
+    let data;
+    try {
+      var decoded = jwt.verify(token, 'ok');
+      if (decoded) {
+        // data = { login: true };
+        // data = decoded;
+        let username = decoded.userName;
+        let info = await login.getInfoAdmin(username);
+        data = { login: true, info: { name: info.fullName } };
       }
-      data.title = title;
-      return res.render('client/f.ejs', { data });
-      // res.json(data);
+    } catch (err) {
+      data = { login: false };
     }
-  }
-
-  async detailRooms(req, res) {
-    let idRoom = req.params.id;
-
-    let data = await CRUD.getRoomByID(idRoom);
-    let listImg = [];
-    data.forEach((room) => {
-      let dt = [];
-      let s = room.imgs.split(']');
-      for (let i = 0; i < s.length - 1; i++) dt.push(s[i].slice(1));
-      listImg.push(dt);
-    });
-    for (let i = 0; i < listImg.length; i++) {
-      data[i].imgs = listImg[i];
-    }
-    res.render('client/detail.ejs', { data });
+    res.render('client/home.ejs', { data: data, layout: false });
     // res.send(data);
   }
 }

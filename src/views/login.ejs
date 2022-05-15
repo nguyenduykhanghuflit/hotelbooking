@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="/client/css/login.css" type="text/css" />
+    <link rel="stylesheet" href="/client/css/loading.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <div class="load-animation">
+      <div id="dots1">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <div class="overlay">
+      <form>
+        <div class="con">
+          <header class="head-form">
+            <h2>Đăng nhập</h2>
+
+            <p>Bạn cần đăng nhập để tiếp tục</p>
+          </header>
+
+          <br />
+          <div class="field-set">
+            <!--   user name -->
+
+            <span class="input-item">
+              <i class="fa fa-user-circle"></i>
+            </span>
+            <!--   user name Input-->
+            <input
+              class="form-input f-username"
+              id="txt-input"
+              type="text"
+              placeholder="username"
+              name="username"
+              required
+            />
+
+            <br />
+
+            <!--   Password -->
+
+            <span class="input-item">
+              <i class="fa fa-key"></i>
+            </span>
+            <!--   Password Input-->
+            <input
+              class="form-input f-password"
+              type="password"
+              placeholder="password"
+              id="pwd"
+              name="password"
+              required
+            />
+
+            <!--      Show/hide password  -->
+            <span>
+              <i
+                class="fa fa-eye"
+                aria-hidden="true"
+                type="button"
+                id="eye"
+              ></i>
+            </span>
+
+            <br />
+
+            <button type="button" class="log-in btnLogin">Đăng nhập</button>
+          </div>
+
+          <!--   other buttons -->
+          <div class="other">
+            <!--      Forgot Password button-->
+            <button type="button" class="btn submits frgt-pass">
+              Quên mật khẩu?
+            </button>
+            <!--     Sign Up button -->
+            <button type="button" class="btn submits sign-up">
+              Đăng kí
+              <!--         Sign Up font icon -->
+              <i class="fa fa-user-plus" aria-hidden="true"></i>
+            </button>
+            <!--      End Other the Division -->
+          </div>
+        </div>
+      </form>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="/client/js/login.js"></script>
+  </body>
+</html>

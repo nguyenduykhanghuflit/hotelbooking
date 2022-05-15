@@ -2,9 +2,9 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable(
-      'Rooms',
+      'Images',
       {
-        roomID: {
+        imageID: {
           allowNull: false,
           primaryKey: true,
           type: Sequelize.STRING,
@@ -14,17 +14,8 @@ module.exports = {
           foreignKey: true,
           type: Sequelize.STRING,
         },
-        floor: {
-          type: Sequelize.INTEGER,
-        },
-        status: {
+        url: {
           type: Sequelize.STRING,
-        },
-        checkin: {
-          type: Sequelize.DATE,
-        },
-        checkout: {
-          type: Sequelize.DATE,
         },
         createdAt: {
           allowNull: true,
@@ -39,6 +30,6 @@ module.exports = {
     );
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Rooms');
+    await queryInterface.dropTable('Images');
   },
 };

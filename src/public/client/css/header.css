@@ -265,12 +265,17 @@ li {
   right: 15px;
   border-radius: 2px;
   border: 1px solid #e4e4e4;
-  width: 80%;
+  width: calc(80% + 20px);
   padding: 10px 8px;
   background: rgb(236, 228, 228);
 }
 .hide-if {
   display: none;
+  transition: 0.3s;
+}
+.login-success:hover .hide-if {
+  display: block;
+  transition: 0.3s;
 }
 .arrow-up {
   width: 0;
@@ -292,7 +297,7 @@ li {
 }
 .list-info li a {
   color: #333;
-  font-size: 11px;
+  font-size: 12px;
 }
 .list-info li:hover a {
   color: rgb(150, 71, 71);
@@ -504,3 +509,34 @@ html .btn-hover:hover {
   width: 100%;
   border-radius: 0;
 } */
+.loading {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(228, 215, 215, 0.2);
+  position: fixed;
+  z-index: 999999;
+  display: none;
+}
+.loader {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  border: 3px solid rgb(220, 217, 213);
+  border-top-color: #002147;
+  box-sizing: border-box;
+  background: transparent;
+  animation: loading 1s linear infinite;
+  position: absolute;
+  top: 20%;
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  0% {
+    transform: rotate(360deg);
+  }
+}

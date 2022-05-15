@@ -288,7 +288,7 @@
               options: E,
               map: t,
             };
-          return s(), r(), a(), f(P), E.debug && console && console.log(P), I;
+          return s(), r(), a(), f(P), E.debug && console && console.log(), I;
         }
       }
       function m() {

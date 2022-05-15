@@ -30,3 +30,14 @@ document.querySelector('.btn-on-top').addEventListener('click', function () {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 });
+
+$(function () {
+  let btnSearch = $('.btn-fliter');
+
+  btnSearch.click(function () {
+    let adult = $('#number-adult').val();
+    let children = $('#number-children').val();
+    console.log(adult);
+    console.log(children);
+  });
+});

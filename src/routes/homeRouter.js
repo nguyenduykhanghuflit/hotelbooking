@@ -1,12 +1,11 @@
 import express from 'express';
 let router = express.Router();
 const homeController = require('../controller/homeController');
+const authController = require('../controller/authController');
 
-router.get('/', homeController.index);
-router.get('/filter/rooms?', homeController.filterRooms);
-router.get('/rooms', homeController.rooms);
-router.get('/detail/:id', homeController.detailRooms);
+router.get('/', homeController.Home);
 
-router.get('/data', homeController.mdw, homeController.data);
+router.get('/data', authController.CheckLogin, homeController.data);
+router.post('/info', authController.GetInfoUser);
 
 module.exports = router;

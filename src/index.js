@@ -3,9 +3,12 @@ require('dotenv').config();
 import router from './routes';
 import configViewEngine from './configs/viewEngine';
 import connectDB from './configs/connectDB';
+
 const app = express();
 const port = process.env.PORT || 3000;
 
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 app.use(
   express.urlencoded({
     extended: true,

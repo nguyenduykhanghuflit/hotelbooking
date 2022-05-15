@@ -3,7 +3,8 @@ import { nanoid } from 'nanoid';
 const { Op } = require('sequelize');
 
 class CRUD {
-  getAllTestData() {
+  /**--------------------------TEST DATA ----------------------------*/
+  getAllTestData1() {
     return new Promise(async (resolve, reject) => {
       try {
         let data = await db.Test.findAll({
@@ -15,13 +16,36 @@ class CRUD {
       }
     });
   }
-
-  getRoomByID(roomID) {
+  getAllTestData() {
     return new Promise(async (resolve, reject) => {
       try {
-        let data = await db.Room.findAll({
-          raw: true,
-          where: { trangThai: 0, roomID },
+        let data = await db.User.findAll();
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  /**-------------------------------------------------------------*/
+
+  //lấy tất cả loại phòng
+  getAllRoomType() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Type.findAll({
+          attributes: { exclude: ['RoomRoomID'] },
+          // attributes: ['url'],
+          include: [
+            {
+              model: db.Image,
+              as: 'imgData',
+              attributes: ['url'],
+              plain: true,
+            },
+          ],
+
+          raw: false, //gộp lại k tách ra
+          nest: true,
         });
         resolve(data);
       } catch (error) {
@@ -30,58 +54,36 @@ class CRUD {
     });
   }
 
-  getAllRoom() {
+  //lấy 1 loại phòng theo typeID
+  getRoomTypeById(typeID) {
     return new Promise(async (resolve, reject) => {
       try {
-        let data = await db.Room.findAll({
-          raw: true,
-          where: { trangThai: 0 },
+        let data = await db.Type.findByPk(typeID, {
+          attributes: { exclude: ['RoomRoomID'] },
+
+          include: [
+            {
+              model: db.Room,
+              as: 'roomData',
+              attributes: ['roomID'],
+              where: { status: 'chưa đặt' },
+              plain: true,
+            },
+            {
+              model: db.Image,
+              as: 'imgData',
+              attributes: ['url'],
+              plain: true,
+            },
+          ],
+          raw: false, //gộp lại k tách ra
+          nest: true,
         });
         resolve(data);
       } catch (error) {
         reject(error);
       }
     });
-  }
-
-  getRoomByCapacity(soNguoiLon, soTreEm) {
-    if (soNguoiLon == 3) {
-      return new Promise(async (resolve, reject) => {
-        try {
-          let data = await db.Room.findAll({
-            raw: true,
-            where: { trangThai: 0, soNguoiLon: 3, soTreEm },
-          });
-          resolve(data);
-        } catch (error) {
-          reject(error);
-        }
-      });
-    } else if (soNguoiLon >= 5) {
-      return new Promise(async (resolve, reject) => {
-        try {
-          let data = await db.Room.findAll({
-            raw: true,
-            where: { trangThai: 0, soNguoiLon: { [Op.gte]: 5 }, soTreEm },
-          });
-          resolve(data);
-        } catch (error) {
-          reject(error);
-        }
-      });
-    } else {
-      return new Promise(async (resolve, reject) => {
-        try {
-          let data = await db.Room.findAll({
-            raw: true,
-            where: { trangThai: 0, soNguoiLon, soTreEm },
-          });
-          resolve(data);
-        } catch (error) {
-          reject(error);
-        }
-      });
-    }
   }
 }
 
