@@ -27,18 +27,26 @@ function close() {
 
 //modal
 var modal = document.getElementById('ModalBooking');
+var modalErr = document.getElementById('modalERR');
+var modalNone = document.querySelector('.modal');
 var btnClose = document.getElementById('btnClose');
 var btnClose2 = document.querySelector('.btn-close-change');
+var btnClose3 = document.getElementById('btnClose3');
 btnClose.onclick = function () {
-  modal.style.display = 'none';
+  modalNone.style.display = 'none';
 };
 btnClose2.onclick = function () {
+  modalNone.style.display = 'none';
+};
+btnClose3.onclick = function () {
+  modalErr.style.display = 'none';
+};
+
+window.onclick = function (event) {
   modal.style.display = 'none';
 };
 window.onclick = function (event) {
-  if (event.target == modal) {
-    modal.style.display = 'none';
-  }
+  modalErr.style.display = 'none';
 };
 
 //info & booking
@@ -138,11 +146,37 @@ $(function () {
   $('.btn-payment').click(() => {
     if (CheckDateValid()) {
       let data = { ...getDataBooking(), token };
-      // console.log(data);
+      console.log(data);
+      $('.loading').css('display', 'block');
       axios
         .post('/rooms/check-data-booking', { data })
-        .then((res) => console.log(res.data))
-        .catch((err) => console.log(err));
+        .then((res) => {
+          $('.loading').css('display', 'none');
+          let mess = res.data.message;
+          if (mess == 'Available') {
+            let dataVoucher = { discount: parseInt(res.data.voucher.discount) };
+            data.voucher = res.data.voucher.voucherName;
+            const totalMoney = showVoucherValid(dataVoucher);
+            $('.voucher_err').css('display', 'none');
+            data.totalMoney = totalMoney;
+            showModalBooking(data);
+            $('#bookroom').click((e) => {
+              axios
+                .post('/rooms/booking', { data })
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            });
+          } else if (mess == 'voucher invalid') {
+            showVoucherInvalid();
+          } else if (mess == 'Unavailable') {
+            $('#modalERR').css('display', 'block');
+          } else window.location.href = `/error/${mess}`;
+        })
+        .catch((err) => (window.location.href = `/error/Lỗi server`));
     }
   });
 

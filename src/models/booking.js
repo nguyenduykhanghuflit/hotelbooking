@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       status: DataTypes.STRING,
       checkin: DataTypes.DATE,
       checkout: DataTypes.DATE,
+      username: DataTypes.STRING,
     },
     {
       sequelize,

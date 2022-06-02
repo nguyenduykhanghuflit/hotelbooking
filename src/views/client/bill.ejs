@@ -46,7 +46,7 @@
         display: none;
       }
 
-      .modal {
+      .modal, #modalERR {
         display: none; 
         position: fixed; 
         z-index: 1; 
@@ -87,7 +87,7 @@
 }
 
 /* The Close Button */
-#btnClose {
+#btnClose,#btnClose3 {
   color: #333;
   font-size: 28px;
   font-weight: bold;
@@ -98,6 +98,12 @@
 
 #btnClose:hover,
 #btnClose:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+#btnClose3:hover,
+#btnClose3:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
@@ -310,9 +316,9 @@
               <div class=" mb-3 cus-w-400">
                 <p class="dis fw-bold mb-3">Số lượng phòng</p>
                 <select id="i-amonut-room" class="form-select" aria-label="Default select example">
-                  <option selected hidden>1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                  <option selected >1</option>
+                  <option >2</option>
+                  <option >3</option>
                  
                 </select>
             
@@ -400,7 +406,7 @@
           </ul>
           <div class="booking-action">
             <button type="button" class="btn btn-close-change btn-outline-secondary">Thay đổi</button>
-            <button type="button" class="btn btn-booking btn-primary">Đặt phòng</button>
+            <button type="button" id="bookroom" class="btn btn-booking btn-primary">Đặt phòng</button>
           </div>
          
         </div>
@@ -408,6 +414,24 @@
       </div>
     
     </div>
+
+
+    <div id="modalERR">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Hotel Huflit </h2>
+          <span id="btnClose3" >&times;</span>
+        </div>
+        <div class="modal-body">
+          <p class="modal-err" style="font-weight:600;">Thật đáng tiếc phòng cuối cùng vừa được đặt, hiện tại Hotel Huflit không còn đủ phòng cho quý khách. Hotel Huflit xin lỗi vì sự bất tiện này</p>
+        </div>
+        
+      </div>
+    
+    </div>
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

@@ -124,15 +124,6 @@ class CRUD {
     });
   }
 
-  // check phòng hợp lệ và có thể đặt:checkin, checkout, số lượng, typeID
-  // lấy ra list phòng theo typeID
-  //lặp ra cái list phòng này:vào bảng booking check[i]:nếu chưa có ai đặt thì đặt:set status=true xong break
-  //nếu có người đặt rồi:
-  //đc list checkin checkout
-  //check qua list này nếu đầu vào nằm trong giữa thì stt=false if stt=true =>book
-  // status:đã đặt
-  // nếu có rồi
-
   CheckVoucherValid(voucherName) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -145,6 +136,43 @@ class CRUD {
         else resolve({ message: 'voucher invalid' });
       } catch (error) {
         reject(error);
+      }
+    });
+  }
+
+  CreateBooking(roomID, status, checkin, checkout, username) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var id = nanoid(10);
+        await db.Booking.create({
+          bookingID: id,
+          roomID,
+          status,
+          checkin,
+          checkout,
+          username,
+        });
+        resolve('Success');
+      } catch (error) {
+        reject('Create Fail');
+      }
+    });
+  }
+
+  UpdateStatusRoomByID(roomID, status) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db.Room.update(
+          { status },
+          {
+            where: {
+              roomID,
+            },
+          }
+        );
+        resolve(true);
+      } catch (error) {
+        reject(false);
       }
     });
   }

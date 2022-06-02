@@ -73,6 +73,7 @@ class RoomController {
           req.body.data.message = 'User Invalid';
           next();
         }
+        req.body.data.username = username;
       }
     } catch (err) {
       req.body.data.message = 'Token Invalid';
@@ -80,30 +81,36 @@ class RoomController {
     }
 
     //check voucher
-    if (!dataBooking.voucher) dataBooking.voucher = { discount: 0 };
+    if (!dataBooking.voucher) req.body.data.voucher = { discount: 0 };
     else {
       let check = await CRUD.CheckVoucherValid(dataBooking.voucher);
       if (check.message == 'voucher invalid') {
         req.body.data.message = check.message;
+        req.body.data.voucher = false;
         next();
       } else {
-        req.body.data.message = check.message;
-        req.body.data.voucher = { ...check.data };
-        next();
+        let voucherName = dataBooking.voucher;
+        req.body.data.voucher = {
+          ...check.data,
+          voucherName,
+        };
       }
     }
 
+    //kiểm tra còn phòng hay không
     let listDataRoom = listRoom.roomData,
-      qty = dataBooking.amount,
+      qty = parseInt(dataBooking.amount),
       dem = 0,
       listRoomIDReady = [];
 
+    //đếm xem có bao nhiêu phòng còn trống
     listDataRoom.forEach((room) => {
       if (room.status == 'trống') {
         listRoomIDReady.push(room.roomID);
         dem++;
       }
     });
+
     if (dem >= parseInt(qty)) {
       req.body.data.message = 'Available';
       req.body.data.roomReady = listRoomIDReady;
@@ -118,16 +125,6 @@ class RoomController {
     bookedRoom.forEach((room) => {
       let listDateBooking = room.bookingData;
       for (let i = 0; i < listDateBooking.length; i++) {
-        // if (
-        //   dayStart > listDateBooking[i].checkout ||
-        //   (dayStart < listDateBooking[i].checkin &&
-        //     dayEnd < listDateBooking[i].checkin)
-        // ) {
-        //   flag = true;
-        // } else {
-        //   flag = false;
-        //   break;
-        // }
         if (
           dayStart == listDateBooking[i].checkin ||
           dayStart == listDateBooking[i].checkout ||
@@ -157,16 +154,36 @@ class RoomController {
 
   //api kiểm tra
   async CheckDataBooking(req, res) {
-    let mess = req.body.data.message;
-    let ret = req.body.data.roomReady;
     let data = req.body.data;
-    res.send({ mess, ret });
+    // console.log(data);
+    res.send(data);
   }
   //api đặt phòng
   async CreateBooking(req, res) {
-    let mess = req.body.data.message;
-    let ret = req.body.data.roomReady;
-    res.send(mess);
+    let data = req.body.data;
+    // console.log(data);
+
+    let mess = data.message;
+    if (mess != 'Available') return res.send('Lỗi');
+    else {
+      let roomReady = data.roomReady;
+      let amount = parseInt(data.amount);
+      // console.log(amount);
+      for (let i = 0; i < amount; i++) {
+        let booking = await CRUD.CreateBooking(
+          roomReady[i],
+          'đã đặt',
+          data.checkin,
+          data.checkout,
+          data.username
+        );
+
+        console.log('bk' + booking);
+        let udr = await CRUD.UpdateStatusRoomByID(roomReady[i], 'đã đặt');
+        console.log('ud' + udr);
+      }
+    }
+    return res.send('Success');
   }
 
   //lọc ra
