@@ -27,33 +27,36 @@ $(function () {
     <i class="bx bx-user"></i>Đăng nhập</a>
     <a class="btn-register btn-account" href="/login">Đăng ký </a>`;
   $('.loading').css('display', 'block');
-  $.ajax({
-    url: '/info',
-    method: 'POST',
-    data: token,
-  })
-    .then((data) => {
-      $('.loading').css('display', 'none');
-      let message = data.message;
-      if (message == 'logged') {
-        let logged = `
-        <div class="btn-account login-success">
-        <span class="username">Hello Khang</span>
-        <i class="bx bx-user-check"></i>
-        <div class="account-info hide-if">
-          <div class="arrow-up"></div>
-          <ul class="list-info">
-            <li><a href="/data">Thông tin của bạn</a></li>
-            <li><a href="/list-room">Phòng đã đặt</a></li>
-            <li><a href="/logout">Đăng xuất</a></li>
-          </ul>
-        </div>
-      </div>
-        `;
-        $('.header-account').html(logged);
-      } else $('.header-account').html(noLogged);
+
+  if (token) {
+    $.ajax({
+      url: '/info',
+      method: 'POST',
+      data: token,
     })
-    .catch((err) => {
-      console.log('Không gửi đc request');
-    });
+      .then((data) => {
+        $('.loading').css('display', 'none');
+        let message = data.message;
+        if (message == 'logged') {
+          let logged = `
+          <div class="btn-account login-success">
+          <span class="username">${data.info.fullName}</span>
+          <i class="bx bx-user-check"></i>
+          <div class="account-info hide-if">
+            <div class="arrow-up"></div>
+            <ul class="list-info">
+              <li><a href="/data">Thông tin của bạn</a></li>
+              <li><a href="/list-room">Phòng đã đặt</a></li>
+              <li><a href="/logout">Đăng xuất</a></li>
+            </ul>
+          </div>
+        </div>
+          `;
+          $('.header-account').html(logged);
+        } else $('.header-account').html(noLogged);
+      })
+      .catch((err) => {
+        console.log('Không gửi đc request');
+      });
+  } else $('.loading').css('display', 'none');
 });

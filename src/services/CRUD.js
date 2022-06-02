@@ -65,8 +65,12 @@ class CRUD {
             {
               model: db.Room,
               as: 'roomData',
-              attributes: ['roomID'],
-              where: { status: 'chưa đặt' },
+              where: {
+                status: {
+                  [Op.ne]: ['đang dọn'],
+                },
+              },
+              attributes: ['roomID', 'status'],
               plain: true,
             },
             {
@@ -80,6 +84,65 @@ class CRUD {
           nest: true,
         });
         resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  getBookedRoomFromBooking(typeID, dayStart) {
+    return new Promise(async (resolve, reject) => {
+      let d = new Date().setHours(0, 0, 0, 0);
+      try {
+        let data = await db.Room.findAll({
+          attributes: ['roomID'],
+          where: {
+            status: 'đã đặt',
+            typeID: typeID,
+          },
+          include: [
+            {
+              model: db.Booking,
+              as: 'bookingData',
+              where: {
+                [Op.or]: [
+                  { checkin: { [Op.gte]: d } },
+                  { checkout: { [Op.gte]: d } },
+                ],
+              },
+              attributes: ['checkin', 'checkout'],
+              plain: true,
+            },
+          ],
+          raw: false, //gộp lại k tách ra
+          nest: true,
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  // check phòng hợp lệ và có thể đặt:checkin, checkout, số lượng, typeID
+  // lấy ra list phòng theo typeID
+  //lặp ra cái list phòng này:vào bảng booking check[i]:nếu chưa có ai đặt thì đặt:set status=true xong break
+  //nếu có người đặt rồi:
+  //đc list checkin checkout
+  //check qua list này nếu đầu vào nằm trong giữa thì stt=false if stt=true =>book
+  // status:đã đặt
+  // nếu có rồi
+
+  CheckVoucherValid(voucherName) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Voucher.findOne({
+          attributes: ['discount', 'voucher_id'],
+          where: { name: voucherName, status: 'active' },
+          raw: true,
+        });
+        if (data) resolve({ message: 'voucher valid', data });
+        else resolve({ message: 'voucher invalid' });
       } catch (error) {
         reject(error);
       }

@@ -9,31 +9,41 @@ const publicKey = fs.readFileSync('./key/publickey.crt');
 
 class AuthenController {
   //[GET]: /login
-
   async Login(req, res) {
     let token = req.cookies.token;
-    try {
-      let deccoded = jwt.verify(token, publicKey, { algorithm: 'RS256' });
-      if (deccoded) {
-        // lấy url trước đó
+    //neu co token
+    if (token) {
+      try {
+        //neu co token thi verify no ra
+        let deccoded = jwt.verify(token, publicKey, { algorithm: 'RS256' });
+
+        //-----------get preUrl---------
         let preUrl = req.cookies.preUrl;
-        //nếu có sẽ chuyển hướng, không có sẽ về home
         if (preUrl) {
-          // giải mã nó ra
           try {
             let url = jwt.verify(preUrl, 'preUrl');
-            res.clearCookie('preUrl');
             res.redirect(url);
           } catch (error) {
-            res.send('url lỗi');
+            return res.send('URL Failed');
           }
-        }
-        //không có sẽ về
-        res.redirect('/');
+          return;
+        } else return res.redirect('/');
+        //-----------get preUrl---------
+      } catch {
+        //token da bi thay doi || het han
+        console.log('Token invalid');
+        res.clearCookie('preUrl');
+        res.clearCookie('token');
+        return res.redirect('/login');
       }
-    } catch (err) {
-      res.render('login.ejs', { layout: false });
-    }
+    } else return res.render('login.ejs', { layout: false });
+  }
+
+  //[GET]: /logout
+  async Logout(req, res) {
+    res.clearCookie('preUrl');
+    res.clearCookie('token');
+    res.redirect('/');
   }
 
   //[POST]: handle login request
@@ -49,7 +59,9 @@ class AuthenController {
       // generate token
       let token = jwt.sign(result, privateKey, { algorithm: 'RS256' });
       //lưu token vào cookie
-      res.cookie('token', token, { expires: new Date(Date.now() + 900000) });
+      res.cookie('token', token, {
+        expires: new Date(Date.now() + 900000),
+      });
       response = { message: 'success' };
     }
 
@@ -58,22 +70,32 @@ class AuthenController {
       result.message == 'wrong password'
     )
       response = result;
-    res.send(response);
+
+    return res.json(response);
   }
 
   // [POST]: check login
   async CheckLogin(req, res, next) {
     let token = req.cookies.token;
-    try {
-      let deccoded = jwt.verify(token, publicKey, { algorithm: 'RS256' });
-      if (deccoded) return next();
-    } catch (err) {
+    if (token) {
+      try {
+        let deccoded = jwt.verify(token, publicKey, { algorithm: 'RS256' });
+        return next();
+      } catch (err) {
+        console.log('token da bi thay doi');
+        return res.redirect('/login');
+      }
+    } else {
       let preUrl = jwt.sign(req.originalUrl, 'preUrl');
-      res.cookie('preUrl', preUrl, { expires: new Date(Date.now() + 900000) });
-      res.redirect('/login');
+      res.cookie('preUrl', preUrl, {
+        expires: new Date(Date.now() + 90000000000),
+      });
+
+      return res.redirect('/login');
     }
   }
 
+  // [POST] chắc chắn có token neu token thay doi se bi login lai
   async GetInfoUser(req, res) {
     let token = req.cookies.token;
     try {
@@ -84,10 +106,11 @@ class AuthenController {
         let info;
         if (role == 'admin') info = await USER.getInfoAdmin(username);
         else info = await USER.getInfoUser(username);
-        res.send({ message: 'logged', info });
+        return res.send({ message: 'logged', info });
       }
     } catch (err) {
-      res.send(console.error(err));
+      console.log('token da bi thay doi');
+      return res.redirect('/login');
     }
   }
 }

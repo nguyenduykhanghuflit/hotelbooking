@@ -84,7 +84,7 @@ header p {
   background: #fff;
   color: #333;
 
-  margin: 5.9px 0 0 0;
+  margin: 0 0 0 0;
   margin-left: -20px;
   padding: 15px 9px 19px 0px;
   border-radius: 0px 5px 5px 0px;
@@ -92,17 +92,17 @@ header p {
   float: right;
   position: relative;
   right: 1%;
-  top: -0.2%;
+  top: 10px;
   z-index: 5;
 
   cursor: pointer;
 }
+
 /* inputs form  */
 .form-input {
   width: 240px;
   height: 50px;
 
-  margin-top: 2%;
   padding: 15px;
 
   font-size: 16px;
@@ -117,6 +117,9 @@ header p {
 }
 input[id='txt-input'] {
   width: 250px;
+}
+.form-input.f-password {
+  margin-top: 10px;
 }
 /* focus  */
 input:focus {
@@ -147,7 +150,7 @@ button {
   text-align: center;
   transition: all 0.2s linear;
 
-  margin: 7% auto;
+  margin: 10px auto;
   letter-spacing: 0.05em;
 }
 /* Submits */
@@ -156,6 +159,15 @@ button {
   display: block;
   float: left;
   margin-left: 2%;
+}
+.err-login {
+  color: rgb(229, 45, 45);
+  padding-left: 7px;
+  padding-top: 5px;
+  font-size: 13px;
+  font-weight: normal;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: none;
 }
 
 /*       Forgot Password button FAF3DD  */

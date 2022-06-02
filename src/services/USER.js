@@ -1,7 +1,10 @@
 const db = require('../models/index');
 import { nanoid } from 'nanoid';
 const { Op } = require('sequelize');
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const privateKey = fs.readFileSync('./key/pkcs8.key');
+const publicKey = fs.readFileSync('./key/publickey.crt');
 class Login {
   checkValidUser(username, password) {
     return new Promise(async (resolve, reject) => {
@@ -33,7 +36,7 @@ class Login {
         });
         resolve(data);
       } catch (error) {
-        reject(error);
+        reject({ message: 'server error info admin' });
       }
     });
   }
@@ -49,7 +52,7 @@ class Login {
         });
         resolve(data);
       } catch (error) {
-        reject(error);
+        reject({ message: 'server error info user' });
       }
     });
   }

@@ -10,10 +10,7 @@
     <title>HotelBooking</title>
 
     <!-- icon web -->
-    <link
-      rel="icon"
-      href="https://www.pinpng.com/pngs/m/144-1449172_hotel-png-icon-hotel-vector-icon-png-transparent.png"
-    />
+    <link rel="icon" href="/client/img/iconlogo.png" />
 
     <!--boxi icon -->
     <link
@@ -232,8 +229,8 @@
                 <li><span>View:</span><%= item.view%></li>
               </ul>
               <h2><sup>$</sup><%= item.price%>,000đ<span>/day</span></h2>
-              <a class="btn-view-detail" href="/rooms/detail/<%=item.typeID%>"
-                >Xem chi tiết</a
+              <a class="btn-view-detail" href="/rooms/booking/<%=item.typeID%>"
+                >Đặt ngay</a
               >
             </div>
           </div>
@@ -293,7 +290,7 @@
                 <li><span>View:</span><%= item.view%></li>
               </ul>
               <h2><sup>$</sup><%= item.price%>,000đ<span>/day</span></h2>
-              <a href="/rooms/detail/<%=item.typeID%>">Xem chi tiết</a>
+              <a href="/rooms/booking/<%=item.typeID%>">Đặt ngay</a>
             </div>
           </div>
 

@@ -242,12 +242,12 @@ p {
 }
 .box-2 {
   transform: translateY(-500px);
-  animation: img-top 2.5s;
+  animation: img-top 2s;
   animation-fill-mode: forwards;
 }
 .user {
   transform: translateY(-500px);
-  animation: img-top 2.5s;
+  animation: img-top 2s;
   animation-fill-mode: forwards;
 }
 .userdetails {
@@ -257,7 +257,7 @@ p {
 }
 .imgdetails {
   transform: translateY(-500px);
-  animation: img-top 1.5s;
+  animation: img-top 2s;
   animation-fill-mode: forwards;
 }
 @keyframes img-top {
@@ -283,7 +283,7 @@ p {
   }
   .box-2 {
     transform: translateX(-500px);
-    animation: box-side 2.6s;
+    animation: box-side 0.5s;
     animation-fill-mode: forwards;
   }
   @keyframes box-side {
@@ -376,4 +376,11 @@ p {
 .card-timeline {
   background-color: #fff;
   z-index: 0;
+}
+.fw-bold span {
+  color: rgb(239, 61, 58);
+  font-size: 14px;
+}
+body .cus-w-400 {
+  width: 300px;
 }

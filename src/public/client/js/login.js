@@ -47,32 +47,53 @@ $(function () {
     return '';
   }
 
+  function ShowErrUsername(message) {
+    $('.err-password').css('display', 'none');
+    $('.err-username').css('display', 'block');
+    $('.err-username').html(message);
+  }
+  function ShowErrPassword(message) {
+    $('.err-username').css('display', 'none');
+    $('.err-password').css('display', 'block');
+    $('.err-password').html(message);
+  }
   $('.btnLogin').click(function () {
-    let username = $('.f-username').val();
-    let password = $('.f-password').val();
+    let username = $('.f-username').val().trim();
+    let password = $('.f-password').val().trim();
 
-    //  thiếu validate
-
-    $('#dots1').css('display', 'block');
-    $.ajax({
-      url: '/login',
-      method: 'POST',
-      data: {
-        username,
-        password,
-      },
-    })
-      .then((data) => {
-        $('#dots1').css('display', 'none');
-        if (data.message == 'success') {
-          window.location.href = '/login';
-        } else {
-          console.log(data);
-        }
+    if (username.length == 0) {
+      ShowErrUsername('Bạn chưa nhập tên đăng nhập');
+    } else if (password.length == 0) {
+      ShowErrPassword('Bạn chưa nhập mật khẩu');
+    } else {
+      $('#dots1').css('display', 'block');
+      $.ajax({
+        url: '/login',
+        method: 'POST',
+        data: {
+          username,
+          password,
+        },
       })
-      .catch((err) => {
-        console.log('Không gửi đc request');
-      });
+        .then((data) => {
+          $('#dots1').css('display', 'none');
+
+          if (data.message == 'success') {
+            window.location.href = '/login';
+          } else if (data.message == 'wrong username')
+            ShowErrUsername('Sai tên đăng nhập');
+          else ShowErrPassword('Sai mật khẩu');
+
+          if (data.message == 'success') {
+            window.location.href = '/login';
+          } else {
+            console.log(data);
+          }
+        })
+        .catch((err) => {
+          console.log('Không gửi đc request');
+        });
+    }
   });
 
   $(document).keypress(function (event) {

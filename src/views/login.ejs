@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Đăng nhập</title>
+    <!-- icon web -->
+    <link
+      rel="icon"
+      href="https://www.pinpng.com/pngs/m/144-1449172_hotel-png-icon-hotel-vector-icon-png-transparent.png"
+    />
     <link rel="stylesheet" href="/client/css/login.css" type="text/css" />
     <link rel="stylesheet" href="/client/css/loading.css" type="text/css" />
     <link
@@ -12,6 +17,7 @@
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       type="text/css"
     />
+    <style></style>
   </head>
   <body>
     <div class="load-animation">
@@ -31,10 +37,8 @@
             <p>Bạn cần đăng nhập để tiếp tục</p>
           </header>
 
-          <br />
           <div class="field-set">
             <!--   user name -->
-
             <span class="input-item">
               <i class="fa fa-user-circle"></i>
             </span>
@@ -47,9 +51,8 @@
               name="username"
               required
             />
-
-            <br />
-
+            <h5 class="err-login err-username">lỗi us</h5>
+            <p></p>
             <!--   Password -->
 
             <span class="input-item">
@@ -74,8 +77,8 @@
                 id="eye"
               ></i>
             </span>
-
-            <br />
+            <p></p>
+            <h5 class="err-login err-password">lỗi pass</h5>
 
             <button type="button" class="log-in btnLogin">Đăng nhập</button>
           </div>

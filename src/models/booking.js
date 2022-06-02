@@ -2,36 +2,36 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Room extends Model {
+  class Booking extends Model {
     static associate(models) {
-      Room.belongsTo(models.Type, { foreignKey: 'typeID', as: 'roomData' });
-      Room.hasMany(models.Booking, {
+      Booking.belongsTo(models.Room, {
         foreignKey: 'roomID',
         as: 'bookingData',
       });
     }
   }
-  Room.init(
+  Booking.init(
     {
-      roomID: {
+      bookingID: {
         allowNull: false,
         primaryKey: true,
         type: DataTypes.STRING, //này nè DataTypes nhaaa
       },
-      typeID: {
+      roomID: {
         allowNull: false,
         foreignKey: true,
         type: DataTypes.STRING,
       },
-      floor: DataTypes.INTEGER,
       status: DataTypes.STRING,
+      checkin: DataTypes.DATE,
+      checkout: DataTypes.DATE,
     },
     {
       sequelize,
-      modelName: 'Room', //chú ý
+      modelName: 'Booking', //chú ý
       timestamps: false,
     }
   );
 
-  return Room;
+  return Booking;
 };
