@@ -90,6 +90,36 @@ class CRUD {
     });
   }
 
+  FindRoom(adult, children) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Type.findAll({
+          attributes: { exclude: ['RoomRoomID'] },
+          where: { adult: adult, children: children },
+          include: [
+            {
+              model: db.Room,
+              as: 'roomData',
+              attributes: ['roomID', 'status'],
+              plain: true,
+            },
+            {
+              model: db.Image,
+              as: 'imgData',
+              attributes: ['url'],
+              plain: true,
+            },
+          ],
+          raw: false, //gộp lại k tách ra
+          nest: true,
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   getBookedRoomFromBooking(typeID, dayStart) {
     return new Promise(async (resolve, reject) => {
       let d = new Date().setHours(0, 0, 0, 0);
@@ -140,7 +170,7 @@ class CRUD {
     });
   }
 
-  CreateBooking(roomID, status, checkin, checkout, username) {
+  CreateBooking(roomID, status, checkin, checkout, username, total) {
     return new Promise(async (resolve, reject) => {
       try {
         var id = nanoid(10);
@@ -151,6 +181,7 @@ class CRUD {
           checkin,
           checkout,
           username,
+          total,
         });
         resolve('Success');
       } catch (error) {

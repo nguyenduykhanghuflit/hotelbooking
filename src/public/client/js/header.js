@@ -64,11 +64,27 @@ $(document).ready(function () {
   };
 
   $('#btnSearch').click(function () {
-    if (CheckDateInvalid() && CheckRoomInvalid()) alert('oke');
+    if (CheckDateInvalid() && CheckRoomInvalid()) {
+      let checkin = new Date($('#date-checkin').val()),
+        checkout = new Date($('#date-checkout').val()),
+        room = $('#number-room').val(),
+        adult = $('#number-adult').val();
+      children = $('#number-children').val();
+      let data = { checkin, checkout, room, adult, children };
+      axios
+        .post('/rooms/filter', { data: data })
+        .then(function (response) {
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error.message);
+        });
+    }
   });
 
   function CheckDateInvalid() {
     let d = new Date();
+    d.setHours(0, 0, 0, 0);
     let checkin = new Date($('#date-checkin').val());
     let checkout = new Date($('#date-checkout').val());
     if (checkin < d || checkin == 'Invalid Date')

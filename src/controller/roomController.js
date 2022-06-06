@@ -38,9 +38,9 @@ class RoomController {
     let typeID = req.params.typeID;
     let data = await CRUD.getRoomTypeById(typeID);
     if (!data) {
-      res.json({ message: 'Phòng không hợp lệ' });
+      return res.json({ message: 'Phòng không hợp lệ' });
     } else {
-      res.render('client/bill.ejs', { data, layout: false });
+      return res.render('client/bill.ejs', { data, layout: false });
     }
   }
 
@@ -52,10 +52,11 @@ class RoomController {
       listRoom = await CRUD.getRoomTypeById(typeID);
 
     //kiểm tra đầu vào
-    if (!listRoom || !typeID || !token) {
+    if (!listRoom || !typeID || !token || !dataBooking) {
       req.body.data.message = 'Data Invalid';
-      next();
+      return next();
     }
+
     //Kiểm tra thông tin người dùng có đúng hay không
     try {
       let deccoded = jwt.verify(token, publicKey, { algorithm: 'RS256' });
@@ -71,23 +72,23 @@ class RoomController {
           info.email != dataBooking.email
         ) {
           req.body.data.message = 'User Invalid';
-          next();
+          return next();
         }
         req.body.data.username = username;
       }
     } catch (err) {
       req.body.data.message = 'Token Invalid';
-      next();
+      return next();
     }
 
-    //check voucher
+    // check voucher
     if (!dataBooking.voucher) req.body.data.voucher = { discount: 0 };
     else {
       let check = await CRUD.CheckVoucherValid(dataBooking.voucher);
       if (check.message == 'voucher invalid') {
         req.body.data.message = check.message;
         req.body.data.voucher = false;
-        next();
+        // return next();
       } else {
         let voucherName = dataBooking.voucher;
         req.body.data.voucher = {
@@ -114,7 +115,7 @@ class RoomController {
     if (dem >= parseInt(qty)) {
       req.body.data.message = 'Available';
       req.body.data.roomReady = listRoomIDReady;
-      next();
+      return next();
     }
 
     let dayStart = dataBooking.checkin,
@@ -144,27 +145,25 @@ class RoomController {
     if (dem >= parseInt(qty)) {
       req.body.data.message = 'Available';
       req.body.data.roomReady = listRoomIDReady;
-      next();
+      return next();
     } else {
       req.body.data.message = 'Unavailable';
       req.body.data.roomReady = null;
-      next();
+      return next();
     }
   }
 
   //api kiểm tra
   async CheckDataBooking(req, res) {
     let data = req.body.data;
-    // console.log(data);
-    res.send(data);
+
+    return res.send(data);
   }
   //api đặt phòng
   async CreateBooking(req, res) {
     let data = req.body.data;
-    // console.log(data);
-
     let mess = data.message;
-    if (mess != 'Available') return res.send('Lỗi');
+    if (mess != 'Available') return res.send('server error');
     else {
       let roomReady = data.roomReady;
       let amount = parseInt(data.amount);
@@ -175,12 +174,11 @@ class RoomController {
           'đã đặt',
           data.checkin,
           data.checkout,
-          data.username
+          data.username,
+          data.totalMoney
         );
 
-        console.log('bk' + booking);
         let udr = await CRUD.UpdateStatusRoomByID(roomReady[i], 'đã đặt');
-        console.log('ud' + udr);
       }
     }
     return res.send('Success');
@@ -188,9 +186,13 @@ class RoomController {
 
   //lọc ra
   async FilterRooms(req, res) {
-    let adult = req.body.data.adult;
-    let children = req.body.data.adult;
-    res.send('aaaa');
+    let adult = req.body.data.adult,
+      children = req.body.data.children,
+      checkin = req.body.checkin,
+      checkout = req.body.checkout,
+      room = req.body.room;
+    let response = await CRUD.FindRoom(adult, children);
+    res.send(response);
   }
 }
 

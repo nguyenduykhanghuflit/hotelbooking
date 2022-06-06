@@ -143,10 +143,10 @@ $(function () {
     };
   };
 
+  let dataSubmit = {};
   $('.btn-payment').click(() => {
     if (CheckDateValid()) {
       let data = { ...getDataBooking(), token };
-      console.log(data);
       $('.loading').css('display', 'block');
       axios
         .post('/rooms/check-data-booking', { data })
@@ -160,16 +160,7 @@ $(function () {
             $('.voucher_err').css('display', 'none');
             data.totalMoney = totalMoney;
             showModalBooking(data);
-            $('#bookroom').click((e) => {
-              axios
-                .post('/rooms/booking', { data })
-                .then((res) => {
-                  console.log(res);
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            });
+            dataSubmit = { ...data };
           } else if (mess == 'voucher invalid') {
             showVoucherInvalid();
           } else if (mess == 'Unavailable') {
@@ -180,6 +171,26 @@ $(function () {
     }
   });
 
+  $('#bookroom').click((e) => {
+    modal.style.display = 'none';
+    if (!dataSubmit) window.location.href = `/error/Hành động không hợp lệ`;
+    else {
+      $('.loading').css('display', 'block');
+      let data = { ...dataSubmit };
+      axios
+        .post('/rooms/booking', { data })
+        .then((res) => {
+          if (res.data == 'Success') {
+            $('.loading').css('display', 'none');
+            alert('Booking Success');
+            window.location.href = `/rooms`;
+          } else window.location.href = `/error/Lỗi server`;
+        })
+        .catch((err) => {
+          window.location.href = `/error/Lỗi server`;
+        });
+    }
+  });
   toastr.options = {
     closeButton: false,
     debug: true,
@@ -212,6 +223,9 @@ $(function () {
     }
     return res.join('') + ' VND';
   };
+
+  $('#money').html(commaSeparator($('#money').html()));
+  $('#price-room span').html(commaSeparator($('#price-room span').html()));
 
   function CheckDateValid() {
     let d = new Date();
