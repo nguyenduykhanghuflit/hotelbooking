@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>hóa đơn nè</h1>
-  </body>
-</html>
+<h1>hóa đơn nè</h1>
+<script>
+  let listText = document.querySelectorAll(
+    '.navbar-vertical .navbar-nav>.nav-item .nav-link'
+  );
+  listText.forEach((item) => {
+    if (
+      item.classList.contains('active') &&
+      item.classList.contains('bg-gradient-primary')
+    )
+      item.classList.remove('active');
+    item.classList.remove('bg-gradient-primary');
+  });
+  document.querySelector('.nav-bill').classList.add('active');
+  document.querySelector('.nav-bill').classList.add('bg-gradient-primary');
+</script>

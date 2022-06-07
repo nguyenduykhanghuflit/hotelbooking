@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'roomID',
         as: 'bookingData',
       });
+      Booking.belongsTo(models.User, {
+        foreignKey: 'username',
+        as: 'userData',
+      });
     }
   }
   Booking.init(
