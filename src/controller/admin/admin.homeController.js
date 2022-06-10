@@ -7,7 +7,11 @@ const jwt = require('jsonwebtoken');
 class AdminHomeController {
   // trang chủ
   async Home(req, res) {
+    let data = await ADMIN.AutoCancelBooking();
+
+    if (data) console.log('Vừa update lại data');
     res.render('admin/home.ejs');
+
     // res.render('admin/home.ejs', { data: data, layout: false });
   }
 }

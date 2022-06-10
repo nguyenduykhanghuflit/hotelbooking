@@ -7,6 +7,13 @@ router.get('/', AdminHomeController.Home);
 
 //quản lý phòng
 router.get('/booking-list', AdminBookingController.BookingList);
+router.post('/booking-list', AdminBookingController.FindBookingList);
+router.post(
+  '/booking-list/update-status',
+  AdminBookingController.UpdateStatusBooking
+);
+router.get('/booking-list/payment/:bookingID', AdminBookingController.Payment);
+router.post('/booking-list/payment', AdminBookingController.HandlePayment);
 router.get('/booking', AdminBookingController.Booking);
 router.get('/room-list', AdminBookingController.RoomList);
 

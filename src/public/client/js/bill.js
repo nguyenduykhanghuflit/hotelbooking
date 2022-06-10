@@ -184,7 +184,9 @@ $(function () {
             $('.loading').css('display', 'none');
             alert('Booking Success');
             window.location.href = `/rooms`;
-          } else window.location.href = `/error/Lỗi server`;
+          } else {
+            window.location.href = `/error/Lỗi không thành công`;
+          }
         })
         .catch((err) => {
           window.location.href = `/error/Lỗi server`;

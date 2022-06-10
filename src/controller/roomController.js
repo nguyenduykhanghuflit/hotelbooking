@@ -82,13 +82,18 @@ class RoomController {
     }
 
     // check voucher
-    if (!dataBooking.voucher) req.body.data.voucher = { discount: 0 };
+    if (!dataBooking.voucher)
+      req.body.data.voucher = {
+        voucher_id: 'Không có',
+        voucherName: 'Không có',
+        discount: 0,
+      };
     else {
       let check = await CRUD.CheckVoucherValid(dataBooking.voucher);
       if (check.message == 'voucher invalid') {
         req.body.data.message = check.message;
         req.body.data.voucher = false;
-        // return next();
+        return next();
       } else {
         let voucherName = dataBooking.voucher;
         req.body.data.voucher = {
@@ -162,6 +167,7 @@ class RoomController {
   //api đặt phòng
   async CreateBooking(req, res) {
     let data = req.body.data;
+    // res.send(data);
     let mess = data.message;
     if (mess != 'Available') return res.send('server error');
     else {
@@ -175,6 +181,8 @@ class RoomController {
           data.checkin,
           data.checkout,
           data.username,
+          data.voucher.voucher_id,
+          data.voucher.discount,
           data.totalMoney
         );
 

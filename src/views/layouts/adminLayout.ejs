@@ -36,12 +36,14 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons+Round"
       rel="stylesheet"
     />
+   
     <!-- CSS Files -->
     <link
       id="pagestyle"
       href="/admin/assets/css/material-dashboard.css?v=3.0.2"
       rel="stylesheet"
     />
+    
     <style>
       .navbar-cus {
         background-color: wheat;
@@ -226,7 +228,7 @@
       
       </div>
     </aside>
-    <main
+    <main 
       class="main-content position-relative max-height-vh-100 h-100 border-radius-lg"
     >
       <!-- Navbar -->
@@ -421,7 +423,7 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="container-fluid py-4">
+      <div class="container-fluid">
         <!-- nội dung trong này nè -->
         <%- body %>
         <!-- <div class="row">
@@ -1277,19 +1279,18 @@
         </div> -->
 
         <!-- footer -->
-        <footer class="footer py-4">
-          <div class="container-fluid">
-            <div class="row align-items-center justify-content-lg-between">
+        <footer  class="footer  py-4">
+          <div  class="container-fluid">
+            <div  class="row align-items-center justify-content-lg-between">
               <div class="col-lg-12 mb-lg-0 mb-12 text-center">
                 <div
-                
-                  class="copyright text-center text-sm text-muted text-lg-start"
+                  class=""
                 >
                   ©
                   <script>
                     document.write(new Date().getFullYear());
                   </script>
-                  , được tạo <i class="fa fa-heart"></i> bởi
+                  , được tạo bởi
                   <a
                     href="https://www.creative-tim.com"
                     class="font-weight-bold"
@@ -1454,12 +1455,13 @@
       </div>
     </div>
     <!--   Core JS Files   -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/admin/assets/js/core/popper.min.js"></script>
     <script src="/admin/assets/js/core/bootstrap.min.js"></script>
     <script src="/admin/assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="/admin/assets/js/plugins/smooth-scrollbar.min.js"></script>
     <script src="/admin/assets/js/plugins/chartjs.min.js"></script>
-    <script>
+    <!-- <script>
       var ctx = document.getElementById('chart-bars').getContext('2d');
 
       new Chart(ctx, {
@@ -1728,7 +1730,7 @@
           },
         },
       });
-    </script>
+    </script> -->
     <script>
       var win = navigator.platform.indexOf('Win') > -1;
       if (win && document.querySelector('#sidenav-scrollbar')) {

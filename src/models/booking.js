@@ -30,6 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       checkin: DataTypes.DATE,
       checkout: DataTypes.DATE,
       username: DataTypes.STRING,
+      voucher_id: DataTypes.STRING,
+      discount: DataTypes.STRING,
       total: DataTypes.STRING,
     },
     {

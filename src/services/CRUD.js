@@ -133,6 +133,11 @@ class CRUD {
           include: [
             {
               model: db.Booking,
+              where: {
+                status: {
+                  [Op.ne]: ['đang dọn'],
+                },
+              },
               as: 'bookingData',
               where: {
                 [Op.or]: [
@@ -170,7 +175,16 @@ class CRUD {
     });
   }
 
-  CreateBooking(roomID, status, checkin, checkout, username, total) {
+  CreateBooking(
+    roomID,
+    status,
+    checkin,
+    checkout,
+    username,
+    voucher_id,
+    discount,
+    total
+  ) {
     return new Promise(async (resolve, reject) => {
       try {
         var id = nanoid(10);
@@ -181,6 +195,8 @@ class CRUD {
           checkin,
           checkout,
           username,
+          voucher_id,
+          discount,
           total,
         });
         resolve('Success');
