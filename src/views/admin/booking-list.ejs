@@ -5,6 +5,7 @@
   integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
   crossorigin="anonymous"
 />
+<script src="https://kit.fontawesome.com/1ca5983c13.js" crossorigin="anonymous"></script>
 <!-- jquery database -->
 <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <style>
@@ -51,16 +52,20 @@
 
 .dd-button {
   display: inline-block;
-  border: 1px solid gray;
   border-radius: 4px;
-  padding: 10px 30px 10px 20px;
-  background-color: #ffffff;
+  width:80px;
+  text-align: center;
+  height: 30px;
+  padding: 0 20px;
+  line-height: 30px;
   cursor: pointer;
   white-space: nowrap;
-  color: #212529;
+}
+.dd-button i{
+  color: #6b6e72;
 }
 
-.dd-button:after {
+/* .dd-button:after {
   content: '';
   position: absolute;
   top: 50%;
@@ -71,11 +76,11 @@
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid black;
-}
+} */
 
-.dd-button:hover {
+/* .dd-button:hover {
   background-color: #ebdddd;
-}
+} */
 
 
 .dd-input {
@@ -83,17 +88,19 @@
 }
 
 .dd-menu {
-  width:100%;
+  width:110px;
   position: absolute;
   z-index: 2222222;
-  top: 100%;
+  top: calc(100% + 5px);
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 0;
-  margin: 2px 0 0 0;
+  left: 50%;
+  transform: translateX(-50%);
   box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
   background-color: #ffffff;
   list-style-type: none;
+  text-align: center;
 }
 
 .dd-input + .dd-menu {
@@ -105,7 +112,7 @@
 } 
 
 .dd-menu li {
-  padding: 10px 20px;
+ 
   cursor: pointer;
   white-space: nowrap;
 }
@@ -116,8 +123,7 @@
 
 .dd-menu li a {
   display: block;
-  margin: -10px -20px;
-  padding: 10px 20px;
+padding: 10px 0;
 }
 
 .dd-menu li.divider{
@@ -125,7 +131,7 @@
   border-bottom: 1px solid #cccccc;
 }
 </style>
-<h4>Danh sách đặt phòng</h4>
+<h4>Danh sách đặt phòng </h4>
 <div class="row mt-3">
   <div class="col-md-4 col-sm-4">
     <div class="input-group input-group-outline mb-3 focused is-focused">
@@ -176,16 +182,17 @@
            
             <td style="text-align:center;"><%= data[i].status %></td>
             <td>
+              
               <label class="dropdown-cus">
 
                 <div class="dd-button">
-                 Thực hiện
+                  <i class="material-icons opacity-10">border_color</i>
                 </div>
               
                 <input type="checkbox" class="dd-input" id="test">
               
                 <ul class="dd-menu">
-                  
+                  <li><a  href="detail/<%= data[i].bookingID %>">Chi tiết</a></li>
                   <%if (data[i].status =='đã nhận phòng') {%>  
                      <li>
                        <a href="booking-list/payment/<%= data[i].bookingID %>">Thanh toán</a>
@@ -193,7 +200,7 @@
                     
                     <%}%>
                  
-                  <li><a  href="detail/<%= data[i].bookingID %>">Chi tiết</a></li>
+                 
                    <%if (data[i].status =='đã đặt') {%>  
                     <li><a  href="checkout/<%= data[i].bookingID %>">Nhận phòng</a></li>
                     <li><a  href="cancel/<%= data[i].bookingID %>">Hủy</a></li>    
