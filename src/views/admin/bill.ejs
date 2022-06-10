@@ -1,16 +1,268 @@
-<h1>hóa đơn nè</h1>
-<script>
-  let listText = document.querySelectorAll(
-    '.navbar-vertical .navbar-nav>.nav-item .nav-link'
-  );
-  listText.forEach((item) => {
-    if (
-      item.classList.contains('active') &&
-      item.classList.contains('bg-gradient-primary')
-    )
-      item.classList.remove('active');
-    item.classList.remove('bg-gradient-primary');
-  });
-  document.querySelector('.nav-bill').classList.add('active');
-  document.querySelector('.nav-bill').classList.add('bg-gradient-primary');
-</script>
+<!-- boostrap 5 -->
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+  crossorigin="anonymous"
+/>
+<!-- jquery database -->
+<link
+  rel="stylesheet"
+  href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"
+/>
+<style>
+  a {
+    text-decoration: none;
+  }
+  .btn {
+    padding: 0.625rem 1.5rem;
+    background-color: #e91e63;
+  }
+  .btn:hover,
+  .btn:focus,
+  .btn:active {
+    background-color: #ec437c;
+  }
+  .befn::before {
+    display: none !important;
+  }
+  .befn::after {
+    display: none !important;
+  }
+
+  .form-label {
+    font-weight: bold;
+  }
+  .ip-check {
+    display: '';
+  }
+  .none-ele {
+    display: none;
+  }
+
+  /* Dropdown */
+
+  .dropdown-cus {
+    display: inline-block;
+    position: relative;
+  }
+
+  .dd-button {
+    display: inline-block;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 10px 30px 10px 20px;
+    background-color: #ffffff;
+    cursor: pointer;
+    white-space: nowrap;
+    color: #212529;
+  }
+
+  .dd-button:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid black;
+  }
+
+  .dd-button:hover {
+    background-color: #ebdddd;
+  }
+
+  .dd-input {
+    display: none;
+  }
+
+  .dd-menu {
+    width: 100%;
+    position: absolute;
+    z-index: 2222222;
+    top: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0;
+    margin: 2px 0 0 0;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    list-style-type: none;
+  }
+
+  .dd-input + .dd-menu {
+    display: none;
+  }
+
+  .dd-input:checked + .dd-menu {
+    display: block;
+  }
+
+  .dd-menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .dd-menu li:hover {
+    background-color: #f6f6f6;
+  }
+
+  .dd-menu li a {
+    display: block;
+    margin: -10px -20px;
+    padding: 10px 20px;
+  }
+
+  .dd-menu li.divider {
+    padding: 0;
+    border-bottom: 1px solid #cccccc;
+  }
+  .btn-detail{
+    background-color: rgb(89, 78, 101); 
+    color: white;
+    text-transform: none;
+    font-size: 14px;
+  }
+  .btn-detail:hover{
+    background-color: rgb(85, 70, 101); 
+    color: white;
+  }
+</style>
+<h4>Danh sách hóa đơn</h4>
+<div class="row mt-3">
+  <div class="col-md-4 col-sm-4">
+    <div class="input-group input-group-outline mb-3 focused is-focused">
+      <label class="form-label">Từ ngày</label>
+      <input id="since" type="date" class="form-control" />
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-4">
+    <div class="input-group input-group-outline mb-3 focused is-focused">
+      <label class="form-label">Đến ngày</label>
+      <input id="arrive" type="date" class="form-control" />
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-3">
+    <button class="btn btn-getListBooking btn-primary">Lọc</button>
+  </div>
+</div>
+<div class="container">
+  <div class="row mt-3">
+    <!-- <a href="javascript:window.print()">print this page</a> -->
+    <table id="table_id" class="display" class="table table-sm">
+      <thead>
+        <tr>
+          <!-- <th scope="col">Mã phòng</th> -->
+
+          <th class="none-ele">Mã hóa đơn</th>
+          <th scope="col">ID</th>
+          <th scope="col">Khách hàng</th>
+          <th style="width: 100px" scope="col">Loại phòng</th>
+          <th scope="col">Ngày nhận phòng</th>
+          <th scope="col">Ngày trả phòng</th>
+          <th scope="col">Số tiền</th>
+          <th class="befn aftn"></th>
+        </tr>
+      </thead>
+      <tbody id="renderData">
+        <% for(var i=0; i<data.length; i++) {%>
+          <tr style="font-size: 14px">
+            <td class="none-ele"><%= data[i].billID %></td>
+            <td><%= data[i].bookingID %></td>
+            <td><%= data[i].customerData.fullName %></td>
+            <td><%= data[i].billData.roomData.nameType %></td>
+            <td><%= data[i].checkin %></td>
+            <td><%= data[i].checkout %></td>
+            <td><%= data[i].totalMoney %></td>
+            <td>
+              <a href="detail/<%= data[i].billID %>">Chi tiết</a>
+            </td>
+           </tr>
+       <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- nhúng jquery và dataTables -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+            <!-- <script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"
+></script> -->
+
+            <!-- thiết lập ngày tháng và lọc data -->
+            <script>
+              $(document).ready(() => {
+                $('#table_id').DataTable({});
+
+                $('.btn-getListBooking').click(() => {
+                  let checkin = $('#since').val(),
+                    checkout = $('#arrive').val();
+                    window.location.href=`/admin/bill/?dayStart=${checkin}&dayEnd=${checkout}`
+                });
+
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop) => searchParams.get(prop),
+});
+          let dayStart = params.dayStart; 
+          let dayEnd = params.dayEnd; 
+          let today;
+          let tomorrow;
+
+          if(dayStart&&dayEnd){
+            today=new Date(dayStart);
+            tomorrow=new Date(dayEnd);;
+          }
+          else{
+            today = new Date();
+            tomorrow  = new Date()
+            tomorrow.setDate(tomorrow.getDate() + 1)
+          }
+              today=today.toISOString().split('T')[0]
+              tomorrow=tomorrow.toISOString().split('T')[0]
+            
+            $('#arrive').val(tomorrow)
+            $('#since').val(today)
+             
+              });
+            </script>
+            <!-- thiết lập front end -->
+            <script>
+              let listText = document.querySelectorAll(
+                '.navbar-vertical .navbar-nav>.nav-item .nav-link'
+              );
+              listText.forEach((item) => {
+                if (
+                  item.classList.contains('active') &&
+                  item.classList.contains('bg-gradient-primary')
+                )
+                  item.classList.remove('active');
+                item.classList.remove('bg-gradient-primary');
+              });
+              document.querySelector('.nav-bill').classList.add('active');
+              document
+                .querySelector('.nav-bill')
+                .classList.add('bg-gradient-primary');
+
+              document.querySelector(
+                '.breadcrumb-item.text-sm.text-dark.active'
+              ).textContent = 'Danh sách hóa đơn';
+              document.querySelector('.breadcrumb-item a').textContent =
+                'Hóa đơn';
+              document
+                .querySelector('.breadcrumb-item a')
+                .setAttribute('href', '/admin/bill');
+            </script>
+          </tr></data.length;
+        >
+      </tbody>
+    </table>
+  </div>
+</div>

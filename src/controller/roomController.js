@@ -84,8 +84,8 @@ class RoomController {
     // check voucher
     if (!dataBooking.voucher)
       req.body.data.voucher = {
-        voucher_id: 'Không có',
-        voucherName: 'Không có',
+        voucher_id: undefined,
+        voucherName: undefined,
         discount: 0,
       };
     else {

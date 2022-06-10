@@ -46,6 +46,75 @@ class ADMIN {
       }
     });
   }
+
+  getAllBillList(checkin, checkout) {
+    return new Promise(async (resolve, reject) => {
+      // console.log(checkin);
+      // console.log(checkout);
+      try {
+        let data = await db.Bill.findAll({
+          where: {
+            checkin: {
+              [Op.gte]: checkin,
+            },
+            checkout: {
+              [Op.lt]: checkout,
+            },
+          },
+          raw: false, //gộp lại k tách ra
+          nest: true,
+          include: [
+            {
+              model: db.Customer,
+              as: 'customerData',
+              plain: true,
+            },
+            {
+              model: db.Room,
+              as: 'billData',
+              plain: true,
+              include: [{ model: db.Type, as: 'roomData', plain: true }],
+            },
+          ],
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  getBillByBillID(billID) {
+    return new Promise(async (resolve, reject) => {
+      // console.log(checkin);
+      // console.log(checkout);
+      try {
+        let data = await db.Bill.findAll({
+          where: {
+            billID,
+          },
+          raw: false, //gộp lại k tách ra
+          nest: true,
+          include: [
+            {
+              model: db.Customer,
+              as: 'customerData',
+              plain: true,
+            },
+            {
+              model: db.Room,
+              as: 'billData',
+              plain: true,
+              include: [{ model: db.Type, as: 'roomData', plain: true }],
+            },
+          ],
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
   getBookingByBookingID(bookingID) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -141,7 +210,7 @@ class ADMIN {
     return new Promise(async (resolve, reject) => {
       try {
         let data = await db.Booking.findAll({
-          raw: true, //gộp lại k tách ra
+          raw: true, //không gộp lại
           nest: true,
         });
 
@@ -168,9 +237,10 @@ class ADMIN {
         var id = nanoid(10);
         await db.Bill.create({
           billID: id,
+          bookingID: data.bookingID,
           customerID: data.userData.info.customerID,
           roomID: data.roomID,
-          voucher_id: 'đang cập nhật',
+          voucher_id: data.voucher_id,
           checkin: data.checkin,
           checkout: data.checkout,
           totalMoney: data.total,

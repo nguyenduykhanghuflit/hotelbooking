@@ -80,3 +80,52 @@
     <link rel="stylesheet" href="/client/css/style.css" type="text/css" />
   </body>
 </html>
+
+<!-- <% for(var i=0; i<data.length; i++) {%>
+          <tr style="font-size:14px">
+            <td class="none-ele"><%= data[i].bookingID %></td>
+            <td><%= data[i].bookingData.roomData.nameType %></td>
+            <td><%= data[i].checkin %></td>
+            <td><%= data[i].checkout %></td>
+            <td><%= data[i].userData.info.fullName %></td>
+            <td><%= data[i].userData.info.phone %></td>
+           
+            <td style="text-align:center;"><%= data[i].status %></td>
+            <td>
+              <label class="dropdown-cus">
+
+                <div class="dd-button">
+                 Thực hiện
+                </div>
+              
+                <input type="checkbox" class="dd-input" id="test">
+              
+                <ul class="dd-menu">
+                  
+                  <%if (data[i].status !='đã trả phòng và thanh toán') {%>  
+                     <li>
+                       <a href="booking-list/payment/<%= data[i].bookingID %>">Thanh toán</a>
+                    </li>  
+                    
+                    <%}%>
+                 
+                  <li><a  href="booking-list/detail/<%= data[i].bookingID %>">Chi tiết</a></li>
+                  <%if (data[i].status !='đã trả phòng và thanh toán') {%>  
+                    
+                      <li><a  href="booking-list/update/<%= data[i].bookingID %>">Cập nhật</a></li>
+                    
+                   
+                   <%}%>
+                 
+                  
+                </ul>
+                
+              </label>
+            </td> -->
+
+<!-- <td><a class="btn btn-detail" role="button" href="">Chi tiết</a></td>
+            <td><a class="btn btn-update" role="button" href="">Cập nhật</a></td>
+            <td><a class="btn btn-payment btn-primary" role="button" href="">Thanh toán</a></td> -->
+
+<!-- </tr>
+       <% } %> -->

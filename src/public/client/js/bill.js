@@ -154,6 +154,7 @@ $(function () {
           $('.loading').css('display', 'none');
           let mess = res.data.message;
           if (mess == 'Available') {
+            // console.log(res.data);
             let dataVoucher = { discount: parseInt(res.data.voucher.discount) };
             data.voucher = res.data.voucher.voucherName;
             const totalMoney = showVoucherValid(dataVoucher);
@@ -177,6 +178,7 @@ $(function () {
     else {
       $('.loading').css('display', 'block');
       let data = { ...dataSubmit };
+
       axios
         .post('/rooms/booking', { data })
         .then((res) => {
@@ -185,7 +187,7 @@ $(function () {
             alert('Booking Success');
             window.location.href = `/rooms`;
           } else {
-            window.location.href = `/error/Lỗi không thành công`;
+            window.location.href = `/error/Đặt phòng không thành công`;
           }
         })
         .catch((err) => {

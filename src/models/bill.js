@@ -2,7 +2,16 @@
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Bill extends Model {
-    static associate(models) {}
+    static associate(models) {
+      Bill.belongsTo(models.Room, {
+        foreignKey: 'roomID',
+        as: 'billData',
+      });
+      Bill.belongsTo(models.Customer, {
+        foreignKey: 'customerID',
+        as: 'customerData',
+      });
+    }
   }
   Bill.init(
     {
@@ -11,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.STRING, //này nè DataTypes nhaaa
       },
+      bookingID: DataTypes.STRING,
       customerID: {
         allowNull: false,
         foreignKey: true,

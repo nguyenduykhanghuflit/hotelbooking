@@ -171,7 +171,43 @@
     margin-left: 5px;
     cursor: pointer;
   }
+  .loading {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(228, 215, 215, 0.2);
+    position: fixed;
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .loader {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    border: 3px solid rgb(220, 217, 213);
+    border-top-color: #002147;
+    box-sizing: border-box;
+    background: transparent;
+    animation: loading 1s linear infinite;
+    position: absolute;
+    top: 20%;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    0% {
+      transform: rotate(360deg);
+    }
+  }
 </style>
+<div class="loading">
+  <div class="loader"></div>
+</div>
 <h4>Thanh toán phòng</h4>
 <div class="row">
   <div class="container">
@@ -230,7 +266,7 @@
         </div>
         <div class="numerical-data">
           <p><%= data.bookingData.roomData.price %>.000VND</p>
-          <p>11%</p>
+          <p><%= data.discount %>%</p>
           <p><%= data.total %></p>
         </div>
       </div>
@@ -248,7 +284,7 @@
     </div>
   </div>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     for (const el of document.querySelectorAll('[placeholder][data-slots]')) {
@@ -291,14 +327,19 @@
 <script>
   let btnPayment = document.querySelector('#btnPayment');
   btnPayment.addEventListener('click', (e) => {
+    $('.loading').css('display', 'flex');
     let bookingID = document.querySelector('#bookingID').value;
     axios
       .post('/admin/booking-list/payment', { data: { bookingID } })
       .then((response) => {
+        $('.loading').css('display', 'block');
         let message = response.data.message;
         if (message == 'success') {
           alert('Thanh toán thành công');
+          //nhảy qua trang chi tiết luôn
+          window.location.href = '/admin/bill';
         } else {
+          $('.loading').css('display', 'block');
           alert('Thanh toán thất bại');
         }
       })

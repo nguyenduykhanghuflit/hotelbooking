@@ -1,10 +1,11 @@
+<!-- boostrap 5 -->
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
   rel="stylesheet"
   integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
   crossorigin="anonymous"
 />
-
+<!-- jquery database -->
 <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <style>
  
@@ -150,7 +151,7 @@
         <tr>
           <!-- <th scope="col">Mã phòng</th> -->
  
-          <th class="none-ele">mã booking</th>
+          <th >ID</th>
         
           <th style="width:80px" scope="col">Loại phòng</th>
           <th scope="col">Ngày đến</th>
@@ -166,7 +167,7 @@
 
         <% for(var i=0; i<data.length; i++) {%>
           <tr style="font-size:14px">
-            <td class="none-ele"><%= data[i].bookingID %></td>
+            <td ><%= data[i].bookingID %></td>
             <td><%= data[i].bookingData.roomData.nameType %></td>
             <td><%= data[i].checkin %></td>
             <td><%= data[i].checkout %></td>
@@ -185,20 +186,20 @@
               
                 <ul class="dd-menu">
                   
-                  <%if (data[i].status !='đã trả phòng và thanh toán') {%>  
+                  <%if (data[i].status =='đã nhận phòng') {%>  
                      <li>
                        <a href="booking-list/payment/<%= data[i].bookingID %>">Thanh toán</a>
                     </li>  
                     
                     <%}%>
                  
-                  <li><a  href="booking-list/detail/<%= data[i].bookingID %>">Chi tiết</a></li>
-                  <%if (data[i].status !='đã trả phòng và thanh toán') {%>  
-                    
-                      <li><a  href="booking-list/update/<%= data[i].bookingID %>">Cập nhật</a></li>
-                    
-                   
+                  <li><a  href="detail/<%= data[i].bookingID %>">Chi tiết</a></li>
+                   <%if (data[i].status =='đã đặt') {%>  
+                    <li><a  href="checkout/<%= data[i].bookingID %>">Nhận phòng</a></li>
+                    <li><a  href="cancel/<%= data[i].bookingID %>">Hủy</a></li>    
+  
                    <%}%>
+                   
                  
                   
                 </ul>
@@ -217,37 +218,52 @@
     </table>
   </div>
 </div>
+
+<!-- nhúng jquery và dataTables -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-<script
+<!-- <script
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
   crossorigin="anonymous"
-></script>
-<script>
+></script> -->
 
+<!-- thiết lập ngày tháng và lọc data -->
+<script>
   $(document).ready(()=> {
     $('#table_id').DataTable({
-      
     });
 
     $('.btn-getListBooking').click(()=>{
       let checkin=$('#since').val()
       ,checkout=$('#arrive').val();
-      axios.post('/admin/booking-list',{
-        data:{checkin,checkout}
-      })
-      .then(res=>RenderData(res.data))
-      .catch(err=>console.log(err))
+      window.location.href=`/admin/booking-list/?dayStart=${checkin}&dayEnd=${checkout}`
+      // axios.post('/admin/booking-list',{
+      //   data:{checkin,checkout}
+      // })
+      // .then(res=>RenderData(res.data))
+      // .catch(err=>console.log(err))
 
     })
 
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop) => searchParams.get(prop),
+    });
+let dayStart = params.dayStart; 
+let dayEnd = params.dayEnd; 
+let today;
+let tomorrow;
 
-    let today = new Date();
+if(dayStart&&dayEnd){
+  today=new Date(dayStart);
+  tomorrow=new Date(dayEnd);;
+}
+else{
+  today = new Date();
+  tomorrow  = new Date()
+  tomorrow.setDate(tomorrow.getDate() + 1)
+}
     today=today.toISOString().split('T')[0]
-
-    let tomorrow = new Date()
-    tomorrow.setDate(tomorrow.getDate() + 1)
     tomorrow=tomorrow.toISOString().split('T')[0]
    
    $('#arrive').val(tomorrow)
@@ -258,13 +274,17 @@
     data.forEach(item=> {
       let btnP='';
       let btnU='';
-      if(item.status!='đã trả phòng và thanh toán')
+      if(item.status=='đã đặt')
      {
+      btnP=`<li><a href="booking-list/checkout/${item.bookingID}">Nhận phòng</a></li>`
+      btnU=`<li><a href="booking-list/cancel/${item.bookingID}">Hủy</a></li>`
+     }
+     if(item.status=='đã nhận phòng'){
       btnP=`<li><a href="booking-list/payment/${item.bookingID}">Thanh toán</a></li>`
-      btnU=`<li><a href="booking-list/update/${item.bookingID}">Cập nhật</a></li>`
      } 
     
      html+=` <tr style="font-size:14px">
+      <td >${item.bookingID}</td>
             <td>${item.bookingData.roomData.nameType}</td>
             <td>${item.checkin} </td>
             <td>${item.checkout} </td>
@@ -290,18 +310,10 @@
     $('#renderData').html(html)
    }
 
-  //  $('.btn-payment').click(e=>{
-  //   var array = $.map($('input[name="locationthemes"]:checked'), function(c){
-  //     if(c.value=='on') {
-  //       let pr=c.parent();
-  //     }
-  //    })
-  //   console.log(array)
-  //  })
-});
 
- 
+});
 </script>
+<!-- thiết lập front end -->
 <script>
   let listText = document.querySelectorAll(
     '.navbar-vertical .navbar-nav>.nav-item .nav-link'

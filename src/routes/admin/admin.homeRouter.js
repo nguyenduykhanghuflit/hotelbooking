@@ -13,11 +13,18 @@ router.post(
   AdminBookingController.UpdateStatusBooking
 );
 router.get('/booking-list/payment/:bookingID', AdminBookingController.Payment);
+router.get(
+  '/booking-list/checkout/:bookingID',
+  AdminBookingController.Checkout
+);
+router.get('/booking-list/cancel/:bookingID', AdminBookingController.Cancel);
+router.get('/booking-list/detail/:bookingID', AdminBookingController.Detail);
 router.post('/booking-list/payment', AdminBookingController.HandlePayment);
 router.get('/booking', AdminBookingController.Booking);
 router.get('/room-list', AdminBookingController.RoomList);
 
 //hóa đơn
 router.get('/bill', AdminBillController.Bill);
+router.get('/bill/detail/:billID', AdminBillController.Detail);
 
 module.exports = router;
