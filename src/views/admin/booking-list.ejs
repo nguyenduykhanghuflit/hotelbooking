@@ -192,10 +192,10 @@ padding: 10px 0;
                 <input type="checkbox" class="dd-input" id="test">
               
                 <ul class="dd-menu">
-                  <li><a  href="detail/<%= data[i].bookingID %>">Chi tiết</a></li>
+                  <li><a  href="/admin/booking-list/detail/<%= data[i].bookingID %>">Chi tiết</a></li>
                   <%if (data[i].status =='đã nhận phòng') {%>  
                      <li>
-                       <a href="booking-list/payment/<%= data[i].bookingID %>">Thanh toán</a>
+                       <a href="/admin/booking-list/payment/<%= data[i].bookingID %>">Thanh toán</a>
                     </li>  
                     
                     <%}%>

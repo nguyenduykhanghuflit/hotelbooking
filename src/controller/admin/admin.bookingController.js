@@ -7,6 +7,11 @@ const jwt = require('jsonwebtoken');
 class AdminBookingController {
   // phiếu đặt phòng
   async BookingList(req, res) {
+    let ud = await ADMIN.UpdateAllRoom();
+    if (ud)
+      console.log(
+        'http://localhost:3000/admin/booking-list: VỪA UPDATE LẠI PHÒNG'
+      );
     let since, arrive;
     if (req.query.dayStart && req.query.dayEnd) {
       try {
@@ -50,7 +55,7 @@ class AdminBookingController {
     let bookingID = req.params.bookingID;
     let data = await ADMIN.getBookingByBookingID(bookingID);
     if (data.status != 'đã nhận phòng')
-      return res.redirect('/admin/booking-list');
+      return res.send('Hành động không hợp lệ');
     // res.send(data);
     return res.render('admin/payment.ejs', { data });
   }
@@ -59,11 +64,11 @@ class AdminBookingController {
     let bookingID = req.params.bookingID;
 
     let data = await ADMIN.getBookingByBookingID(bookingID);
-    if (data.status != 'đã đặt') return res.redirect('/admin/booking-list');
+    if (data.status != 'đã đặt') return res.send('Hành động không hợp lệ');
     // res.send(data);
     else {
       let checkout = await ADMIN.UpdateBooking(bookingID, 'hủy');
-      return res.redirect('/admin/booking-list');
+      return res.redirect(req.get('referer'));
     }
   }
 
@@ -71,11 +76,11 @@ class AdminBookingController {
     let bookingID = req.params.bookingID;
 
     let data = await ADMIN.getBookingByBookingID(bookingID);
-    if (data.status != 'đã đặt') return res.redirect('/admin/booking-list');
+    if (data.status != 'đã đặt') return res.send('Hành động không hợp lệ');
     // res.send(data);
     else {
       let checkout = await ADMIN.UpdateBooking(bookingID, 'đã nhận phòng');
-      return res.redirect('/admin/booking-list');
+      return res.redirect(req.get('referer'));
     }
   }
 

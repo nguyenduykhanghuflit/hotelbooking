@@ -166,6 +166,43 @@ class ADMIN {
     });
   }
 
+  UpdateAllRoom() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let dataPayment = await db.Booking.findAll({
+          where: {
+            [Op.or]: [
+              { status: 'hủy' },
+              { status: 'đã trả phòng và thanh toán' },
+            ],
+          },
+          raw: false, //gộp lại k tách ra
+          nest: true,
+        });
+        let listRoomID = [];
+        dataPayment.forEach((item) => listRoomID.push(item.roomID));
+
+        listRoomID.forEach(async (item) => {
+          let dt = await db.Booking.findAll({
+            where: {
+              roomID: item,
+              [Op.or]: [{ status: 'đã đặt' }, { status: 'đã nhận phòng' }],
+            },
+            raw: false, //gộp lại k tách ra
+            nest: true,
+          });
+          if (dt.length == 0) {
+            let updateStatus = await this.UpdateStatusRoomByID(item, 'trống');
+            resolve(updateStatus);
+          }
+          resolve(true);
+        });
+      } catch (error) {
+        reject(false);
+      }
+    });
+  }
+
   UpdateRoomReady(roomID) {
     return new Promise(async (resolve, reject) => {
       try {

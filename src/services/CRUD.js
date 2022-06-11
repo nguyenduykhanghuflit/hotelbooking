@@ -152,6 +152,7 @@ class CRUD {
           raw: false, //gộp lại k tách ra
           nest: true,
         });
+
         resolve(data);
       } catch (error) {
         reject(error);
