@@ -32,8 +32,12 @@ class AdminHomeController {
   }
   async Detail(req, res) {
     let billID = req.params.billID;
-
-    let data = await ADMIN.getBillByBillID(billID);
+    let dataBill = await ADMIN.getBillByBillID(billID);
+    let voucherName = dataBill.voucher_id;
+    let dataVoucher = await ADMIN.GetVoucherByVoucherName(voucherName);
+    dataBill = JSON.parse(JSON.stringify(dataBill));
+    dataVoucher = JSON.parse(JSON.stringify(dataVoucher));
+    var data = Object.assign(dataBill, dataVoucher);
     // res.send(data);
     return res.render('admin/detail-bill.ejs', { data });
   }

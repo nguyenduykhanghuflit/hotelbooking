@@ -300,6 +300,21 @@ class ADMIN {
       }
     });
   }
+
+  GetVoucherByVoucherName(name) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Voucher.findOne({
+          where: { name },
+          raw: false, //gộp lại k tách ra
+          plain: true,
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
 }
 
 module.exports = new ADMIN();

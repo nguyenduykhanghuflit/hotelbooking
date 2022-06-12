@@ -7,8 +7,6 @@ const jwt = require('jsonwebtoken');
 class AdminBookingController {
   //[Controller]
   async BookingList(req, res) {
-    let ud = await ADMIN.UpdateAllRoom();
-    if (ud) console.log('Phiếu đặt phòng: trạng thái phòng vừa được cập nhật');
     let since, arrive;
     if (req.query.dayStart && req.query.dayEnd) {
       try {
@@ -95,9 +93,10 @@ class AdminBookingController {
         bookingID,
         'đã trả phòng và thanh toán'
       );
-      console.log(updateBooking);
+      let ud = await ADMIN.UpdateAllRoom();
+      if (ud)
+        console.log('Phiếu đặt phòng: trạng thái phòng vừa được cập nhật');
       let AutoCancelBooking = await ADMIN.AutoCancelBooking();
-      console.log(AutoCancelBooking);
       createBill.bookingID = bookingID;
       return res.send(createBill);
     }

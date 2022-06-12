@@ -25,6 +25,27 @@ class Login {
     });
   }
 
+  CheckAccountAdmin(username, password) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let user = await db.User.findByPk(username);
+        let data;
+        if (!user) {
+          data = { message: 'wrong username' };
+        } else {
+          if (user.role == 'admin') {
+            if (user.password === password)
+              data = { message: 'success', username };
+            else data = { message: 'wrong password' };
+          } else data = { message: 'Account Invalid' };
+        }
+        resolve(data);
+      } catch (error) {
+        reject({ message: 'server error' });
+      }
+    });
+  }
+
   async getInfoAdmin(username) {
     return new Promise(async (resolve, reject) => {
       try {
