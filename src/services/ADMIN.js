@@ -84,15 +84,26 @@ class ADMIN {
     });
   }
 
+  getBillByBookingID(bookingID) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Bill.findOne({
+          where: { bookingID },
+          raw: false, //gộp lại k tách ra
+          nest: true,
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
   getBillByBillID(billID) {
     return new Promise(async (resolve, reject) => {
       // console.log(checkin);
       // console.log(checkout);
       try {
-        let data = await db.Bill.findAll({
-          where: {
-            billID,
-          },
+        let data = await db.Bill.findByPk(billID, {
           raw: false, //gộp lại k tách ra
           nest: true,
           include: [

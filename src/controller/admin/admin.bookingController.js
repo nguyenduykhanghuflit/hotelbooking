@@ -5,13 +5,10 @@ const ADMIN = require('../../services/ADMIN');
 const jwt = require('jsonwebtoken');
 
 class AdminBookingController {
-  // phiếu đặt phòng
+  //[Controller]
   async BookingList(req, res) {
     let ud = await ADMIN.UpdateAllRoom();
-    if (ud)
-      console.log(
-        'http://localhost:3000/admin/booking-list: VỪA UPDATE LẠI PHÒNG'
-      );
+    if (ud) console.log('Phiếu đặt phòng: trạng thái phòng vừa được cập nhật');
     let since, arrive;
     if (req.query.dayStart && req.query.dayEnd) {
       try {
@@ -51,6 +48,7 @@ class AdminBookingController {
     res.send(data);
   }
 
+  //[Controller]
   async Payment(req, res) {
     let bookingID = req.params.bookingID;
     let data = await ADMIN.getBookingByBookingID(bookingID);
@@ -60,9 +58,9 @@ class AdminBookingController {
     return res.render('admin/payment.ejs', { data });
   }
 
+  //[Controller]
   async Cancel(req, res) {
     let bookingID = req.params.bookingID;
-
     let data = await ADMIN.getBookingByBookingID(bookingID);
     if (data.status != 'đã đặt') return res.send('Hành động không hợp lệ');
     // res.send(data);
@@ -72,9 +70,9 @@ class AdminBookingController {
     }
   }
 
+  //[Controller]
   async Checkout(req, res) {
     let bookingID = req.params.bookingID;
-
     let data = await ADMIN.getBookingByBookingID(bookingID);
     if (data.status != 'đã đặt') return res.send('Hành động không hợp lệ');
     // res.send(data);
@@ -83,7 +81,7 @@ class AdminBookingController {
       return res.redirect(req.get('referer'));
     }
   }
-
+  //[API xử lý thanh toán và trả phòng]
   async HandlePayment(req, res) {
     let bookingID = req.body.data.bookingID.trim();
     let data = await ADMIN.getBookingByBookingID(bookingID);
@@ -100,23 +98,34 @@ class AdminBookingController {
       console.log(updateBooking);
       let AutoCancelBooking = await ADMIN.AutoCancelBooking();
       console.log(AutoCancelBooking);
+      createBill.bookingID = bookingID;
       return res.send(createBill);
     }
     return res.send({
       createBill,
     });
   }
+
+  //[Controller]
   async Detail(req, res) {
     let bookingID = req.params.bookingID;
 
     let data = await ADMIN.getBookingByBookingID(bookingID);
-    res.send(data);
+    // res.send(data);
+    return res.render('admin/detail-booking.ejs', { data });
   }
 
-  async UpdateStatusBooking(req, res) {
-    let bookingID = req.body.data.bookingID,
-      roomID = req.body.data.roomID;
+  //[Controller]
+  async DetailBillFromBookingID(req, res) {
+    let bookingID = req.params.bookingID;
+    let check = await ADMIN.getBookingByBookingID(bookingID);
+    if (check.status != 'đã trả phòng và thanh toán')
+      return res.send('Hành động không hợp lệ');
+    let data = await ADMIN.getBillByBookingID(bookingID);
+    let billID = data.billID;
+    res.redirect(`/admin/bill/detail/${billID}`);
   }
+
   //đặt phòng tại quầy
   async Booking(req, res) {
     res.render('admin/booking.ejs');

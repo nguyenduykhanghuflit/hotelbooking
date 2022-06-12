@@ -9,8 +9,8 @@ class AdminHomeController {
   async Home(req, res) {
     let data = await ADMIN.AutoCancelBooking();
     let ud = await ADMIN.UpdateAllRoom();
-    if (ud) console.log('test update phòng');
-    if (data) console.log('Vừa update lại data');
+    if (ud) console.log('ADMIN: trạng thái phòng vừa được cập nhật');
+    if (data) console.log('ADMIN: các phòng quá hạn đã được hủy');
     res.render('admin/home.ejs');
 
     // res.render('admin/home.ejs', { data: data, layout: false });

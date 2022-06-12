@@ -15,12 +15,15 @@
     height: auto;
     width: 100%;
     border-radius: 10px;
-    background-color: #fff;
     padding: 0 20px;
     box-sizing: border-box;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
   .payment-details {
-    margin-top: 20px;
+    width: 90%;
+    margin-top: 20px auto;
   }
   .payment-details p {
     font-size: 12px;
@@ -46,7 +49,7 @@
   }
   .input-text span {
     position: absolute;
-    top: -16px;
+    top: -22px;
     left: 10px;
     font-size: 14px;
     font-weight: bolder;
@@ -58,7 +61,6 @@
     height: 40px;
     width: 70px;
     border: none;
-
     border-bottom: 1px solid #f6f6f7;
     border-top: 1px solid #f6f6f7;
     position: absolute;
@@ -204,18 +206,93 @@
       transform: rotate(360deg);
     }
   }
+  .cus-text {
+    color: #333;
+  }
+  .inline-div {
+    width: 90%;
+    display: flex;
+    margin: 0 auto;
+
+    justify-content: space-between;
+  }
+  .inline-div p {
+    display: block;
+    width: 42%;
+  }
+
+  .payment-details p {
+    font-size: 14px;
+  }
 </style>
 <div class="loading">
   <div class="loader"></div>
 </div>
-<h4>Thanh toán phòng</h4>
+
 <div class="row">
   <div class="container">
     <div class="card">
       <div class="payment-details">
-        <h3>Hóa đơn thanh toán</h3>
-        <p>Mời quý khách kiểm tra lại hóa đơn</p>
-        <p>Mã hóa đơn: <%= data.bookingID %></p>
+        <h3 style="text-align: center">Phiếu đặt phòng</h3>
+        <div class="inline-div">
+          <p>
+            Mã đặt phòng:
+            <span class="cus-text bookingID"><%= data.bookingID %></span>
+          </p>
+          <p>
+            Ngày đặt phòng:
+            <span class="cus-text createdAt"><%= data.createdAt %></span>
+          </p>
+        </div>
+        <div class="inline-div">
+          <p>
+            Họ tên:
+            <span class="cus-text"><%= data.userData.info.fullName %></span>
+          </p>
+          <p>
+            Số điện thoại:
+            <span class="cus-text"><%= data.userData.info.phone %></span>
+          </p>
+        </div>
+        <div class="inline-div">
+          <p>
+            Ngày nhận phòng:
+            <span class="cus-text"><%= data.checkin %></span>
+          </p>
+          <p>
+            Ngày trả phòng:
+            <span class="cus-text"><%= data.checkout %></span>
+          </p>
+        </div>
+        <div class="inline-div">
+          <p>
+            Loại phòng:
+            <span class="cus-text"
+              ><%= data.bookingData.roomData.nameType %></span
+            >
+          </p>
+          <p>
+            Giá phòng:
+            <span class="cus-text"
+              ><%= data.bookingData.roomData.price %>000đ</span
+            >
+          </p>
+        </div>
+        <div class="inline-div">
+          <p>
+            Mã phòng:
+            <span class="cus-text"><%= data.bookingData.roomID%></span>
+          </p>
+          <p>
+            Trạng thái:
+            <span class="cus-text"><%= data.status %></span>
+          </p>
+        </div>
+        <%if (data.status =='đã trả phòng và thanh toán') {%>
+        <a href="/admin/booking-list/detail-bill/<%= data.bookingID %>"
+          >Xem hóa đơn</a
+        >
+        <%}%>
       </div>
       <div style="display: none" class="input-text">
         <input
@@ -226,65 +303,32 @@
         />
         <span>Mã hóa đơn</span>
       </div>
-      <div class="input-text">
-        <input
-          type="text"
-          readonly="readonly"
-          value=" <%= data.userData.info.fullName %>"
-        />
-        <span>Họ tên</span>
-      </div>
-      <div class="input-text">
-        <input
-          type="text"
-          readonly="readonly"
-          value=" <%= data.userData.info.phone %>"
-        />
-        <span>Số điện thoại</span>
-      </div>
-      <div class="input-text">
-        <input
-          type="text"
-          readonly="readonly"
-          value=" <%= data.bookingData.roomData.nameType %> "
-        />
-        <span>Loại phòng</span>
-      </div>
-      <div class="input-text">
-        <input type="text" readonly="readonly" value=" <%= data.checkin %>" />
-        <span>Ngày nhận phòng</span>
-      </div>
-      <div class="input-text">
-        <input type="text" readonly="readonly" value=" <%= data.checkout %>" />
-        <span>Ngày nhận trả phòng</span>
-      </div>
-      <div class="summary">
-        <div class="text-data">
-          <p>Tạm tính</p>
-          <p>Khuyến mãi</p>
-          <h5>Tổng tiền</h5>
-        </div>
-        <div class="numerical-data">
-          <p><%= data.bookingData.roomData.price %>.000VND</p>
-          <p><%= data.discount %>%</p>
-          <p><%= data.total %></p>
-        </div>
-      </div>
-      <div class="pay">
-        <!-- <a
-          role="button"
-          class="btn btn-primary"
-          href="/admin/booking-list/payment/<%= data.bookingID %>"
-          >Thanh toán</a
-        > -->
-        <button id="btnPayment" class="btn btn-primary">Thanh toán</button>
-      </div>
-      <div class="secure"></div>
-      <div class="last"></div>
     </div>
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  function datestring(d) {
+    let day =
+      d.getDate() +
+      '-' +
+      (d.getMonth() + 1) +
+      '-' +
+      d.getFullYear() +
+      ' ' +
+      d.getHours() +
+      ':' +
+      d.getMinutes();
+    return day;
+  }
+  function datestring2(d) {
+    let day = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+    return day;
+  }
+  let d = $('.createdAt').html();
+  d = new Date(d);
+  $('.createdAt').html(datestring(d));
+</script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     for (const el of document.querySelectorAll('[placeholder][data-slots]')) {
@@ -324,32 +368,8 @@
     }
   });
 </script>
+
 <script>
-  let btnPayment = document.querySelector('#btnPayment');
-  btnPayment.addEventListener('click', (e) => {
-    $('.loading').css('display', 'flex');
-    let bookingID = document.querySelector('#bookingID').value;
-    axios
-      .post('/admin/booking-list/payment', { data: { bookingID } })
-      .then((response) => {
-        $('.loading').css('display', 'none');
-        let message = response.data.message;
-        if (message == 'success') {
-          alert('Thanh toán thành công');
-          $('.loading').css('display', 'none');
-
-          //nhảy qua trang chi tiết luôn
-          window.location.href = `/admin/booking-list/detail-bill/${response.data.bookingID}`;
-        } else {
-          $('.loading').css('display', 'flex');
-          alert('Thanh toán thất bại');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-
   let listText = document.querySelectorAll(
     '.navbar-vertical .navbar-nav>.nav-item .nav-link'
   );
@@ -366,7 +386,7 @@
 
   document.querySelector(
     '.breadcrumb-item.text-sm.text-dark.active'
-  ).textContent = 'Thanh toán';
+  ).textContent = 'Chi tiết';
   document.querySelector('.breadcrumb-item a').textContent = 'Phiếu đặt phòng';
   document
     .querySelector('.breadcrumb-item a')

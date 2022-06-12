@@ -34,7 +34,8 @@ class AdminHomeController {
     let billID = req.params.billID;
 
     let data = await ADMIN.getBillByBillID(billID);
-    res.send(data);
+    // res.send(data);
+    return res.render('admin/detail-bill.ejs', { data });
   }
 }
 module.exports = new AdminHomeController();

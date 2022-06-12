@@ -1,0 +1,398 @@
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+  .btn-primary {
+    background-color: rgb(130, 130, 223);
+  }
+  .btn-primary:hover,
+  .btn-primary:focus,
+  .btn-primary:active {
+    background-color: rgb(107, 107, 234);
+  }
+  .container {
+    min-height: 100vh;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+  }
+  .card {
+    height: auto;
+    width: 100%;
+    border-radius: 10px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .payment-details {
+    width: 100%;
+    margin-top: 20px auto;
+  }
+  .payment-details p {
+    font-size: 12px;
+    font-weight: 700;
+    color: #89898e;
+  }
+  .input-text {
+    position: relative;
+    margin-top: 30px;
+  }
+  input[type='text'] {
+    height: 40px;
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    outline: 0;
+    border: 1px solid #f6f6f7;
+    padding: 0 10px;
+    box-sizing: border-box;
+    font-size: 13px;
+    color: #333;
+    font-weight: bolder;
+  }
+  .input-text span {
+    position: absolute;
+    top: -22px;
+    left: 10px;
+    font-size: 14px;
+    font-weight: bolder;
+  }
+  .input-text-cvv {
+    position: relative;
+  }
+  .input-text-cvv input[type='text'] {
+    height: 40px;
+    width: 70px;
+    border: none;
+    border-bottom: 1px solid #f6f6f7;
+    border-top: 1px solid #f6f6f7;
+    position: absolute;
+    top: -40px;
+    right: 60px;
+  }
+  .cvv input[type='text'] {
+    position: absolute;
+    right: 0;
+    border-right: 1px solid #f6f6f7;
+  }
+  .billing {
+    margin-top: 30px;
+    position: relative;
+  }
+  .billing span {
+    font-size: 12px;
+    font-weight: 700;
+    position: absolute;
+    top: -16px;
+    left: 10px;
+  }
+  .billing select {
+    height: 35px;
+    width: 100%;
+    font-size: 12px;
+    outline: 0;
+    padding-left: 5px;
+    border: 1px solid #f6f6f7;
+    cursor: pointer;
+  }
+  .billing select option:nth-child(1) {
+    display: none;
+  }
+  .zip-state {
+    display: flex;
+    width: 100%;
+  }
+  .zip {
+    width: 50%;
+  }
+  .zip input[type='text'] {
+    height: 35px;
+  }
+  .state {
+    width: 50%;
+  }
+  .summary {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .text-data p {
+    margin-top: 3px;
+    font-size: 14px;
+    font-weight: bolder;
+  }
+  .numerical-data p {
+    margin-top: 3px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .pay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .pay .btn-primary {
+    width: 100%;
+
+    border: none;
+    outline: 0;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bolder;
+    cursor: pointer;
+    transition: all 0.5s;
+  }
+
+  .secure {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*text-align:center;*/
+    color: #aeaebc;
+  }
+  .secure p {
+    font-size: 12px;
+    font-weight: 600;
+    color: #aeaebc;
+    margin-left: 5px;
+  }
+  .last {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .last p {
+    margin-right: 5px;
+  }
+  .last a {
+    color: blue;
+    text-decoration: none;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+  .loading {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(228, 215, 215, 0.2);
+    position: fixed;
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .loader {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    border: 3px solid rgb(220, 217, 213);
+    border-top-color: #002147;
+    box-sizing: border-box;
+    background: transparent;
+    animation: loading 1s linear infinite;
+    position: absolute;
+    top: 20%;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    0% {
+      transform: rotate(360deg);
+    }
+  }
+  .cus-text {
+    color: #333;
+  }
+  .inline-div {
+    width: 90%;
+    display: flex;
+    margin: 0 auto;
+
+    justify-content: space-between;
+  }
+  .inline-div p {
+    display: block;
+    width: 42%;
+  }
+  .inline-div span {
+    font-weight: normal;
+  }
+
+  .payment-details p {
+    font-size: 14px;
+  }
+</style>
+<div class="loading">
+  <div class="loader"></div>
+</div>
+
+<div class="row">
+  <div class="container">
+    <div class="card">
+      <div class="payment-details">
+        <h3 style="text-align: center">Hóa đơn đặt phòng</h3>
+        <div class="inline-div">
+          <p>Mã hóa đơn: <span class="cus-text"><%= data.billID %></span></p>
+          <p>
+            Ngày tạo hóa đơn:
+            <span class="cus-text createdAt"><%= data.createdAt %></span>
+          </p>
+        </div>
+        <div class="inline-div">
+          <p>
+            Họ tên:
+            <span class="cus-text"><%= data.customerData.fullName %></span>
+          </p>
+          <p>
+            Số điện thoại:
+            <span class="cus-text"><%= data.customerData.phone %></span>
+          </p>
+        </div>
+        <div class="inline-div">
+          <p>
+            Ngày nhận phòng:
+            <span class="cus-text"><%= data.checkin %></span>
+          </p>
+          <p>
+            Ngày trả phòng:
+            <span class="cus-text"><%= data.checkout %></span>
+          </p>
+        </div>
+        <div class="inline-div">
+          <p>
+            Loại phòng:
+            <span class="cus-text"><%= data.billData.roomData.nameType %></span>
+          </p>
+          <p>
+            Giá phòng:
+            <span class="cus-text"
+              ><%= data.billData.roomData.price %>000đ</span
+            >
+          </p>
+        </div>
+        <div class="inline-div">
+          <p>
+            Tạm tính:
+            <span class="cus-text"
+              ><%= data.billData.roomData.price %>000đ</span
+            >
+          </p>
+        </div>
+        <div class="inline-div">
+          <p>
+            Voucher:
+            <span class="cus-text"><%= data.voucher_id%></span>
+          </p>
+        </div>
+        <div class="inline-div">
+          <h4>
+            Tổng tiền:
+            <span class="cus-text"><%= data.totalMoney%></span>
+          </h4>
+          <button onclick="window.print()" class="btn btn-primary">
+            In hóa đơn
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    function datestring(d) {
+      let day =
+        d.getDate() +
+        '-' +
+        (d.getMonth() + 1) +
+        '-' +
+        d.getFullYear() +
+        ' ' +
+        d.getHours() +
+        ':' +
+        d.getMinutes();
+      return day;
+    }
+    function datestring2(d) {
+      let day = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+      return day;
+    }
+    let d = $('.createdAt').html();
+    d = new Date(d);
+    $('.createdAt').html(datestring(d));
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      for (const el of document.querySelectorAll('[placeholder][data-slots]')) {
+        const pattern = el.getAttribute('placeholder'),
+          slots = new Set(el.dataset.slots || '_'),
+          prev = ((j) =>
+            Array.from(pattern, (c, i) => (slots.has(c) ? (j = i + 1) : j)))(0),
+          first = [...pattern].findIndex((c) => slots.has(c)),
+          accept = new RegExp(el.dataset.accept || '\\d', 'g'),
+          clean = (input) => {
+            input = input.match(accept) || [];
+            return Array.from(pattern, (c) =>
+              input[0] === c || slots.has(c) ? input.shift() || c : c
+            );
+          },
+          format = () => {
+            const [i, j] = [el.selectionStart, el.selectionEnd].map((i) => {
+              i = clean(el.value.slice(0, i)).findIndex((c) => slots.has(c));
+              return i < 0
+                ? prev[prev.length - 1]
+                : back
+                ? prev[i - 1] || first
+                : i;
+            });
+            el.value = clean(el.value).join``;
+            el.setSelectionRange(i, j);
+            back = false;
+          };
+        let back = false;
+        el.addEventListener('keydown', (e) => (back = e.key === 'Backspace'));
+        el.addEventListener('input', format);
+        el.addEventListener('focus', format);
+        el.addEventListener(
+          'blur',
+          () => el.value === pattern && (el.value = '')
+        );
+      }
+    });
+  </script>
+  <!-- thiết lập front end -->
+  <script>
+    let listText = document.querySelectorAll(
+      '.navbar-vertical .navbar-nav>.nav-item .nav-link'
+    );
+    listText.forEach((item) => {
+      if (
+        item.classList.contains('active') &&
+        item.classList.contains('bg-gradient-primary')
+      )
+        item.classList.remove('active');
+      item.classList.remove('bg-gradient-primary');
+    });
+    document.querySelector('.nav-bill').classList.add('active');
+    document.querySelector('.nav-bill').classList.add('bg-gradient-primary');
+
+    document.querySelector(
+      '.breadcrumb-item.text-sm.text-dark.active'
+    ).textContent = 'Chi tiết hóa đơn';
+    document.querySelector('.breadcrumb-item a').textContent = 'Hóa đơn';
+    document
+      .querySelector('.breadcrumb-item a')
+      .setAttribute('href', '/admin/bill');
+  </script>
+</div>
