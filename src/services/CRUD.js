@@ -207,6 +207,38 @@ class CRUD {
     });
   }
 
+  CreateUserCustomer(username) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db.User.create({
+          username,
+          password: '12345',
+          role: 'customer',
+        });
+        resolve(true);
+      } catch (error) {
+        reject(false);
+      }
+    });
+  }
+  CreateInfoCustomer(username, fullName, email, phone) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var id = nanoid(10);
+        await db.Customer.create({
+          customerID: id,
+          username,
+          fullName,
+          email,
+          phone,
+        });
+        resolve(true);
+      } catch (error) {
+        reject(false);
+      }
+    });
+  }
+
   UpdateStatusRoomByID(roomID, status) {
     return new Promise(async (resolve, reject) => {
       try {

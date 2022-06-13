@@ -1,7 +1,8 @@
 const { response } = require('express');
 const e = require('express');
 const ADMIN = require('../../services/ADMIN');
-
+const CRUD = require('../../services/CRUD');
+import { nanoid } from 'nanoid';
 const jwt = require('jsonwebtoken');
 
 class AdminBookingController {
@@ -133,8 +134,122 @@ class AdminBookingController {
 
   //danh sách phòng
   async RoomList(req, res) {
-    res.render('admin/room-list.ejs');
-    // res.render('admin/home.ejs', { data: data, layout: false });
+    let data = await CRUD.getAllRoomType();
+    // res.send(data);
+    res.render('admin/room-list.ejs', { data });
+  }
+
+  //trang đặt phòng
+  async RoomListBooing(req, res) {
+    let typeID = req.params.typeID;
+    let data = await CRUD.getRoomTypeById(typeID);
+    if (!data) {
+      return res.json({ message: 'Phòng không hợp lệ' });
+    } else {
+      // return res.send(data);
+      return res.render('admin/roomlist-booking.ejs', { data });
+    }
+    // res.send(typeID);
+    // res.render('admin/room-list.ejs', { data });
+  }
+
+  async CheckRoom(req, res) {
+    //input
+    let checkin = req.body.checkin;
+    let checkout = req.body.checkout;
+    let typeID = req.body.typeID;
+    let amount = parseInt(req.body.amount);
+    let listRoom = await CRUD.getRoomTypeById(typeID);
+
+    //output
+    let dataRes = {};
+
+    if (listRoom.length == 0)
+      return res.send((dataRes.message = 'Data Invalid'));
+    if (!checkin || !checkout || !typeID)
+      return res.send((dataRes.message = 'Data Invalid'));
+
+    let listDataRoom = listRoom.roomData,
+      dem = 0,
+      listRoomIDReady = [];
+    //đếm xem có bao nhiêu phòng còn trống
+    listDataRoom.forEach((room) => {
+      if (room.status == 'trống') {
+        listRoomIDReady.push(room.roomID);
+        dem++;
+      }
+    });
+    if (dem >= amount) {
+      dataRes.message = 'Available';
+      dataRes.roomReady = listRoomIDReady;
+      return res.send(dataRes);
+    }
+
+    let bookedRoom = await CRUD.getBookedRoomFromBooking(typeID, checkin);
+    let flag = false;
+    bookedRoom.forEach((room) => {
+      let listDateBooking = room.bookingData;
+      for (let i = 0; i < listDateBooking.length; i++) {
+        if (
+          checkin == listDateBooking[i].checkin ||
+          checkin == listDateBooking[i].checkout ||
+          checkout == listDateBooking[i].checkin ||
+          checkout == listDateBooking[i].checkout
+        ) {
+          flag = false;
+          break;
+        } else flag = true;
+      }
+      if (flag) {
+        listRoomIDReady.push(room.roomID);
+        dem++;
+      }
+    });
+
+    if (dem >= amount) {
+      dataRes.message = 'Available';
+      dataRes.roomReady = listRoomIDReady;
+    } else {
+      dataRes.message = 'Unavailable';
+      dataRes.roomReady = null;
+    }
+    return res.send(dataRes);
+  }
+
+  async BookingRoom(req, res) {
+    let roomReady = req.body.listRoom;
+    let amount = parseInt(req.body.amount);
+    let total = req.body.totalMoney;
+    var id = nanoid(10);
+    let username = `Đặt trực tiếp ${id}`;
+    //create user
+    let customer = await CRUD.CreateUserCustomer(username);
+    if (!customer) return res.send('Không tạo được tài khoản khách hàng');
+
+    let info = await CRUD.CreateInfoCustomer(
+      username,
+      req.body.fullName,
+      req.body.email,
+      req.body.phone
+    );
+    if (!info) res.send('Không tạo được thông tin khách hàng');
+    // // res.send({ roomReady, amount, total });
+    for (let i = 0; i < amount; i++) {
+      let booking = await CRUD.CreateBooking(
+        roomReady[i],
+        'đã đặt',
+        req.body.checkin,
+        req.body.checkout,
+        username,
+        'Không có',
+        '0',
+        total
+      );
+      if (booking == 'Create Fail') res.send('Fail');
+
+      let udr = await CRUD.UpdateStatusRoomByID(roomReady[i], 'đã đặt');
+    }
+    return res.send('Success');
   }
 }
 module.exports = new AdminBookingController();

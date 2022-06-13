@@ -1,0 +1,826 @@
+<!-- boostrap 5 -->
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+  crossorigin="anonymous"
+/>
+<script
+  src="https://kit.fontawesome.com/1ca5983c13.js"
+  crossorigin="anonymous"
+></script>
+<!-- jquery database -->
+<link
+  rel="stylesheet"
+  href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"
+/>
+<style>
+  .alert-err{
+    display: none;
+  }
+  a {
+    text-decoration: none;
+  }
+  .ps__thumb-y {
+    width: 0px !important;
+  }
+  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  font-family: 'Montserrat', sans-serif;
+}
+body {
+  padding: 5px;
+}
+p {
+  margin: 0%;
+}
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  overflow: hidden;
+}
+.box-1 {
+  max-width: 450px;
+  padding: 10px 40px;
+  user-select: none;
+}
+.box-1 img.pic {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+}
+.box-1 img.mobile-pic {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.box-1 .name {
+  font-size: 11px;
+  font-weight: 600;
+}
+.dis {
+  font-size: 12px;
+  font-weight: 500;
+}
+.box-2 {
+  max-width: 450px;
+  padding: 10px 40px;
+}
+.box-2 .box-inner-2 input.form-control {
+  font-size: 12px;
+  font-weight: 600;
+}
+.box-2 .box-inner-2 .inputWithIcon {
+  position: relative;
+}
+.box-2 .box-inner-2 .inputWithIcon span {
+  position: absolute;
+  left: 15px;
+  top: 8px;
+}
+.box-2 .box-inner-2 .inputWithcheck {
+  position: relative;
+}
+.box-2 .box-inner-2 .inputWithcheck span {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: green;
+  font-size: 12px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 15px;
+  top: 6px;
+}
+.form-control:focus,
+.form-select:focus {
+  box-shadow: none;
+  outline: none;
+  border: 1px solid #7700ff;
+}
+.border:focus-within {
+  border: 1px solid #7700ff !important;
+}
+.box-2 .card-atm .form-control {
+  border: none;
+  box-shadow: none;
+}
+.form-select {
+  border-radius: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.address .form-control.zip {
+  border-radius: 0;
+  border-bottom-left-radius: 10px;
+}
+.address .form-control.state {
+  border-radius: 0;
+  border-bottom-right-radius: 10px;
+}
+.box-2 .box-inner-2 .btn.btn-outline-primary {
+  width: 120px;
+  padding: 10px;
+  font-size: 11px;
+  padding: 0% !important;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 0;
+  background-color: whitesmoke;
+  color: black;
+  font-weight: 600;
+}
+.box-2 .box-inner-2 .btn.btn-primary {
+  background-color: #7700ff;
+  color: whitesmoke;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  justify-content: center;
+  border: none;
+  padding: 10px;
+}
+.box-2 .box-inner-2 .btn.btn-primary:hover {
+  background-color: #7a34ca;
+}
+.box-2 .box-inner-2 .btn.btn-primary .fas {
+  font-size: 13px !important;
+  color: whitesmoke;
+}
+.carousel-indicators [data-bs-target] {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.carousel-inner {
+  width: 100%;
+  height: 200px;
+}
+.carousel-item img {
+  object-fit: cover;
+  height: 100%;
+}
+.carousel-control-prev {
+  transform: translateX(-50%);
+  opacity: 1;
+}
+.carousel-control-prev:hover .fas.fa-arrow-left {
+  transform: translateX(-5px);
+}
+.carousel-control-next {
+  transform: translateX(50%);
+  opacity: 1;
+}
+.carousel-control-next:hover .fas.fa-arrow-right {
+  transform: translateX(5px);
+}
+.fas.fa-arrow-left,
+.fas.fa-arrow-right {
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+.icon {
+  width: 30px;
+  height: 30px;
+  background-color: #f8f9fa;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transform-origin: center;
+  opacity: 1;
+}
+.fas.fa-times {
+  color: red;
+}
+.fas,
+.fab {
+  color: #6d6c6d;
+}
+::placeholder {
+  font-size: 12px;
+}
+.couponCode {
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+#code {
+  pointer-events: none;
+  font-weight: 600;
+}
+.close {
+  cursor: pointer;
+}
+.info {
+  transform: translateX(-500px);
+  animation: moving 1.5s;
+  animation-fill-mode: forwards;
+}
+.updates {
+  transform: translateX(-500px);
+  animation: moving 1.7s;
+  animation-fill-mode: forwards;
+}
+.different {
+  transform: translateX(-500px);
+  animation: moving 1.9s;
+  animation-fill-mode: forwards;
+}
+.black {
+  transform: translateX(-500px);
+  animation: moving 2.1s;
+  animation-fill-mode: forwards;
+}
+.white {
+  transform: translateX(-500px);
+  animation: moving 2.3s;
+  animation-fill-mode: forwards;
+}
+.pastel {
+  transform: translateX(-500px);
+  animation: moving 2.5s;
+  animation-fill-mode: forwards;
+}
+.footer {
+  transform: translateX(-500px);
+  animation: moving 2.6s;
+  animation-fill-mode: forwards;
+}
+@keyframes moving {
+  0% {
+    opacity: 0;
+    transform: translateX(-500px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+.box-2 {
+  transform: translateY(-500px);
+  animation: img-top 2s;
+  animation-fill-mode: forwards;
+}
+.user {
+  transform: translateY(-500px);
+  animation: img-top 2s;
+  animation-fill-mode: forwards;
+}
+.userdetails {
+  transform: translateY(-500px);
+  animation: img-top 2s;
+  animation-fill-mode: forwards;
+}
+.imgdetails {
+  transform: translateY(-500px);
+  animation: img-top 2s;
+  animation-fill-mode: forwards;
+}
+@keyframes img-top {
+  0% {
+    opacity: 0;
+    transform: translateY(-500px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+@media (max-width: 768px) {
+  .container {
+    max-width: 700px;
+    margin: 10px auto;
+  }
+  .box-1,
+  .box-2 {
+    max-width: 600px;
+    padding: 20px 90px;
+    margin: 20px auto;
+  }
+  .box-2 {
+    transform: translateX(-500px);
+    animation: box-side 0.5s;
+    animation-fill-mode: forwards;
+  }
+  @keyframes box-side {
+    0% {
+      opacity: 0;
+      transform: translateX(-500px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+  }
+}
+@media (max-width: 426px) {
+  .box-1,
+  .box-2 {
+    max-width: 400px;
+    padding: 20px 10px;
+  }
+  ::placeholder {
+    font-size: 9px;
+  }
+}
+.bs4-order-tracking {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: #878788;
+  padding-left: 0px;
+  margin-top: 30px;
+}
+.bs4-order-tracking li {
+  list-style-type: none;
+  font-size: 13px;
+  width: 25%;
+  float: left;
+  position: relative;
+  font-weight: 400;
+  color: #878788;
+  text-align: center;
+}
+.bs4-order-tracking li:first-child:before {
+  margin-left: 15px !important;
+  padding-left: 11px !important;
+  text-align: left !important;
+}
+.bs4-order-tracking li:last-child:before {
+  margin-right: 5px !important;
+  padding-right: 11px !important;
+  text-align: right !important;
+}
+.bs4-order-tracking li > div {
+  color: #fff;
+  width: 29px;
+  text-align: center;
+  line-height: 29px;
+  display: block;
+  font-size: 12px;
+  background: #878788;
+  border-radius: 50%;
+  margin: auto;
+}
+.bs4-order-tracking li:after {
+  content: '';
+  width: 150%;
+  height: 2px;
+  background: #878788;
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 15px;
+  z-index: -1;
+}
+.bs4-order-tracking li:first-child:after {
+  left: 50%;
+}
+.bs4-order-tracking li:last-child:after {
+  left: 0% !important;
+  width: 0% !important;
+}
+.bs4-order-tracking li.active {
+  font-weight: bold;
+  color: #dc3545;
+}
+.bs4-order-tracking li.active > div {
+  background: #dc3545;
+}
+.bs4-order-tracking li.active:after {
+  background: #dc3545;
+}
+.card-timeline {
+ 
+  z-index: 0;
+}
+.fw-bold span {
+  color: rgb(239, 61, 58);
+  font-size: 14px;
+}
+body .cus-w-400 {
+  width: 300px;
+}
+.voucher_err{
+        color: rgb(223, 18, 18);
+        padding: 5px 7px;
+        display: none ;
+      }
+      .box-2 .box-inner-2 .inputWithcheck .voucher_ok{
+        display: none;
+      }
+
+      .btn-check{
+        background-color: green;
+      }
+      .loading {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(228, 215, 215, 0.2);
+    position: fixed;
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .loader {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    border: 3px solid rgb(220, 217, 213);
+    border-top-color: #002147;
+    box-sizing: border-box;
+    background: transparent;
+    animation: loading 1s linear infinite;
+    position: absolute;
+    top: 20%;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    0% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+<div class="loading">
+  <div class="loader"></div>
+</div>
+  <div id="div1"></div>
+<div class="container">
+    <div class="container d-lg-flex">
+        <div class="box-1  user">
+          <div style="background-color: transparent;" class="box-inner-1 pb-3 mb-3">
+            <div class="d-flex justify-content-between mb-3 userdetails">
+              <p class="fw-bold">Loại phòng: <span><%= data.nameType%></span></p>
+            </div>
+            <p id="price-room" class="fw-bold">Giá: <span><%= data.price%>000</span></p>
+            <div
+              id="my"
+              class="carousel slide carousel-fade img-details"
+              data-bs-ride="carousel"
+              data-bs-interval="2000"
+            >
+              <div class="carousel-indicators">
+                <button
+                  type="button"
+                  data-bs-target="#my"
+                  data-bs-slide-to="0"
+                  class="active"
+                  aria-current="true"
+                  aria-label="Slide 1"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#my"
+                  data-bs-slide-to="1"
+                  aria-label="Slide 2"
+                ></button>
+                <button
+                  type="button"
+                  data-bs-target="#my"
+                  data-bs-slide-to="2"
+                  aria-label="Slide 3"
+                ></button>
+              </div>
+              
+            
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="<%= data.imgData[0].url%>"
+                        class="d-block w-100">
+                </div>
+                <div class="carousel-item">
+                    <img src="<%= data.imgData[1].url%>"
+                        class="d-block w-100 h-100">
+                </div>
+               
+                <div class="carousel-item">
+                    <img src="<%= data.imgData[2].url%>"
+                        class="d-block w-100">
+                </div>
+            </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#my"
+                data-bs-slide="prev"
+              >
+                <div class="icon"><span class="fas fa-arrow-left"></span></div>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#my"
+                data-bs-slide="next"
+              >
+                <div class="icon"><span class="fas fa-arrow-right"></span></div>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+            <p class="dis my-3 info"><%=data.description%></p>
+            <div>
+              <p class="dis footer my-3">
+                <!-- Here is a quick guide on how to apply them -->
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="box-2">
+          <div class="box-inner-2">
+            <div>
+              <p class="fw-bold">ĐẶT PHÒNG TÀI QUẦY</p>
+              <p class="dis mb-3">Cung cấp thông tin để đặt phòng</p>
+              <div style="font-size: 14px;" class="alert alert-err alert-warning" role="alert">
+                Bạn cần nhập đầy đủ thông tin để đặt phòng
+              </div>
+            </div>
+            <form action="">
+              <input id="typeID" style="display: none" class="form-control" type="text"  value="<%=data.typeID%>" />
+              <div class="mb-3 cus-w-400">
+                <p class="dis fw-bold mb-2">Họ tên</p>
+                <input id="i-fullname" class="form-control" type="text"  value="" />
+              </div>
+              <div>
+               
+                </div>
+                <div class="my-3 cus-w-400  cardname">
+                  <p class="dis fw-bold mb-2">SDT</p>
+                  <input id="i-phone"  class="form-control" type="phone" />
+                </div>
+                <div class="my-3 cus-w-400 cardname">
+                  <p class="dis fw-bold mb-2">Email</p>
+                  <input id="i-email"  class="form-control" type="email" />
+                </div>
+                <div class=" mb-3 cus-w-400">
+                  <p class="dis fw-bold mb-2">Check in</p>
+                  <input id="i-checkin"  class="form-control" type="date" />
+               </div>
+               <div class=" mb-3 cus-w-400">
+                <p class="dis fw-bold mb-2">Check out</p>
+                <input id="i-checkout"  class="form-control" type="date" />
+             </div>
+                <div class=" mb-3 cus-w-400">
+                  <p class="dis fw-bold mb-3">Số lượng phòng</p>
+                  <select id="i-amonut-room" class="form-select" aria-label="Default select example">
+                    <option selected value="1" >1</option>
+                    <option value="2">2</option>
+                    <option value="3" >3</option>
+                  </select>
+                <button type="button" class="btn btn-check-room btn-secondary mt-2">Kiểm tra phòng</button>
+                 
+                  <div class="d-flex flex-column dis">
+                    <div
+                      class="d-flex align-items-center justify-content-between mb-2"
+                    >
+                      <p>Tổng tiền</p>
+                      <p id="money"><%= data.price%>000</p>
+                    </div>
+                   
+                 
+                  
+                    <div class="btn btn-payment btn-success mt-2">
+                    Đặt phòng
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+</div>
+
+<!-- nhúng jquery và dataTables -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+
+<!-- thiết lập ngày tháng và lọc data -->
+<script>
+  const commaSeparator = (money) => {
+    let res = [...money];
+    let count = 0;
+    for (let i = res.length - 1; i >= 0; i--) {
+      count++;
+      if (count == 3) {
+        if (i != 0) {
+          res[i] = '.' + res[i];
+          count = 0;
+        }
+      }
+    }
+    return res.join('') + ' VND';
+  };
+  function SetDay(){
+    let today;
+    let tomorrow;
+    today = new Date();
+      tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+    today = today.toISOString().split('T')[0];
+    tomorrow = tomorrow.toISOString().split('T')[0];
+
+    $('#i-checkin').val(today);
+    $('#i-checkout').val(tomorrow);
+  }
+  function GetDayCheckIn(){
+    return { checkin:$('#i-checkin').val(), checkout:$('#i-checkout').val()}
+}
+
+  function ShowButtonRoom(){
+    $('.btn-check-room').css('background-color', 'green')
+      $('.btn-check-room').html(`Còn phòng`)
+  }
+  function ShowErr(mess){
+    $('#div1').scrollTop(0);
+    $('.alert-err').html(mess)
+   $('.alert-err').css('display','block');
+  }
+  function validatePhoneNumber(input_str) {
+  var re = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+  return re.test(input_str);
+}
+const validateEmail = (email) => {
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+};
+  function CloseErr(){
+    $('.alert-err').html("")
+   $('.alert-err').css('display','none');
+  }
+  function ValidateData(){
+   let fn= $('#i-fullname').val()
+   let email= $('#i-email').val()
+   let phone= $('#i-phone').val()
+   let checkin= $('#i-checkin').val()
+   let checkout= $('#i-checkout').val()
+
+   let check=true;
+   let d=new Date();
+   d.setHours(0,0,0,0);
+   if(fn.trim().length==0||email.trim().length==0||phone.trim().length==0)
+  {
+    ShowErr("Bạn chưa nhập đủ thông tin")
+    check=false;
+  }
+  else if(!validatePhoneNumber(phone)) {
+     check=false;
+     ShowErr("SĐT không hợp lệ")
+   }
+   else if(!validateEmail(email)) {
+    ShowErr("Email không hợp lệ")
+    check=false;
+   }
+  
+   else if(new Date(checkin)<d) {
+     check=false
+     ShowErr("Ngày nhận phòng phải tính từ hôm nay")
+   }
+   else if(new Date(checkout)<=new Date(checkin)){
+    check=false
+    ShowErr("Ngày trả phòng phải sau ngày nhận phòng")
+   }
+   else {
+    check=true
+    CloseErr()
+   }
+   return check;
+  }
+  
+  function GetData(){
+    let fullName= $('#i-fullname').val()
+   let email= $('#i-email').val()
+   let phone= $('#i-phone').val()
+   let getDays= GetDayCheckIn();
+  let typeID=$('#typeID').val().trim();
+  let amount=$('#i-amonut-room').val().trim();
+  let datacheck={...getDays,typeID,amount}
+  return {fullName,email,phone,...datacheck,listRoom}
+  }
+  let listRoom=[];
+  $(document).ready(() => {
+    $('#table_id').DataTable({});
+    SetDay();
+  $('#money').html(commaSeparator($('#money').html()));
+  $('#price-room span').html(commaSeparator($('#price-room span').html()));
+
+ let check="no"; 
+
+ $('#i-checkin').change(function(){
+  check="no";
+  $('.btn-check-room').css('background-color', '#6c757d')
+  $('.btn-check-room').html(`Kiểm tra`)
+ })
+ $('#i-checkout').change(function(){
+  check="no";
+  $('.btn-check-room').css('background-color', '#6c757d')
+  $('.btn-check-room').html(`Kiểm tra`)
+ })
+
+  $('.btn-check-room').click(function(){
+    let getDays= GetDayCheckIn();    
+    let typeID=$('#typeID').val().trim();
+    let amount=$('#i-amonut-room').val().trim();
+    let now=new Date();
+   if(new Date(getDays.checkin)<now) {
+     ShowErr("Ngày nhận phòng phải tính từ hôm nay")
+   }
+   else if(new Date(getDays.checkout)<=new Date(getDays.checkin)){
+    ShowErr("Ngày trả phòng phải sau ngày nhận phòng")
+   }
+   else{
+    $('.alert-err').html("")
+   $('.alert-err').css('display','none');
+    axios.post('/admin/room-list/checkroom',{...getDays,typeID,amount})
+    .then(res=>{
+    
+      let mess=res.data.message;
+      if(mess=='Available'){
+        ShowButtonRoom()
+        let roomData=res.data.roomReady;
+        listRoom=[]
+        listRoom=[...roomData]
+        check=true;
+      }
+      else{
+        check=false;
+        $('.btn-check-room').css('background-color', '#878788')
+      $('.btn-check-room').html(`Hết phòng`)
+      }
+    })
+    .catch(err=>console.log(err))
+   }
+   
+  })
+
+  $('.btn-payment').click(function(){
+    
+    if(check=='no') alert("Bấm kiểm tra trước khi đặt phòng")
+    else if(check){
+      if(ValidateData()){
+        let data=GetData();
+        let totalMoney=$('#money').html()
+        $('.loading').css('display', 'flex');
+        axios.post('/admin/room-list/bookingroom',{...data,totalMoney})
+        .then(res=>{
+          $('.loading').css('display', 'none');
+        if(res.data=="Success"){
+          alert("Đặt thành công")
+          window.location.href =`/admin/booking-list/?dayStart=${data.checkin}&dayEnd=${data.checkout}`
+        }
+        else{
+          alert("Có lỗi trong quá trình đặt phòng")
+        }
+        })
+        .catch(err=>console.log(err))
+      
+      }
+    }
+   else alert("hết phòng")
+  })
+ 
+
+
+  });
+</script>
+
+<!-- thiết lập front end -->
+<script>
+  let listText = document.querySelectorAll(
+    '.navbar-vertical .navbar-nav>.nav-item .nav-link'
+  );
+  listText.forEach((item) => {
+    if (
+      item.classList.contains('active') &&
+      item.classList.contains('bg-gradient-primary')
+    )
+      item.classList.remove('active');
+    item.classList.remove('bg-gradient-primary');
+  });
+  document.querySelector('.nav-room').classList.add('active');
+  document.querySelector('.nav-room').classList.add('bg-gradient-primary');
+
+  document.querySelector(
+    '.breadcrumb-item.text-sm.text-dark.active'
+  ).textContent = 'Phòng';
+  document.querySelector('.breadcrumb-item a').textContent = 'Danh sách phòng';
+  document
+    .querySelector('.breadcrumb-item a')
+    .setAttribute('href', '/admin/room-list');
+</script>

@@ -1,3 +1,12 @@
+<link
+  rel="stylesheet"
+  href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"
+/>
+<style>
+  .tbl-center {
+    text-align: center;
+  }
+</style>
 <div class="row">
   <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
     <div class="card">
@@ -8,16 +17,12 @@
           <i class="material-icons opacity-10">weekend</i>
         </div>
         <div class="text-end pt-1">
-          <p class="text-sm mb-0 text-capitalize">Today's Money</p>
-          <h4 class="mb-0">$53k</h4>
+          <h4 class="mb-0">Số phòng</h4>
         </div>
       </div>
       <hr class="dark horizontal my-0" />
       <div class="card-footer p-3">
-        <p class="mb-0">
-          <span class="text-success text-sm font-weight-bolder">+55% </span>than
-          lask week
-        </p>
+        <h5 class="num-room"><%= data.countRoom %> phòng hiện có</h5>
       </div>
     </div>
   </div>
@@ -30,16 +35,12 @@
           <i class="material-icons opacity-10">person</i>
         </div>
         <div class="text-end pt-1">
-          <p class="text-sm mb-0 text-capitalize">Today's Users</p>
-          <h4 class="mb-0">2,300</h4>
+          <h4 class="mb-0">Người dùng</h4>
         </div>
       </div>
       <hr class="dark horizontal my-0" />
       <div class="card-footer p-3">
-        <p class="mb-0">
-          <span class="text-success text-sm font-weight-bolder">+3% </span>than
-          lask month
-        </p>
+        <h5 class="num-user"><%= data.countUser %> người dùng</h5>
       </div>
     </div>
   </div>
@@ -49,19 +50,15 @@
         <div
           class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute"
         >
-          <i class="material-icons opacity-10">person</i>
+          <i class="material-icons opacity-10">airline_seat_flat</i>
         </div>
         <div class="text-end pt-1">
-          <p class="text-sm mb-0 text-capitalize">New Clients</p>
-          <h4 class="mb-0">3,462</h4>
+          <h4 class="mb-0">Đặt phòng</h4>
         </div>
       </div>
       <hr class="dark horizontal my-0" />
       <div class="card-footer p-3">
-        <p class="mb-0">
-          <span class="text-danger text-sm font-weight-bolder">-2%</span>
-          than yesterday
-        </p>
+        <h5 class="num-booking"><%= data.countBooking %> phiếu đặt phòng</h5>
       </div>
     </div>
   </div>
@@ -71,20 +68,97 @@
         <div
           class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute"
         >
-          <i class="material-icons opacity-10">weekend</i>
+          <i class="material-icons opacity-10">featured_play_list </i>
         </div>
         <div class="text-end pt-1">
-          <p class="text-sm mb-0 text-capitalize">Sales</p>
-          <h4 class="mb-0">$103,430</h4>
+          <h4 class="mb-0">Thanh toán</h4>
         </div>
       </div>
       <hr class="dark horizontal my-0" />
       <div class="card-footer p-3">
-        <p class="mb-0">
-          <span class="text-success text-sm font-weight-bolder">+5% </span>than
-          yesterday
-        </p>
+        <h5 class="num-payment"><%= data.countBill %> hóa đơn</h5>
       </div>
     </div>
   </div>
 </div>
+<div class="row mt-3">
+  <div class="row mt-3">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <!-- <h4 class="card-title">Đơn hàng</h4> -->
+          <div class="table-responsive">
+            <table
+              style="color: #344767"
+              class="table header-border table-hover verticle-middle"
+            >
+              <thead>
+                <tr>
+                  <th scope="col">Đặt phòng</th>
+                  <th class="tbl-center" scope="col">Số lượng</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Mới</td>
+                  <td class="tbl-center qtyNew">0</td>
+                </tr>
+
+                <tr>
+                  <td>Đã nhận phòng</td>
+                  <td class="tbl-center">0</td>
+                </tr>
+
+                <tr>
+                  <td>Đã thanh toán</td>
+                  <td class="tbl-center qtySuccess">0</td>
+                </tr>
+                <tr>
+                  <td>Đã hủy</td>
+                  <td class="tbl-center qtyFalse">0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3">
+        <h4>Doanh thu hôm nay là: 5.000.000 VNĐ</h4>
+        <h4>Doanh thu tháng này là: 35.000.000 VNĐ</h4>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Số đơn trong tuần</h4>
+          <div id="chart-with-area" class="ct-chart ct-golden-section"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<script>
+  new Chartist.Line(
+    '#chart-with-area',
+    {
+      labels: [
+        'Thứ 2',
+        'Thứ 3',
+        'Thứ 4',
+        'Thứ 5',
+        'Thứ 6',
+        'Thứ 7',
+        'Chủ nhật',
+      ],
+
+      series: [[1, 2, 5, 3, 4, 2, 7]],
+    },
+    {
+      low: 0,
+      showArea: true,
+      // plugins: [Chartist.plugins.tooltip()],
+    }
+  );
+</script>

@@ -62,17 +62,28 @@ router.post(
   AdminLoginController.CheckLogin,
   AdminBookingController.HandlePayment
 );
-// đặt phòng trực tiếp
-router.get(
-  '/booking',
-  AdminLoginController.CheckLogin,
-  AdminBookingController.Booking
-);
+
 // danh sách phòng
 router.get(
   '/room-list',
   AdminLoginController.CheckLogin,
   AdminBookingController.RoomList
+);
+//đặt phòng
+router.get(
+  '/room-list/booking/:typeID',
+  AdminLoginController.CheckLogin,
+  AdminBookingController.RoomListBooing
+);
+router.post(
+  '/room-list/checkroom',
+  AdminLoginController.CheckLogin,
+  AdminBookingController.CheckRoom
+);
+router.post(
+  '/room-list/bookingroom',
+  AdminLoginController.CheckLogin,
+  AdminBookingController.BookingRoom
 );
 
 //--------------------hóa đơn---------------------

@@ -315,6 +315,64 @@ class ADMIN {
       }
     });
   }
+
+  Statistical() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let countRoom = await db.Room.findAll();
+        let countUser = await db.User.findAll();
+        let countBooking = await db.Booking.findAll();
+        let countBill = await db.Bill.findAll();
+
+        resolve({
+          countRoom: countRoom.length,
+          countUser: countUser.length,
+          countBooking: countBooking.length,
+          countBill: countBill.length,
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  StatisticalWeek() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // let d = new Date();
+        // var day = d.getDay(),
+        //   diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        // let firstday = new Date(d.setDate(diff));
+        // firstday.setHours(0, 0, 0, 0);
+        // let date = new Date();
+        // var lastday = date.getDate() - (date.getDay() - 1) + 6;
+        // lastday = new Date(date.setDate(lastday));
+        // lastday.setHours(23, 59, 59);
+        // lastday.setHours(23, 59, 59, 0);
+
+        // let countBooking = await db.Booking.findAll({
+        //   where: {
+        //     [Op.and]: [
+        //       {
+        //         createdAt: {
+        //           [Op.lte]: firstday,
+        //         },
+        //       },
+        //       {
+        //         createdAt: {
+        //           [Op.lte]: lastday,
+        //         },
+        //       },
+        //     ],
+        //   },
+        // });
+        let countBill = await db.Bill.findAll();
+
+        resolve(countBill);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
 }
 
 module.exports = new ADMIN();
