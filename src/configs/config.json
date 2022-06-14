@@ -5,6 +5,6 @@
     "database": "FJHok5nv9h",
     "host": "remotemysql.com",
     "dialect": "mysql",
-    "logging": false
+    "logging": true
   }
 }
