@@ -1,10 +1,21 @@
 const { Sequelize } = require('sequelize');
-
-const sequelize = new Sequelize('FJHok5nv9h', 'FJHok5nv9h', 'I1rOb9HYjM', {
-  host: 'remotemysql.com',
-  dialect: 'mysql',
-  logging: false,
-});
+require('dotenv').config();
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: 'mysql',
+    logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  }
+);
 
 let connectDB = async () => {
   try {
