@@ -63,23 +63,16 @@ $(document).ready(function () {
     hideMethod: 'fadeOut',
   };
 
+  $('#date-checkin').val('2011/09/29');
+
   $('#btnSearch').click(function () {
-    if (CheckDateInvalid() && CheckRoomInvalid()) {
-      let checkin = new Date($('#date-checkin').val()),
-        checkout = new Date($('#date-checkout').val()),
-        room = $('#number-room').val(),
-        adult = $('#number-adult').val();
-      children = $('#number-children').val();
-      let data = { checkin, checkout, room, adult, children };
-      axios
-        .post('/rooms/filter', { data: data })
-        .then(function (response) {
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error.message);
-        });
-    }
+    let checkin = new Date($('#date-checkin').val()),
+      checkout = new Date($('#date-checkout').val()),
+      room = $('#number-room').val(),
+      adult = $('#number-adult').val();
+    children = $('#number-children').val();
+
+    window.location.href = `/rooms/filter?adult=${adult}&children=${children}`;
   });
 
   function CheckDateInvalid() {
@@ -88,9 +81,9 @@ $(document).ready(function () {
     let checkin = new Date($('#date-checkin').val());
     let checkout = new Date($('#date-checkout').val());
     if (checkin < d || checkin == 'Invalid Date')
-      toastr['warning']('CHECK IN không hợp lệ');
+      toastr['warning']('Ngày nhận phòng phải tính từ hôm nay');
     else if (checkout <= checkin || checkout == 'Invalid Date')
-      toastr['warning']('CHECK OUT không hợp lệ');
+      toastr['warning']('Ngày trả phòng phải sau ngày đặt phòng');
     else return true;
   }
   function CheckRoomInvalid() {

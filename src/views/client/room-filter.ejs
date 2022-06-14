@@ -10,10 +10,7 @@
     <title>HotelBooking</title>
 
     <!-- icon web -->
-    <link
-      rel="icon"
-      href="https://www.pinpng.com/pngs/m/144-1449172_hotel-png-icon-hotel-vector-icon-png-transparent.png"
-    />
+    <link rel="icon" href="/client/img/iconlogo.png" />
 
     <!--boxi icon -->
     <link
@@ -58,6 +55,9 @@
   </head>
 
   <body>
+    <div class="loading">
+      <div class="loader"></div>
+    </div>
     <div id="header">
       <div class="header-nav">
         <div class="header-logo">
@@ -77,17 +77,11 @@
           <li class="nav-item">
             <a href="/about" class="nav-link-nb">Giới thiệu</a>
           </li>
-          <!-- <li class="nav-item">
-            <a href="/login" class="nav-link-nb">Đăng nhập</a>
-          </li>
-          <li class="nav-item">
-            <a href="/register" class="nav-link-nb">Đăng ký</a>
-          </li> -->
         </ul>
       </div>
       <div class="header-account">
         <!-- đã login -->
-        <div class="btn-account login-success">
+        <!-- <div class="btn-account login-success">
           <span class="username">Hello Khang</span>
           <i class="bx bx-user-check"></i>
           <div class="account-info hide-if">
@@ -99,13 +93,13 @@
               <li><a href="/logout">Đăng xuất</a></li>
             </ul>
           </div>
-        </div>
+        </div> -->
 
         <!-- Chưa login -->
-        <!-- <a class="btn-login btn-account" href="/login"
+        <a class="btn-login btn-account" href="/login"
           ><i class="bx bx-user"></i>Đăng nhập
         </a>
-        <a class="btn-register btn-account" href="/login">Đăng ký </a> -->
+        <a class="btn-register btn-account" href="/register">Đăng ký </a>
       </div>
     </div>
     <div id="booking" class="section">
@@ -214,7 +208,7 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="section-title">
-              <h5 style="font-size: 30px; margin: 10px 0">Đề xuất cho bạn</h5>
+              <h5 style="font-size: 30px; margin: 10px 0">Kết quả tìm kiếm</h5>
             </div>
           </div>
         </div>
@@ -223,20 +217,20 @@
           if(pre=="img") {%> <% pre="text" %>
           <div class="col-lg-6 p-0 order-lg-<%= a%> order-md-<%= a%> col-md-6">
             <div class="room__text">
-              <h3>Loại phòng: <%= item.loaiPhong%></h3>
-              <h2><sup>$</sup><%= item.gia%>,000đ<span>/day</span></h2>
+              <h3><%= item.nameType%></h3>
+
               <ul>
                 <li><span>Size:</span>30 ft</li>
                 <li>
-                  <span>Sức chứa:</span>Tối da <%= item.soNguoiLon +
-                  item.soTreEm %>
+                  <span>Sức chứa:</span>Tối da <%= item.adult + item.children %>
                 </li>
-                <li><span>Giường:</span><%= item.soGiuong%></li>
+                <li><span>Giường:</span><%= item.bed%></li>
                 <li><span>Dịch vụ:</span>Wifi, TV, Bếp,...</li>
-                <li><span>View:</span>Cảnh biển</li>
+                <li><span>View:</span><%= item.view%></li>
               </ul>
-              <a class="btn-view-detail" href="/detail/<%=item.roomID%>"
-                >Xem chi tiết</a
+              <h2><sup>$</sup><%= item.price%>,000đ<span>/day</span></h2>
+              <a class="btn-view-detail" href="/rooms/booking/<%=item.typeID%>"
+                >Đặt ngay</a
               >
             </div>
           </div>
@@ -245,19 +239,19 @@
             <div class="room__pic__slider owl-carousel">
               <div
                 class="room__pic__item set-bg"
-                data-setbg="<%=item.imgs[0] %>"
+                data-setbg="<%=item.imgData[0].url %>"
               ></div>
               <div
                 class="room__pic__item set-bg"
-                data-setbg="<%=item.imgs[1] %>"
+                data-setbg="<%=item.imgData[1].url %>"
               ></div>
               <div
                 class="room__pic__item set-bg"
-                data-setbg="<%=item.imgs[2] %>"
+                data-setbg="<%=item.imgData[2].url %>"
               ></div>
               <div
                 class="room__pic__item set-bg"
-                data-setbg="<%=item.imgs[3] %>"
+                data-setbg="<%=item.imgData[3].url %>"
               ></div>
             </div>
           </div>
@@ -266,37 +260,37 @@
             <div class="room__pic__slider owl-carousel">
               <div
                 class="room__pic__item set-bg"
-                data-setbg="<%=item.imgs[0] %>"
+                data-setbg="<%=item.imgData[0].url %>"
               ></div>
               <div
                 class="room__pic__item set-bg"
-                data-setbg="<%=item.imgs[1] %>"
+                data-setbg="<%=item.imgData[1].url %>"
               ></div>
               <div
                 class="room__pic__item set-bg"
-                data-setbg="<%=item.imgs[2] %>"
+                data-setbg="<%=item.imgData[2].url %>"
               ></div>
               <div
                 class="room__pic__item set-bg"
-                data-setbg="<%=item.imgs[3] %>"
+                data-setbg="<%=item.imgData[3].url %>"
               ></div>
             </div>
           </div>
           <div class="col-lg-6 p-0 order-lg-<%= b%> order-md-<%= b%> col-md-6">
             <div class="room__text right__text">
-              <h3><%= item.loaiPhong%></h3>
-              <h2><sup>$</sup><%= item.gia%>,000đ<span>/day</span></h2>
+              <h3><%= item.nameType%></h3>
+
               <ul>
                 <li><span>Size:</span>30 ft</li>
                 <li>
-                  <span>Sức chứa:</span>Tối da <%= item.soNguoiLon +
-                  item.soTreEm %>
+                  <span>Sức chứa:</span>Tối da <%= item.adult + item.children %>
                 </li>
-                <li><span>Giường:</span><%= item.soGiuong%></li>
+                <li><span>Giường:</span><%= item.bed%></li>
                 <li><span>Dịch vụ:</span>Wifi, TV, Bếp,...</li>
-                <li><span>View:</span>Cảnh biển</li>
+                <li><span>View:</span><%= item.view%></li>
               </ul>
-              <a href="/detail/<%=item.roomID%>">Xem chi tiết</a>
+              <h2><sup>$</sup><%= item.price%>,000đ<span>/day</span></h2>
+              <a href="/rooms/booking/<%=item.typeID%>">Đặt ngay</a>
             </div>
           </div>
 
@@ -320,12 +314,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="/client/js/jquery.slicknav.js"></script>
     <script src="/client/js/owl.carousel.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- toast -->
     <script src="/client/js/toastr.js"></script>
 
     <script src="/client/js/main.js"></script>
     <script src="/client/js/header.js"></script>
     <script src="/client/js/room.js"></script>
+    <script src="/client/js/setheader.js"></script>
   </body>
 </html>

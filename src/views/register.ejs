@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Đăng nhập</title>
+    <title>Đăng ký</title>
     <!-- icon web -->
     <link
       rel="icon"
@@ -154,9 +154,44 @@
 
         <!-- Registeration Form -->
         <div class="col-md-7 col-lg-6 ml-auto">
-          <p class="show-err"></p>
+          <p class="show-err">p</p>
           <form>
             <div class="row">
+              <!-- First Name -->
+              <div class="input-group col-lg-12 mb-4">
+                <div class="input-group-prepend">
+                  <span
+                    class="input-group-text bg-white px-4 border-md border-right-0"
+                  >
+                    <i class="fa fa-user-plus text-muted"></i>
+                  </span>
+                </div>
+                <input
+                  id="fullName"
+                  type="text"
+                  name="firstname"
+                  placeholder="First Name"
+                  class="form-control bg-white border-left-0 border-md"
+                />
+              </div>
+              <div class="input-group col-lg-12 mb-4">
+                <div class="input-group-prepend">
+                  <span
+                    class="input-group-text bg-white px-4 border-md border-right-0"
+                  >
+                    <i class="fa fa-mars-stroke text-muted"></i>
+                  </span>
+                </div>
+                <select
+                  id="gender"
+                  name="firstname"
+                  class="form-control bg-white border-left-0 border-md"
+                >
+                  <option value="Nam">Nam</option>
+                  <option value="Nữ">Nữ</option>
+                </select>
+              </div>
+
               <!-- UserName -->
               <div class="input-group col-lg-12 mb-4">
                 <div class="input-group-prepend">
@@ -172,6 +207,43 @@
                   name="username"
                   placeholder="Username"
                   class="form-control bg-white border-left-0 border-md"
+                />
+              </div>
+
+              <!-- Email Address -->
+              <div class="input-group col-lg-12 mb-4">
+                <div class="input-group-prepend">
+                  <span
+                    class="input-group-text bg-white px-4 border-md border-right-0"
+                  >
+                    <i class="fa fa-envelope text-muted"></i>
+                  </span>
+                </div>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  class="form-control bg-white border-left-0 border-md"
+                />
+              </div>
+
+              <!-- Phone Number -->
+              <div class="input-group col-lg-12 mb-4">
+                <div class="input-group-prepend">
+                  <span
+                    class="input-group-text bg-white px-4 border-md border-right-0"
+                  >
+                    <i class="fa fa-phone-square text-muted"></i>
+                  </span>
+                </div>
+
+                <input
+                  id="phone"
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone Number"
+                  class="form-control bg-white border-md border-left-0 pl-3"
                 />
               </div>
 
@@ -200,7 +272,7 @@
                   class="btn btn-primary font-weight-bold btn-block py-2"
                   id="btnAdd"
                 >
-                  Đăng nhập
+                  Đăng ký
                 </button>
               </div>
 
@@ -218,8 +290,8 @@
               <!-- Already Registered -->
               <div class="text-center w-100">
                 <p class="text-muted font-weight-bold">
-                  Chưa có tài khoản?
-                  <a href="/register" class="text-primary ml-2">Đăng ký</a>
+                  Đã có tài khoản?
+                  <a href="/login" class="text-primary ml-2">Đăng nhập</a>
                 </p>
               </div>
             </div>
@@ -251,8 +323,11 @@
     function GetData() {
       let username = $('#username').val();
       let password = $('#password').val();
-
-      return { username, password };
+      let fullName = $('#fullName').val();
+      let gender = $('#gender').val();
+      let email = $('#email').val();
+      let phone = $('#phone').val();
+      return { username, password, fullName, gender, email, phone };
     }
     function ShowErr(mess) {
       $('.show-err').html(mess);
@@ -264,28 +339,31 @@
     }
     $(document).ready(() => {
       $('#btnAdd').click(() => {
+        $('.loading').css('display', 'flex');
         let data = GetData();
-        if (data.username.length == 0) {
-          ShowErr('Bạn chưa nhập tên đăng nhập');
-        } else if (data.password.length == 0) {
-          ShowErr('Bạn chưa nhập mật khẩu');
-        } else {
-          $('.loading').css('display', 'flex');
-          axios
-            .post('/login', { data })
-            .then((res) => {
-              $('.loading').css('display', 'none');
+        // console.log(data);
 
-              if (res.data.message == 'success') {
-                window.location.href = '/login';
-              } else if (res.data.message == 'wrong username')
-                ShowErr('Sai tên đăng nhập');
-              else ShowErr('Sai mật khẩu');
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
+        axios
+          .post('/register', { data })
+          .then((res) => {
+            $('.loading').css('display', 'none');
+            let mess = res.data;
+            console.log(mess);
+            if (mess == 'Data Invalid')
+              ShowErr('Bạn cần nhập đầy đủ thông tin');
+            else if (mess == 'User Invalid') ShowErr('Username đã tồn tại');
+            else if (mess == 'Email Invalid') ShowErr('Email không hợp lệ');
+            else if (mess == 'Phone Invalid')
+              ShowErr('Số điện thoại không hợp lệ');
+            else {
+              HideErr();
+              alert('Đăng ký thành công');
+              window.location.href = '/login';
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       });
     });
   </script>

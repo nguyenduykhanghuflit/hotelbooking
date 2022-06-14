@@ -14,9 +14,11 @@ class Login {
         if (!user) {
           data = { message: 'wrong username' };
         } else {
-          if (user.password === password)
-            data = { message: 'success', username, role: user.role };
-          else data = { message: 'wrong password' };
+          if (user.role == 'customer') {
+            if (user.password === password)
+              data = { message: 'success', username, role: user.role };
+            else data = { message: 'wrong password' };
+          } else data = { message: 'wrong username' };
         }
         resolve(data);
       } catch (error) {
@@ -74,6 +76,52 @@ class Login {
         resolve(data);
       } catch (error) {
         reject({ message: 'server error info user' });
+      }
+    });
+  }
+
+  CheckUsernameValid(username) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.User.findAll({
+          where: { username, role: 'customer' },
+        });
+        // if (data.length > 0) resolve(false);
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  CreateAccountCustomer(username, password) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.User.create({
+          username,
+          password,
+          role: 'customer',
+        });
+        resolve('Success');
+      } catch (error) {
+        reject('Fail');
+      }
+    });
+  }
+  CreateInfoCustomer(username, fullName, email, phone, gender) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var customerID = nanoid(10);
+        let data = await db.Customer.create({
+          customerID,
+          username,
+          fullName,
+          email,
+          phone,
+          gender,
+        });
+        resolve('Success');
+      } catch (error) {
+        reject('Fail');
       }
     });
   }

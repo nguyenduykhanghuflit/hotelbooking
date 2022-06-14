@@ -21,9 +21,9 @@ class HomeController {
       var decoded = jwt.verify(token, 'ok');
       if (decoded) {
         // data = { login: true };
-        // data = decoded;
+        // data = decoded;ReturnInfoUser
         let username = decoded.userName;
-        let info = await login.getInfoAdmin(username);
+        let info = await login.getInfoUser(username);
         data = { login: true, info: { name: info.fullName } };
       }
     } catch (err) {

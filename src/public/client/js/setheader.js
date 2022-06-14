@@ -25,7 +25,7 @@ $(function () {
 
   let noLogged = `<a class="btn-login btn-account" href="/login">
     <i class="bx bx-user"></i>Đăng nhập</a>
-    <a class="btn-register btn-account" href="/login">Đăng ký </a>`;
+    <a class="btn-register btn-account" href="/register">Đăng ký </a>`;
   $('.loading').css('display', 'block');
 
   if (token) {
@@ -45,8 +45,8 @@ $(function () {
           <div class="account-info hide-if">
             <div class="arrow-up"></div>
             <ul class="list-info">
-              <li><a href="/data">Thông tin của bạn</a></li>
-              <li><a href="/list-room">Phòng đã đặt</a></li>
+              <li><a href="/info">Thông tin của bạn</a></li>
+              <li><a href="/my-booking">Phòng đã đặt</a></li>
               <li><a href="/logout">Đăng xuất</a></li>
             </ul>
           </div>

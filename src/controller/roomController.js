@@ -22,15 +22,15 @@ class RoomController {
   }
 
   //chi tiết [sửa lại bảng Room-->Sai]
-  // async DetailRooms(req, res) {
-  //   let typeID = req.params.typeID;
-  //   //find Type by ID
-  //   let data = await CRUD.getRoomTypeById(typeID);
-  //   !data
-  //     ? res.json({ message: 'Phòng không hợp lệ' })
-  //     : res.render('client/detail.ejs', { data, layout: false });
-  //   // res.render('client/detail.ejs', { data, layout: false });
-  // }
+  async DetailRooms(req, res) {
+    let typeID = req.params.typeID;
+    //find Type by ID
+    let data = await CRUD.getRoomTypeById(typeID);
+    !data
+      ? res.json({ message: 'Phòng không hợp lệ' })
+      : res.render('client/detail.ejs', { data, layout: false });
+    //   // res.render('client/detail.ejs', { data, layout: false });
+  }
 
   //
 
@@ -194,13 +194,17 @@ class RoomController {
 
   //lọc ra
   async FilterRooms(req, res) {
-    let adult = req.body.data.adult,
-      children = req.body.data.children,
-      checkin = req.body.checkin,
-      checkout = req.body.checkout,
-      room = req.body.room;
-    let response = await CRUD.FindRoom(adult, children);
-    res.send(response);
+    let adult = req.query.adult,
+      children = req.query.children;
+
+    if (!adult || !children) res.send('Lọc không hợp lệ');
+    // checkin = req.body.checkin,
+    // checkout = req.body.checkout,
+    // room = req.body.room;
+    else {
+      let data = await CRUD.FindRoom(adult, children);
+      res.render('client/room-filter.ejs', { data, layout: false });
+    }
   }
 }
 

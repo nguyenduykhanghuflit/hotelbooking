@@ -33,11 +33,4 @@ document.querySelector('.btn-on-top').addEventListener('click', function () {
 
 $(function () {
   let btnSearch = $('.btn-fliter');
-
-  btnSearch.click(function () {
-    let adult = $('#number-adult').val();
-    let children = $('#number-children').val();
-    console.log(adult);
-    console.log(children);
-  });
 });

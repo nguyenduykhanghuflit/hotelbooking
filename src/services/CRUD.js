@@ -61,18 +61,9 @@ class CRUD {
         let data = await db.Type.findByPk(typeID, {
           attributes: { exclude: ['RoomRoomID'] },
 
+          attributes: { exclude: ['RoomRoomID'] },
+          // attributes: ['url'],
           include: [
-            {
-              model: db.Room,
-              as: 'roomData',
-              where: {
-                status: {
-                  [Op.ne]: ['đang dọn'],
-                },
-              },
-              attributes: ['roomID', 'status'],
-              plain: true,
-            },
             {
               model: db.Image,
               as: 'imgData',
@@ -80,6 +71,7 @@ class CRUD {
               plain: true,
             },
           ],
+
           raw: false, //gộp lại k tách ra
           nest: true,
         });
@@ -93,6 +85,7 @@ class CRUD {
   FindRoom(adult, children) {
     return new Promise(async (resolve, reject) => {
       try {
+        if (adult == 4) children = 2;
         let data = await db.Type.findAll({
           attributes: { exclude: ['RoomRoomID'] },
           where: { adult: adult, children: children },

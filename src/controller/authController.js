@@ -39,6 +39,10 @@ class AuthenController {
     } else return res.render('login.ejs', { layout: false });
   }
 
+  async Register(req, res) {
+    return res.render('register.ejs', { layout: false });
+  }
+
   //[GET]: /logout
   async Logout(req, res) {
     res.clearCookie('preUrl');
@@ -48,8 +52,8 @@ class AuthenController {
 
   //[POST]: handle login request
   async HandleLogin(req, res) {
-    let username = req.body.username;
-    let password = req.body.password;
+    let username = req.body.data.username;
+    let password = req.body.data.password;
 
     // kiểm tra username và password
     let result = await USER.checkValidUser(username, password);
@@ -73,6 +77,50 @@ class AuthenController {
 
     return res.json(response);
   }
+
+  //[POST]: handle register request
+  async HandleRegister(req, res) {
+    let data = req.body.data;
+    let username = data.username;
+    let password = data.password;
+    let fullName = data.fullName;
+    let gender = data.gender;
+    let email = data.email;
+    let phone = data.phone;
+    if (!username || !password || !fullName || !gender || !email || !phone)
+      res.send('Data Invalid');
+    else if (
+      !email.match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+    ) {
+      res.send('Email Invalid');
+    } else if (!/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(phone)) {
+      res.send('Phone Invalid');
+    } else {
+      let checkUsername = await USER.CheckUsernameValid(username);
+      let l = checkUsername.length;
+      if (l > 0) {
+        res.send('User Invalid');
+      } else {
+        let create = await USER.CreateAccountCustomer(username, password);
+        if (create != 'Success') res.send('Fail');
+        else {
+          let info = await USER.CreateInfoCustomer(
+            username,
+            fullName,
+            email,
+            phone,
+            gender
+          );
+          if (info != 'Success') res.send('Fail');
+        }
+
+        res.send('Success');
+      }
+    }
+  }
+  // kiểm tra username và password
 
   // [POST]: check login
   async CheckLogin(req, res, next) {
@@ -107,6 +155,24 @@ class AuthenController {
         if (role == 'admin') info = await USER.getInfoAdmin(username);
         else info = await USER.getInfoUser(username);
         return res.send({ message: 'logged', info });
+      }
+    } catch (err) {
+      console.log('token da bi thay doi');
+      return res.redirect('/login');
+    }
+  }
+
+  async ReturnInfoUser(req, res) {
+    let token = req.cookies.token;
+    try {
+      let deccoded = jwt.verify(token, publicKey, { algorithm: 'RS256' });
+      if (deccoded) {
+        let username = deccoded.username;
+        let role = deccoded.role;
+        let info;
+        if (role == 'admin') info = await USER.getInfoAdmin(username);
+        else info = await USER.getInfoUser(username);
+        return res.send(info);
       }
     } catch (err) {
       console.log('token da bi thay doi');
