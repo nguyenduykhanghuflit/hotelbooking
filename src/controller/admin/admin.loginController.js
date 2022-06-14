@@ -87,5 +87,12 @@ class AdminLoginController {
       return res.redirect('/admin/login');
     }
   }
+
+  //[GET]: /logout
+  async Logout(req, res) {
+    res.clearCookie('preUrlAdmin');
+    res.clearCookie('tokenAdmin');
+    res.redirect('/admin');
+  }
 }
 module.exports = new AdminLoginController();

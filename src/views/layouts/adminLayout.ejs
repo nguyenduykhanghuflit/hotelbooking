@@ -160,8 +160,8 @@
               Thiết lập hệ thống
             </h6>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="./pages/rtl.html">
+          <li class="nav-item nav-room-m">
+            <a class="nav-link text-white" href="/admin/room">
               <div
                 class="text-white text-center me-2 d-flex align-items-center justify-content-center"
               >
@@ -172,8 +172,8 @@
               <span class="nav-link-text ms-1">Phòng</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="./pages/rtl.html">
+          <li class="nav-item nav-type">
+            <a class="nav-link text-white" href="/admin/room-type">
               <div
                 class="text-white text-center me-2 d-flex align-items-center justify-content-center"
               >
@@ -184,8 +184,8 @@
               <span class="nav-link-text ms-1">Loại phòng</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" href="./pages/rtl.html">
+          <li class="nav-item nav-user">
+            <a class="nav-link text-white" href="/admin/manager">
               <div
                 class="text-white text-center me-2 d-flex align-items-center justify-content-center"
               >
@@ -235,18 +235,25 @@
              
             </div>
             <ul class="navbar-nav justify-content-end">
-              <li class="nav-item d-flex align-items-center">
-                <a
-                  href="javascript:;"
-                  class="nav-link text-body font-weight-bold px-0"
-                >
+            
+              <li class="nav-item dropdown pe-2 d-flex align-items-center">
+                <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="fa fa-user me-sm-1"></i>
-                  <span class="d-sm-inline d-none">Sign In</span>
+                  <span class="d-sm-inline d-none">Admin</span>
                 </a>
+                <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+                  <li style="padding:0 10px;display: inline-flex;align-items: center;justify-content: center" class="mb-2">
+                    <i class="fa fa-sign-out me-sm-1"></i>
+                    <a class="dropdown-item text-center border-radius-md" href="/admin/logout">
+                      Đăng xuất
+                    </a>
+                  </li>
+                </ul>
               </li>
              
              
             </ul>
+            
           </div>
         </div>
       </nav>

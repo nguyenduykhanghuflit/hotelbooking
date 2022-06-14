@@ -373,6 +373,93 @@ class ADMIN {
       }
     });
   }
+
+  GetAllRoom() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Room.findAll({
+          raw: false, //gộp lại k tách ra
+          nest: true,
+          include: [
+            {
+              model: db.Type,
+              as: 'roomData',
+              plain: true,
+              include: [
+                {
+                  model: db.Image,
+                  as: 'imgData',
+                  plain: true,
+                },
+              ],
+            },
+          ],
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  GetRoomByRoomID(roomID) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Room.findByPk(roomID, {
+          raw: false, //gộp lại k tách ra
+          nest: true,
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  CreateRoom(typeID, floor) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var roomID = nanoid(10);
+        let data = await db.Room.create({
+          roomID,
+          typeID,
+          floor: parseInt(floor),
+          status: 'trống',
+        });
+        resolve('succes');
+      } catch (error) {
+        reject('fail');
+      }
+    });
+  }
+  async UpdateRoom(roomID, floor, typeID) {
+    await db.Room.update(
+      { floor, typeID },
+      {
+        where: {
+          roomID,
+        },
+      }
+    );
+  }
+  GetAllType() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Type.findAll();
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  GetAllAdmin() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Admin.findAll();
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
 }
 
 module.exports = new ADMIN();
