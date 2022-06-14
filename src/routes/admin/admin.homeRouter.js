@@ -166,7 +166,7 @@ router.get(
   AdminSystemController.Manager
 );
 router.get(
-  '/edit-admin:/adminID',
+  '/edit-admin/:adminID',
   AdminLoginController.CheckLogin,
   AdminSystemController.EditManagerController
 );
@@ -183,7 +183,7 @@ router.post(
   AdminSystemController.EditManager
 );
 router.post(
-  '/manager/create',
+  '/create-manager',
   AdminLoginController.CheckLogin,
   AdminSystemController.CreateManager
 );

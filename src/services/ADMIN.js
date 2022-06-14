@@ -460,6 +460,99 @@ class ADMIN {
       }
     });
   }
+
+  CheckUserValid(username) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.User.findAll({
+          where: { username, role: 'admin' },
+        });
+        // if (data.length > 0) resolve(false);
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  CreateAccountAdmin(username, password) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.User.create({
+          username,
+          password,
+          role: 'admin',
+        });
+        resolve('Success');
+      } catch (error) {
+        reject('Fail');
+      }
+    });
+  }
+  CreateInfoAdmin(username, fullName, email, phone, gender) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        var adminID = nanoid(10);
+        let data = await db.Admin.create({
+          adminID,
+          username,
+          fullName,
+          email,
+          phone,
+          gender,
+        });
+        resolve('Success');
+      } catch (error) {
+        reject('Fail');
+      }
+    });
+  }
+  getAdminById(adminID) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Admin.findByPk(adminID, {
+          raw: false, //gộp lại k tách ra
+          plain: true,
+          include: [
+            {
+              model: db.User,
+              as: 'acc',
+              raw: false, //gộp lại k tách ra
+              plain: true,
+            },
+          ],
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  async UpdateAdmin(
+    adminID,
+    username,
+    fullName,
+    email,
+    password,
+    phone,
+    gender
+  ) {
+    await db.Admin.update(
+      { fullName, email, phone, gender },
+      {
+        where: {
+          adminID,
+        },
+      }
+    );
+    await db.User.update(
+      { password },
+      {
+        where: {
+          username,
+        },
+      }
+    );
+  }
 }
 
 module.exports = new ADMIN();

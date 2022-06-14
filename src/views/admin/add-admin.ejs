@@ -66,22 +66,39 @@
     color: #6b6e72;
   }
 
-  /* .dd-button:after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 15px;
-  transform: translateY(-50%);
-  width: 0; 
-  height: 0; 
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid black;
-} */
+  .loading {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(228, 215, 215, 0.2);
+    position: fixed;
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .loader {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    border: 3px solid rgb(220, 217, 213);
+    border-top-color: #002147;
+    box-sizing: border-box;
+    background: transparent;
+    animation: loading 1s linear infinite;
+    position: absolute;
+    top: 20%;
+  }
 
-  /* .dd-button:hover {
-  background-color: #ebdddd;
-} */
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    0% {
+      transform: rotate(360deg);
+    }
+  }
 
   .dd-input {
     display: none;
@@ -129,41 +146,69 @@
     padding: 0;
     border-bottom: 1px solid #cccccc;
   }
+  .err {
+    color: red;
+    font-size: 13px;
+  }
+  .alert-err {
+    display: none;
+  }
 </style>
 <h4>Thêm admin</h4>
+<div class="loading">
+  <div class="loader"></div>
+</div>
 <div class="row">
   <div style="margin: 0 auto" class="col-md-8 col-sm-8">
-    <form
-      method="post"
-      name="formCreate"
-      action="/admin/room/create"
-      class="row g-3"
-    >
-      <div class="col-md-10">
+    <div class="alert alert-err alert-warning" role="alert"></div>
+    <form class="row g-3">
+      <div class="col-md-12">
         <label for="username" class="form-label">Username</label>
-        <input type="text" required " class="form-control" name="username" />
+        <input
+          type="text"
+          autocomplete="off"
+          class="form-control"
+          id="username"
+        />
+        <span class="err errU"></span>
       </div>
-      <div class="col-md-10">
+      <div class="col-md-12">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          autocomplete="off"
+          class="form-control"
+          id="password"
+        />
+        <span class="err errP"></span>
+      </div>
+      <div class="col-md-12">
         <label for="fullName" class="form-label">Họ và tên</label>
-        <input type="text" required class="form-control" name="fullName" />
+        <input type="text" required class="form-control" id="fullName" />
+        <span class="err errF"></span>
       </div>
-      <div class="col-md-10">
-        <label for="email" class="form-label">Email</label>
-        <input type="text" required class="form-control" name="email" />
-      </div>
-      <div class="col-md-10">
-        <label for="phone" class="form-label">Số điện thoại</label>
-        <input type="number" required class="form-control" name="phone" />
-      </div>
-      <div class="col-md-10">
+      <div class="col-md-12">
         <label for="gender" class="form-label">Giới tính</label>
         <select name="gender" id="gender" class="form-select">
           <option value="Nam">Nam</option>
           <option value="Nữ">Nữ</option>
         </select>
       </div>
+      <div class="col-md-12">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" required class="form-control" id="email" />
+        <span class="err errE"></span>
+      </div>
+      <div class="col-md-12">
+        <label for="phone" class="form-label">Số điện thoại</label>
+        <input type="number" required class="form-control" id="phone" />
+        <span class="err errP"></span>
+      </div>
+
       <div class="col-12">
-        <button type="submit" class="btn btn-primary">Thêm người dùng</button>
+        <button type="button" id="btnAdd" class="btn btn-primary">
+          Thêm người dùng
+        </button>
       </div>
     </form>
   </div>
@@ -175,8 +220,51 @@
 
 <!-- thiết lập ngày tháng và lọc data -->
 <script>
+  function GetData() {
+    let username = $('#username').val();
+    let password = $('#password').val();
+    let fullName = $('#fullName').val();
+    let gender = $('#gender').val();
+    let email = $('#email').val();
+    let phone = $('#phone').val();
+    return { username, password, fullName, gender, email, phone };
+  }
+  function ShowErr(mess) {
+    $('.alert-err').html(mess);
+    $('.alert-err').css('display', 'block');
+  }
+  function HideErr() {
+    $('.alert-err').html('');
+    $('.alert-err').css('display', 'none');
+  }
   $(document).ready(() => {
     $('#table_id').DataTable({});
+
+    $('#btnAdd').click(() => {
+      $('.loading').css('display', 'flex');
+      let data = GetData();
+
+      axios
+        .post('/admin/create-manager', { data })
+        .then((res) => {
+          $('.loading').css('display', 'none');
+          let mess = res.data;
+          console.log(mess);
+          if (mess == 'Data Invalid') ShowErr('Bạn cần nhập đầy đủ thông tin');
+          else if (mess == 'User Invalid') ShowErr('Username đã tồn tại');
+          else if (mess == 'Email Invalid') ShowErr('Email không hợp lệ');
+          else if (mess == 'Phone Invalid')
+            ShowErr('Số điện thoại không hợp lệ');
+          else {
+            HideErr();
+            alert('Thành công');
+            window.location.href = '/admin/manager';
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
   });
 </script>
 <!-- thiết lập front end -->

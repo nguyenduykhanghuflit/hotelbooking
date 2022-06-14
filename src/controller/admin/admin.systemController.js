@@ -76,10 +76,68 @@ class AdminSystemController {
   }
 
   //[VIEW]
-  async EditManagerController(req, res) {}
+  async EditManagerController(req, res) {
+    let adminID = req.params.adminID;
+    let data = await ADMIN.getAdminById(adminID);
+    // res.send(data);
+    res.render('admin/edit-admin.ejs', { data });
+  }
   //Xử lý
-  async CreateManager(req, res) {}
+  async CreateManager(req, res) {
+    let data = req.body.data;
+    let username = data.username;
+    let password = data.password;
+    let fullName = data.fullName;
+    let gender = data.gender;
+    let email = data.email;
+    let phone = data.phone;
+
+    if (!username || !password || !fullName || !gender || !email || !phone)
+      res.send('Data Invalid');
+    else if (
+      !email.match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+    ) {
+      res.send('Email Invalid');
+    } else if (!/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(phone)) {
+      res.send('Phone Invalid');
+    } else {
+      let checkUsername = await ADMIN.CheckUserValid(username);
+      let l = checkUsername.length;
+      if (l > 0) {
+        res.send('User Invalid');
+      } else {
+        let create = await ADMIN.CreateAccountAdmin(username, password);
+        if (create != 'Success') res.send('Fail');
+        else {
+          let info = await ADMIN.CreateInfoAdmin(
+            username,
+            fullName,
+            email,
+            phone,
+            gender
+          );
+          if (info != 'Success') res.send('Fail');
+        }
+
+        res.send('Success');
+      }
+    }
+  }
   //Xử lý
-  async EditManager(req, res) {}
+  async EditManager(req, res) {
+    let data = req.body;
+    let ud = await ADMIN.UpdateAdmin(
+      data.adminID,
+      data.username,
+      data.fullName,
+      data.email,
+      data.password,
+      data.phone,
+      data.gender
+    );
+    res.redirect('/admin/manager');
+  }
 }
 module.exports = new AdminSystemController();
