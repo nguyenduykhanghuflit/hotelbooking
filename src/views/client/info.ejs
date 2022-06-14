@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Hiroto Template" />
+    <meta name="keywords" content="Hiroto, unica, creative, html" />
+    <meta name="viewport" content="width=dev-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>HotelBooking</title>
+
+    <!-- icon web -->
+    <link rel="icon" href="/client/img/iconlogo.png" />
+
+    <!--boxi icon -->
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="/client/css/elegant-icons.css"
+      type="text/css"
+    />
+    <!-- fontawesome -->
+    <link
+      rel="stylesheet"
+      href="/client/css/font-awesome.min.css"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="/client/css/bootstrap.min.css"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="/client/css/header-bootstrap.css"
+      type="text/css"
+    />
+
+    <!-- Css Styles -->
+    <link
+      rel="stylesheet"
+      href="/client/css/owl.carousel.min.css"
+      type="text/css"
+    />
+
+    <link rel="stylesheet" href="/client/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="/client/css/header.css" type="text/css" />
+    <link rel="stylesheet" href="/client/css/room.css" type="text/css" />
+    <link rel="stylesheet" href="/client/css/my-booking.css" type="text/css" />
+
+    <!-- toast -->
+    <link rel="stylesheet" href="/client/css/toastr.css" type="text/css" />
+  </head>
+
+  <body>
+    <div class="loading">
+      <div class="loader"></div>
+    </div>
+    <div id="header">
+      <div class="header-nav">
+        <div class="header-logo">
+          <img src="/client/img/mylogo.svg" alt="" class="logo" />
+        </div>
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="/" class="nav-link-nb nav-link-nb-main">Trang chủ</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/rooms" class="nav-link-nb">Phòng</a>
+          </li>
+          <li class="nav-item">
+            <a href="/hotel" class="nav-link-nb">Thông tin</a>
+          </li>
+          <li class="nav-item">
+            <a href="/location" class="nav-link-nb">Vị trí</a>
+          </li>
+        </ul>
+      </div>
+      <div class="header-account">
+        <a class="btn-login btn-account" href="/login"
+          ><i class="bx bx-user"></i>Đăng nhập
+        </a>
+        <a class="btn-register btn-account" href="/register">Đăng ký </a>
+      </div>
+    </div>
+    <div style="height: 250px" id="booking" class="section">
+      <div class="section-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="section-title">
+                <h5 style="font-size: 30px; color: #fff; font-weight: bold">
+                  Tìm phòng nhanh chóng, dễ dàng và tiện lợi ở hotel HUFLIT
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rooms Section Begin -->
+    <section style="padding-top: 10px" class="rooms">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title">
+              <h5 style="font-size: 30px; margin-top: 10px">
+                Thông tin cá nhân
+              </h5>
+            </div>
+          </div>
+          <div style="margin: 0 auto" class="col-lg-8">
+            <form method="POST" action="/info/update">
+              <div class="form-group">
+                <label for="fullName">Họ tên</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fullName"
+                  name="fullName"
+                  required=""
+                  value="<%=info.fullName %>"
+                  placeholder="Họ tên của bạn"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  value="<%=info.email %>"
+                  required=""
+                  pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                  title="Email không hợp lệ"
+                  placeholder="Email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="phone"
+                  value="<%=info.phone %>"
+                  name="phone"
+                  required=""
+                  placeholder="Số điện thoại"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  value="<%=info.info.password %>"
+                  name="password"
+                  required=""
+                  placeholder="Mật khẩu"
+                />
+              </div>
+
+              <button type="submit" class="btn btn-primary">Cập nhật</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="btn-on-top"></div>
+      </div>
+    </section>
+
+    <!--==================================== -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Js Plugins -->
+
+    <!-- <script src="/client/js/jquery-3.3.1.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="/client/js/jquery.slicknav.js"></script>
+    <script src="/client/js/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- toast -->
+    <script src="/client/js/toastr.js"></script>
+
+    <script src="/client/js/main.js"></script>
+    <script src="/client/js/header.js"></script>
+    <script src="/client/js/room.js"></script>
+    <script src="/client/js/setheader.js"></script>
+  </body>
+</html>

@@ -171,8 +171,75 @@ class AuthenController {
         let role = deccoded.role;
         let info;
         if (role == 'admin') info = await USER.getInfoAdmin(username);
-        else info = await USER.getInfoUser(username);
-        return res.send(info);
+        else info = await USER.getInfoCustomer(username);
+        return res.render('client/info.ejs', { info, layout: false });
+      }
+    } catch (err) {
+      console.log('token da bi thay doi');
+      return res.redirect('/login');
+    }
+  }
+  async UpdateInfo(req, res) {
+    let token = req.cookies.token;
+    let fullName = req.body.fullName;
+    let phone = req.body.phone;
+    let email = req.body.email;
+    let password = req.body.password;
+
+    if (!fullName || !phone || !email || !password) return res.send('Lỗi');
+    try {
+      let deccoded = jwt.verify(token, publicKey, { algorithm: 'RS256' });
+      if (deccoded) {
+        let username = deccoded.username;
+        console.log(username);
+        console.log({ fullName, phone, email, password });
+        let ud = await USER.UpdateInfoCustomer(
+          username,
+          fullName,
+          email,
+          phone,
+          password
+        );
+        return res.redirect('/info');
+      }
+    } catch (err) {
+      console.log('token da bi thay doi');
+      return res.redirect('/login');
+    }
+  }
+
+  async GetBookingByUsername(req, res) {
+    let token = req.cookies.token;
+    try {
+      let deccoded = jwt.verify(token, publicKey, { algorithm: 'RS256' });
+      if (deccoded) {
+        let username = deccoded.username;
+        let data = await USER.GetAllBookingByUsername(username);
+        // res.send(data);
+        return res.render('client/my-booking.ejs', { data, layout: false });
+      }
+    } catch (err) {
+      console.log('token da bi thay doi');
+      return res.redirect('/login');
+    }
+  }
+
+  async Cancel(req, res) {
+    let token = req.cookies.token;
+    let bookingID = req.params.bookingID;
+    try {
+      let deccoded = jwt.verify(token, publicKey, { algorithm: 'RS256' });
+      if (deccoded) {
+        let username = deccoded.username;
+        let data = await USER.getBillByBookingID(bookingID);
+        let usernameBill = data.username;
+        if (usernameBill != username) res.send('Không hợp lệ');
+        else {
+          let ud = await USER.UpdateBooking(bookingID, 'hủy');
+          res.redirect('/my-booking');
+        }
+        // res.send(data);
+        // return res.render('client/my-booking.ejs', { data, layout: false });
       }
     } catch (err) {
       console.log('token da bi thay doi');

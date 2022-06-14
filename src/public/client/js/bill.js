@@ -232,9 +232,14 @@ $(function () {
   $('#price-room span').html(commaSeparator($('#price-room span').html()));
 
   function CheckDateValid() {
+    //lấy ngày hiện tại
     let d = new Date();
+
+    //lấy ngày nhận phòng
     let checkin = new Date($('#i-checkin').val());
+    //lấy ngày trả phòng
     let checkout = new Date($('#i-checkout').val());
+
     if (checkin == 'Invalid Date')
       toastr['warning']('Bạn chưa chọn ngày bắt đầu');
     else if (checkin < d.setHours(00, 00, 01))

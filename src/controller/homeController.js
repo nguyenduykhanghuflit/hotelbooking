@@ -9,8 +9,13 @@ const jwt = require('jsonwebtoken');
 
 class HomeController {
   async data(req, res) {
-    let data = await USER.getInfoAdmin('admin1');
-    res.json(data);
+    res.render('client/home.ejs', { layout: false });
+  }
+  async Location(req, res) {
+    res.render('client/location.ejs', { layout: false });
+  }
+  async Hotel(req, res) {
+    res.render('client/hotel.ejs', { layout: false });
   }
   // trang chủ
   async Home(req, res) {

@@ -125,6 +125,125 @@ class Login {
       }
     });
   }
+
+  GetAllBookingByUsername(username) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Booking.findAll({
+          where: { username },
+          raw: false, //gộp lại k tách ra
+          nest: true,
+          order: [['createdAt', 'DESC']],
+          include: [
+            {
+              model: db.Room,
+              as: 'bookingData',
+              raw: false, //gộp lại k tách ra
+              nest: true,
+              include: [
+                {
+                  model: db.Type,
+                  as: 'roomData',
+                  raw: false, //gộp lại k tách ra
+                  nest: true,
+                  include: [
+                    {
+                      model: db.Image,
+                      as: 'imgData',
+                      raw: false, //gộp lại k tách ra
+                      nest: true,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        });
+        resolve(data);
+      } catch (error) {
+        reject({ message: 'server error info admin' });
+      }
+    });
+  }
+
+  getBillByBookingID(bookingID) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Booking.findByPk(bookingID);
+        resolve(data);
+      } catch (error) {
+        reject({ message: 'server error info admin' });
+      }
+    });
+  }
+  UpdateBooking(bookingID, stt) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db.Booking.update(
+          { status: stt },
+          {
+            where: {
+              bookingID,
+            },
+          }
+        );
+        resolve(true);
+      } catch (error) {
+        reject(false);
+      }
+    });
+  }
+
+  async getInfoCustomer(username) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Customer.findOne({
+          attributes: { exclude: ['customerID'] },
+          where: { username },
+          raw: false, //gộp lại k tách ra
+          nest: true,
+          include: [
+            {
+              model: db.User,
+
+              as: 'info',
+              raw: false, //gộp lại k tách ra
+              plain: true,
+            },
+          ],
+        });
+        resolve(data);
+      } catch (error) {
+        reject({ message: 'server error info user' });
+      }
+    });
+  }
+
+  UpdateInfoCustomer(username, fullName, email, phone, password) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db.Customer.update(
+          { fullName, email, phone },
+          {
+            where: {
+              username,
+            },
+          }
+        );
+        await db.User.update(
+          { password },
+          {
+            where: {
+              username,
+            },
+          }
+        );
+        resolve(true);
+      } catch (error) {
+        reject(false);
+      }
+    });
+  }
 }
 
 module.exports = new Login();

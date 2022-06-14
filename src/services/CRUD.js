@@ -65,6 +65,17 @@ class CRUD {
           // attributes: ['url'],
           include: [
             {
+              model: db.Room,
+              as: 'roomData',
+              where: {
+                status: {
+                  [Op.ne]: ['đang dọn'],
+                },
+              },
+              attributes: ['roomID', 'status'],
+              plain: true,
+            },
+            {
               model: db.Image,
               as: 'imgData',
               attributes: ['url'],
