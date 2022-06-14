@@ -5,7 +5,7 @@ import configViewEngine from './configs/viewEngine';
 import connectDB from './configs/connectDB';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
