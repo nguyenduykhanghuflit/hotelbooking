@@ -12,10 +12,14 @@ class AdminHomeController {
     // if (ud) console.log('ADMIN: trạng thái phòng vừa được cập nhật');
     if (data) console.log('ADMIN: các phòng quá hạn đã được hủy');
     let statistical = await ADMIN.Statistical();
-    let statisticalWeek = await ADMIN.StatisticalWeek();
+    // let statisticalWeek = await ADMIN.StatisticalWeek();
     // res.send(statisticalWeek);
 
     res.render('admin/home.ejs', { data: statistical });
+  }
+  async DataHome(req, res) {
+    let data = await ADMIN.DataHome();
+    res.send(data);
   }
 }
 module.exports = new AdminHomeController();

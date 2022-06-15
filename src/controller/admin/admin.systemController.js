@@ -46,8 +46,8 @@ class AdminSystemController {
   }
   //[VIEW]
   async RoomType(req, res) {
-    res.send('loại phòng');
-    // res.render('admin/home.ejs', { data: statistical });
+    let data = await ADMIN.GetAllRoomType();
+    res.render('admin/type-room.ejs', { data });
   }
   //[VIEW]
   async CreateRoomTypeController(req, res) {
@@ -55,7 +55,9 @@ class AdminSystemController {
   }
   //[VIEW]
   async EditRoomTypeController(req, res) {
-    res.render('admin/home.ejs', { data: statistical });
+    let data = await ADMIN.GetAllRoomTypeByTypeID(req.params.typeID);
+    res.render('admin/edit-type-room.ejs', { data });
+    // res.send(data);
   }
   //Xử lý
   async CreateRoomType(req, res) {
@@ -63,7 +65,18 @@ class AdminSystemController {
   }
   //Xử lý
   async EditRoomType(req, res) {
-    res.render('admin/home.ejs', { data: statistical });
+    let data = req.body;
+    let ud = await ADMIN.UpdateRoomType(
+      data.typeID,
+      data.nameType,
+      data.price,
+      data.adult,
+      data.children,
+      data.bed,
+      data.description,
+      data.view
+    );
+    res.redirect('/admin/room-type');
   }
   //[VIEW]
   async Manager(req, res) {

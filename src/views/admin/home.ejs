@@ -101,21 +101,21 @@
               <tbody>
                 <tr>
                   <td>Mới</td>
-                  <td class="tbl-center qtyNew">0</td>
+                  <td class="tbl-center bookNew">0</td>
                 </tr>
 
                 <tr>
                   <td>Đã nhận phòng</td>
-                  <td class="tbl-center">0</td>
+                  <td class="tbl-center bookCheck">0</td>
                 </tr>
 
                 <tr>
                   <td>Đã thanh toán</td>
-                  <td class="tbl-center qtySuccess">0</td>
+                  <td class="tbl-center bookPay qtySuccess">0</td>
                 </tr>
                 <tr>
                   <td>Đã hủy</td>
-                  <td class="tbl-center qtyFalse">0</td>
+                  <td class="tbl-center bookCancel">0</td>
                 </tr>
               </tbody>
             </table>
@@ -123,8 +123,7 @@
         </div>
       </div>
       <div class="mt-3">
-        <h4>Doanh thu hôm nay là: 5.000.000 VNĐ</h4>
-        <h4>Doanh thu tháng này là: 35.000.000 VNĐ</h4>
+        <h4 class="revenue-week">Doanh thu tuần này là:</h4>
       </div>
     </div>
     <div class="col-lg-6">
@@ -137,28 +136,128 @@
     </div>
   </div>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 <script>
-  new Chartist.Line(
-    '#chart-with-area',
-    {
-      labels: [
-        'Thứ 2',
-        'Thứ 3',
-        'Thứ 4',
-        'Thứ 5',
-        'Thứ 6',
-        'Thứ 7',
-        'Chủ nhật',
-      ],
-
-      series: [[12, 23, 9, 8, 4, 2, 7]],
-    },
-    {
-      low: 0,
-      showArea: true,
-      // plugins: [Chartist.plugins.tooltip()],
+  const commaSeparator = (money) => {
+    let res = [...money];
+    let count = 0;
+    for (let i = res.length - 1; i >= 0; i--) {
+      count++;
+      if (count == 3) {
+        if (i != 0) {
+          res[i] = ',' + res[i];
+          count = 0;
+        }
+      }
     }
-  );
+    return res.join('') + 'VND';
+  };
+  function beginOfWeek(d) {
+    d = new Date(d);
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6 : 1);
+    return new Date(d.setDate(diff));
+  }
+  function endOfWeek(date) {
+    var lastday = date.getDate() - (date.getDay() - 1) + 6;
+    return new Date(date.setDate(lastday));
+  }
+  $(document).ready(function () {
+    const currentDay = new Date();
+    const firstDayOfWeek = beginOfWeek(currentDay);
+    firstDayOfWeek.setHours(00, 00, 00);
+    const weekend = endOfWeek(currentDay);
+    weekend.setHours(23, 59, 59);
+
+    let data = {};
+    axios
+      .get('/admin/data-home')
+      .then((res) => {
+        let dataBill = res.data.dataBill;
+        let dataBooking = res.data.dataBooking;
+        let now = new Date();
+        now.setHours(0, 0, 0, 0);
+
+        let bookCheck = 0;
+        let bookNew = 0;
+        let bookPay = 0;
+        let bookCancel = 0;
+        let sum = 0;
+        let dayArr = [0, 0, 0, 0, 0, 0, 0];
+        dataBooking.forEach((item) => {
+          let itemNow = new Date(item.createdAt);
+          let itemN = new Date(item.createdAt);
+          itemN.setHours(0, 0, 0, 0);
+
+          if (itemNow >= firstDayOfWeek && itemNow <= weekend) {
+            let dayOfWeek = itemNow.getDay();
+            // //số đơn trong tuần
+            dayArr[dayOfWeek]++;
+          }
+          if (itemN >= now) {
+            bookNew++;
+          }
+          if (itemNow >= now && item.status == 'đã nhận phòng') {
+            bookCheck++;
+          }
+          if (itemNow >= now && item.status == 'đã trả phòng và thanh toán') {
+            bookPay++;
+          }
+          if (itemNow >= now && item.status == 'hủy') {
+            bookCancel++;
+          }
+        });
+
+        dataBill.forEach((item) => {
+          let itemNow = new Date(item.createdAt);
+          itemNow.setHours(0, 0, 0, 0);
+
+          if (itemNow >= firstDayOfWeek && itemNow <= weekend) {
+            let mn = item.totalMoney.replace(/[^0-9]/g, '');
+
+            sum += mn * 1;
+          }
+        });
+        sum = commaSeparator(sum.toString());
+        $('.bookCheck').html(bookCheck);
+        $('.bookNew').html(bookNew);
+        $('.bookPay').html(bookPay);
+        $('.bookCancel').html(bookCancel);
+        $('.revenue-week').html('Doanh thu tuần này là: ' + sum);
+
+        new Chartist.Line(
+          '#chart-with-area',
+          {
+            labels: [
+              'Thứ 2',
+              'Thứ 3',
+              'Thứ 4',
+              'Thứ 5',
+              'Thứ 6',
+              'Thứ 7',
+              'Chủ nhật',
+            ],
+
+            series: [
+              [
+                dayArr[1],
+                dayArr[2],
+                dayArr[3],
+                dayArr[4],
+                dayArr[5],
+                dayArr[6],
+                dayArr[0],
+              ],
+            ],
+          },
+          {
+            low: 0,
+            showArea: true,
+            // plugins: [Chartist.plugins.tooltip()],
+          }
+        );
+      })
+      .catch((err) => console.log(err));
+  });
 </script>

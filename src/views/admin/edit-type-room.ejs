@@ -1,0 +1,299 @@
+<!-- boostrap 5 -->
+<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+  crossorigin="anonymous"
+/>
+<script
+  src="https://kit.fontawesome.com/1ca5983c13.js"
+  crossorigin="anonymous"
+></script>
+<!-- jquery database -->
+<link
+  rel="stylesheet"
+  href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css"
+/>
+<style>
+  a {
+    text-decoration: none;
+  }
+  .btn {
+    padding: 0.625rem 1.5rem;
+    background-color: #e91e63;
+  }
+  .btn:hover,
+  .btn:focus,
+  .btn:active {
+    background-color: #ec437c;
+  }
+  .befn::before {
+    display: none !important;
+  }
+  .befn::after {
+    display: none !important;
+  }
+
+  .form-label {
+    font-weight: bold;
+  }
+  .ip-check {
+    display: '';
+  }
+  .none-ele {
+    display: none;
+  }
+
+  /* Dropdown */
+
+  .dropdown-cus {
+    display: inline-block;
+    position: relative;
+  }
+
+  .dd-button {
+    display: inline-block;
+    border-radius: 4px;
+    width: 80px;
+    text-align: center;
+    height: 30px;
+    padding: 0 20px;
+    line-height: 30px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .dd-button i {
+    color: #6b6e72;
+  }
+
+  .loading {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(228, 215, 215, 0.2);
+    position: fixed;
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .loader {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    border: 3px solid rgb(220, 217, 213);
+    border-top-color: #002147;
+    box-sizing: border-box;
+    background: transparent;
+    animation: loading 1s linear infinite;
+    position: absolute;
+    top: 20%;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: rotate(0deg);
+    }
+    0% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .dd-input {
+    display: none;
+  }
+
+  .dd-menu {
+    width: 110px;
+    position: absolute;
+    z-index: 2222222;
+    top: calc(100% + 5px);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    list-style-type: none;
+    text-align: center;
+  }
+
+  .dd-input + .dd-menu {
+    display: none;
+  }
+
+  .dd-input:checked + .dd-menu {
+    display: block;
+  }
+
+  .dd-menu li {
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .dd-menu li:hover {
+    background-color: #f6f6f6;
+  }
+
+  .dd-menu li a {
+    display: block;
+    padding: 10px 0;
+  }
+
+  .dd-menu li.divider {
+    padding: 0;
+    border-bottom: 1px solid #cccccc;
+  }
+  .err {
+    color: red;
+    font-size: 13px;
+  }
+  .alert-err {
+    display: none;
+  }
+</style>
+<h4>Chỉnh sửa thông tin phòng</h4>
+<div class="loading">
+  <div class="loader"></div>
+</div>
+<div class="row">
+  <div style="margin: 0 auto" class="col-md-8 col-sm-8">
+    <div class="alert alert-err alert-warning" role="alert"></div>
+    <form method="POST" action="/admin/room-type-edit" class="row g-3">
+      <input
+        type="text"
+        value="<%= data.typeID %>"
+        readonly
+        style="display: none"
+        class="form-control"
+        name="typeID"
+      />
+      <div class="col-md-12">
+        <label for="nameType" class="form-label">Tên loại phòng</label>
+        <input
+          type="text"
+          value="<%= data.nameType %>"
+          required
+          class="form-control"
+          name="nameType"
+        />
+        <span class="err errU"></span>
+      </div>
+      <div class="col-md-3">
+        <label for="price" class="form-label">Giá phòng (1tr=1000)</label>
+        <input
+          type="number"
+          min="500"
+          max="2500"
+          required
+          class="form-control"
+          name="price"
+          value="<%= data.price %>"
+        />
+        <span class="err errP"></span>
+      </div>
+      <div class="col-md-3">
+        <label for="adult" class="form-label">Số người lớn</label>
+        <input
+          type="number"
+          min="1"
+          max="6"
+          required
+          class="form-control"
+          value="<%= data.adult %>"
+          name="adult"
+        />
+        <span class="err errF"></span>
+      </div>
+      <div class="col-md-3">
+        <label for="children" class="form-label">Số trẻ em</label>
+        <input
+          type="number"
+          min="0"
+          max="3"
+          required
+          class="form-control"
+          value="<%= data.children %>"
+          name="children"
+        />
+        <span class="err errF"></span>
+      </div>
+      <div class="col-md-3">
+        <label for="children" class="form-label">Loại giường</label>
+        <input
+          type="text"
+          required
+          class="form-control"
+          value="<%= data.bed %>"
+          name="bed"
+        />
+        <span class="err errF"></span>
+      </div>
+
+      <div class="col-md-12">
+        <label for="description" class="form-label">Mô tả</label>
+        <textarea
+          rows="5"
+          class="form-control"
+          required
+          name="description"
+          class="form-label"
+        >
+  
+            <%= data.description %>
+          </textarea
+        >
+
+        <span class="err errF"></span>
+      </div>
+      <div class="col-md-12">
+        <label for="view" class="form-label">View</label>
+        <input
+          type="text"
+          required
+          class="form-control"
+          value="<%= data.view %>"
+          name="view"
+        />
+        <span class="err errF"></span>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" id="btnAdd" class="btn btn-primary">
+          Cập nhật
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- nhúng jquery và dataTables -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+
+<!-- thiết lập front end -->
+<script>
+  let listText = document.querySelectorAll(
+    '.navbar-vertical .navbar-nav>.nav-item .nav-link'
+  );
+  listText.forEach((item) => {
+    if (
+      item.classList.contains('active') &&
+      item.classList.contains('bg-gradient-primary')
+    )
+      item.classList.remove('active');
+    item.classList.remove('bg-gradient-primary');
+  });
+  document.querySelector('.nav-type').classList.add('active');
+  document.querySelector('.nav-type').classList.add('bg-gradient-primary');
+
+  document.querySelector(
+    '.breadcrumb-item.text-sm.text-dark.active'
+  ).textContent = 'Chỉnh sửa';
+  document.querySelector('.breadcrumb-item a').textContent = 'Loại phòng';
+  document
+    .querySelector('.breadcrumb-item a')
+    .setAttribute('href', '/admin/room-type');
+</script>

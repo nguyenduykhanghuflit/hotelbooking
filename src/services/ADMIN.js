@@ -335,39 +335,13 @@ class ADMIN {
       }
     });
   }
-  StatisticalWeek() {
+  DataHome() {
     return new Promise(async (resolve, reject) => {
       try {
-        // let d = new Date();
-        // var day = d.getDay(),
-        //   diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
-        // let firstday = new Date(d.setDate(diff));
-        // firstday.setHours(0, 0, 0, 0);
-        // let date = new Date();
-        // var lastday = date.getDate() - (date.getDay() - 1) + 6;
-        // lastday = new Date(date.setDate(lastday));
-        // lastday.setHours(23, 59, 59);
-        // lastday.setHours(23, 59, 59, 0);
+        let dataBill = await db.Bill.findAll();
+        let dataBooking = await db.Booking.findAll();
 
-        // let countBooking = await db.Booking.findAll({
-        //   where: {
-        //     [Op.and]: [
-        //       {
-        //         createdAt: {
-        //           [Op.lte]: firstday,
-        //         },
-        //       },
-        //       {
-        //         createdAt: {
-        //           [Op.lte]: lastday,
-        //         },
-        //       },
-        //     ],
-        //   },
-        // });
-        let countBill = await db.Bill.findAll();
-
-        resolve(countBill);
+        resolve({ dataBill, dataBooking });
       } catch (error) {
         reject(error);
       }
@@ -401,6 +375,47 @@ class ADMIN {
       }
     });
   }
+  GetAllRoomType() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Type.findAll({
+          raw: false, //gộp lại k tách ra
+          nest: true,
+          include: [
+            {
+              model: db.Image,
+              as: 'imgData',
+              plain: true,
+            },
+          ],
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+  GetAllRoomTypeByTypeID(typeID) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let data = await db.Type.findByPk(typeID, {
+          raw: false, //gộp lại k tách ra
+          nest: true,
+          include: [
+            {
+              model: db.Image,
+              as: 'imgData',
+              plain: true,
+            },
+          ],
+        });
+        resolve(data);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
   GetRoomByRoomID(roomID) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -436,6 +451,33 @@ class ADMIN {
       {
         where: {
           roomID,
+        },
+      }
+    );
+  }
+  async UpdateRoomType(
+    typeID,
+    nameType,
+    price,
+    adult,
+    children,
+    bed,
+    description,
+    view
+  ) {
+    await db.Type.update(
+      {
+        nameType,
+        price,
+        adult: parseInt(adult),
+        children: parseInt(children),
+        bed,
+        description,
+        view,
+      },
+      {
+        where: {
+          typeID,
         },
       }
     );

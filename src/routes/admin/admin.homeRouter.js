@@ -13,6 +13,11 @@ router.post('/login', AdminLoginController.HandleLogin);
 
 //-----------------Trang chủ---------------------
 router.get('/', AdminLoginController.CheckLogin, AdminHomeController.Home);
+router.get(
+  '/data-home',
+  AdminLoginController.CheckLogin,
+  AdminHomeController.DataHome
+);
 
 //----------------Trang quản lý phòng----------------
 
@@ -138,7 +143,7 @@ router.get(
   AdminSystemController.RoomType
 );
 router.get(
-  '/room-type-edit/:roomID',
+  '/room-type-edit/:typeID',
   AdminLoginController.CheckLogin,
   AdminSystemController.EditRoomTypeController
 );

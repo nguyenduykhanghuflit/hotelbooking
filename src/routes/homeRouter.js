@@ -4,6 +4,7 @@ const homeController = require('../controller/homeController');
 const authController = require('../controller/authController');
 
 router.get('/', homeController.Home);
+
 router.get('/location', homeController.Location);
 router.get('/hotel', homeController.Hotel);
 router.get('/info', authController.ReturnInfoUser);
